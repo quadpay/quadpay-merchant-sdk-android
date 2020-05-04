@@ -51,6 +51,16 @@ These functions give your application information regarding the result of the Qu
 
 ##### Register for activity results
 
+```
+@Override
+protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+    if (QuadPay.getInstance().handleCheckoutResult(this, requestCode, resultCode, data)) {
+        return;
+    }
+    super.onActivityResult(requestCode, resultCode, data);
+}
+```
+
 ##### Checkout Success
 
 This function returns a token you may exchange to confirm an order has been created.
