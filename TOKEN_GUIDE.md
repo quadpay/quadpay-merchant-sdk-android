@@ -10,15 +10,17 @@ Items you will need:
 
 ### The QuadPay Android SDK
 
-- Our SDK is currently only available privately, please inquire about an integration (##sales email?) for more information.
+- Our SDK is currently only available privately, please inquire with your QuadPay account manager.
 
 ### How to start a QuadPay checkout
 
 #### Initialize the QuadPay SDK
 
+Your merchant id will be provided by your QuadPay account manager.
+
 ```
 QuadPay.getInstance().initialize(
-  "{{PUBLISHABLE_KEY}}", // merchant public key
+  "{{merchant_id}}", // merchant public key
   "production", // envrionment
   "US", // locale
 );
@@ -85,7 +87,7 @@ public void checkoutCancelled(String reason) {
 
 ### Exchanging QuadPay tokens for confirmed orders
 
-As soon as your customer has confirmed their order you must exchange the QuadPay token. Tokens have a duration of 24 hours after which they can no longer be exchanged for orders.
+As soon as your customer has confirmed their order you must exchange the QuadPay token. Under the default account settings tokens have a duration of 24 hours after which they can no longer be exchanged for orders.
 
 The timing of your shipping can be any time *after* you have exchanged the token.
 
@@ -96,11 +98,14 @@ See https://docs.quadpay.com/docs/custom-integration-guide#signing-requests for 
 Post the token:
 
 ```
-curl -X post https://gateway.quadpay.com/checkout/exchange_token
+curl -X post https://gateway.quadpay.com/checkout/exchange-token
   -H 'content-type: application/json' 
   -H 'X-QP-Signature: [signature]'
   -d '{
     "token": [token],
+    "totalOrderAmount": <number>, (optional)
+    "taxAmount": <number>, (optional),
+    "shippingAmount": <number>, (optional)
   }'
 ```
 

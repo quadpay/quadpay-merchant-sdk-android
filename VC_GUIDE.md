@@ -10,15 +10,17 @@ Items you will need:
 
 ### The QuadPay Android SDK
 
-- Our SDK is currently only available privately, please inquire about an integration (##sales email?) for more information.
+- Our SDK is currently only available privately, please inquire with your QuadPay account manager.
 
 ### How to start a QuadPay checkout
 
 #### Initialize the QuadPay SDK:
 
+Your merchant id will be provided by your QuadPay account manager.
+
 ```
 QuadPay.getInstance().initialize(
-  "{{PUBLISHABLE_KEY}}", // merchant public key
+  "{{merchant_id}}", // merchant public key
   "production", // envrionment
   "US", // locale
 );
