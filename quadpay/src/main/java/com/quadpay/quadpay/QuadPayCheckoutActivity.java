@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.content.Intent;
 import android.util.Log;
 
+import java.security.InvalidParameterException;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
@@ -12,7 +14,7 @@ public class QuadPayCheckoutActivity extends QuadPayActivity
         implements QuadPayJSMessageListener, QuadPayWebViewClient.WebViewClientCallbacks {
     static void start(@NonNull Activity activity,
                       @NonNull QuadPayCheckoutDetails details,
-                      boolean virtual) {
+                      boolean virtual) throws InvalidParameterException {
         final Intent intent = new Intent(activity, QuadPayCheckoutActivity.class);
         if (virtual) {
             String dest = QuadPayURLBuilder.buildVirtualCheckoutURL(details);

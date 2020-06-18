@@ -39,12 +39,22 @@ public class DashboardFragment extends Fragment {
         final QuadPayCheckoutDetails details = new QuadPayCheckoutDetails();
         details.amount = "100";
         details.customerFirstName = "Quincy";
+        details.merchantReference = "customer-order-492101";
+        details.customerEmail = "paul.sauer+mobile-sdk-example@quadpay.com";
+        details.customerLastName = "Payman";
+        details.customerPhoneNumber = "+14076901147";
+        details.customerAddressLine1 = "240 Meeker Ave";
+        details.customerAddressLine2 = "Apt 35";
+        details.customerPostalCode = "11211";
+        details.customerCity = "Brooklyn";
+        details.customerState = "NY";
+        details.customerCountry = "US";
 
         button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Log.d("SDKExample", "Starting activity");
                 // Do something in response to button click
-                QuadPay.startVirtualCheckout(getActivity(), details);
+                QuadPay.startCheckout(getActivity(), details);
             }
         });
         return root;
