@@ -1,8 +1,8 @@
 apply plugin: 'maven-publish'
 apply plugin: 'com.jfrog.bintray'
 
-version '0.0.2' // your library version
-group 'com.quadpay' // whatever group name you'd like
+version '0.0.3'
+group 'com.quadpay'
 
 publishing {
     publications {
@@ -46,7 +46,6 @@ bintray {
     pkg {
         repo = 'QuadPaySDK' // the name of the repository you created on Bintray
         name = 'com.quadpay.quadpay' // the name of the package you created inside it
-        userOrg = 'quadpay'
         version {
             name = this.version
             released = new Date()
