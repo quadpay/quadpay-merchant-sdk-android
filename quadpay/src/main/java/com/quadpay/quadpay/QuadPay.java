@@ -46,18 +46,12 @@ public final class QuadPay {
     public static void startCheckout(
             @NonNull Activity activity,
             @NonNull QuadPayCheckoutDetails details) {
-        if (!(activity instanceof QuadPayCheckoutDelegate)) {
-            throw new IllegalArgumentException("Must implement QuadPayCheckoutDelegate (did you implement Virtual?)");
-        }
         QuadPayCheckoutActivity.start(activity, details);
     }
 
     public static void startVirtualCheckout(
             @NonNull Activity activity,
             @NonNull QuadPayCheckoutDetails details) {
-        if (!(activity instanceof QuadPayVirtualCheckoutDelegate)) {
-            throw new IllegalArgumentException("Must implement QuadPayVirtualCheckoutDelegate");
-        }
         QuadPayCheckoutActivity.start(activity, details, true);
     }
 
