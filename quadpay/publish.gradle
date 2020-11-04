@@ -8,7 +8,7 @@ publishing {
     publications {
         Production(MavenPublication) {
             artifact("$buildDir/outputs/aar/quadpay-release.aar")
-            artifact("$buildDir/libs/quadpay-0.0.2-sources.jar")
+            artifact("$buildDir/libs/quadpay-0.0.3-sources.jar")
             groupId this.group
             artifactId 'quadpay'
             version this.version
