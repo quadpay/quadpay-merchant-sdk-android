@@ -9,7 +9,7 @@ public class QuadPayURLBuilder {
     static String baseURL() {
         switch (QuadPay.configuration.environment) {
             case SANDBOX:
-                return "https://sandbox.gateway.quadpay.xyz";
+                return "https://sandbox.gateway.quadpay.com";
             case PRODUCTION:
                 return "https://gateway.quadpay.com";
             case CI:
