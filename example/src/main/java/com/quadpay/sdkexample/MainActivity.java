@@ -16,12 +16,13 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import com.quadpay.quadpay.QuadPay;
+import com.quadpay.quadpay.QuadPayCustomer;
 import com.quadpay.quadpay.QuadPayCard;
 import com.quadpay.quadpay.QuadPayCardholder;
 import com.quadpay.quadpay.QuadPayVirtualCheckoutDelegate;
 import com.quadpay.quadpay.QuadPayCheckoutDelegate;
 
-public class MainActivity extends AppCompatActivity implements QuadPayCheckoutDelegate {
+public class MainActivity extends AppCompatActivity implements QuadPayVirtualCheckoutDelegate {
 
     void alertTo(String message) {
         new AlertDialog.Builder(this)
@@ -42,20 +43,20 @@ public class MainActivity extends AppCompatActivity implements QuadPayCheckoutDe
         }
         alertTo("QuadPaySDK.checkoutCancelled: " + reason);
     }
-
-    // This is what the callback would look like for virtual checkout!
-    @Override
-    public void checkoutSuccessful(String orderId) {
-        Log.d("SDKExample", "QuadPay virtual checkout successful - " + orderId);
-        alertTo("QuadPaySDK.checkoutSuccessful: " + orderId);
-    }
+//
+//    // This is what the callback would look like for virtual checkout!
+//    @Override
+//    public void checkoutSuccessful(String orderId, QuadPayCustomer customer) {
+//        Log.d("SDKExample", "QuadPay virtual checkout successful - " + orderId + " customer: " + customer.toString());
+//        alertTo("QuadPaySDK.checkoutSuccessful: " + orderId);
+//    }
 
 // This is what the callback would look like for virtual checkout -- not needed for the standard integration!
-//    @Override
-//    public void checkoutSuccessful(QuadPayCard card, QuadPayCardholder cardholder) {
-//        Log.d("SDKExample", "QuadPay virtual checkout successful - " + card.toString() + " for "  + cardholder.toString());
-//        alertTo("QuadPaySDK.checkoutSuccessful: " + card.number);
-//    }
+    @Override
+    public void checkoutSuccessful(QuadPayCard card, QuadPayCardholder cardholder, QuadPayCustomer customer) {
+        Log.d("SDKExample", "QuadPay virtual checkout successful - " + card.toString() + " for "  + cardholder.toString() + " customer: " + customer.toString());
+        alertTo("QuadPaySDK.checkoutSuccessful: " + card.number);
+    }
 
     @Override
     public void checkoutError(String error) {

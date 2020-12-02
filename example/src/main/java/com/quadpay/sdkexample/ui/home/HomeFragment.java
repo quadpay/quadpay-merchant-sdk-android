@@ -56,7 +56,7 @@ public class HomeFragment extends Fragment {
             public void onClick(View v) {
                 Log.d("SDKExample", "Starting activity");
                 // Do something in response to button click
-                QuadPay.startCheckout(getActivity(), details);
+                QuadPay.startVirtualCheckout(getActivity(), details);
             }
         });
         return root;

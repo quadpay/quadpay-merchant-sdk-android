@@ -67,7 +67,7 @@ public final class QuadPay {
                         // dispatch callback
                         if (message instanceof VirtualCheckoutSuccessfulMessage) {
                             VirtualCheckoutSuccessfulMessage m = (VirtualCheckoutSuccessfulMessage)message;
-                            delegate.checkoutSuccessful(m.card, m.cardholder);
+                            delegate.checkoutSuccessful(m.card, m.cardholder, m.customer);
                         } else if (message instanceof CheckoutCancelledMessage) {
                             CheckoutCancelledMessage m = (CheckoutCancelledMessage)message;
                             delegate.checkoutCancelled(m.reason);
@@ -103,7 +103,7 @@ public final class QuadPay {
                         // dispatch callback
                         if (message instanceof CheckoutSuccessfulMessage) {
                             CheckoutSuccessfulMessage m = (CheckoutSuccessfulMessage)message;
-                            delegate.checkoutSuccessful(m.orderId);
+                            delegate.checkoutSuccessful(m.orderId, m.customer);
                         } else if (message instanceof CheckoutCancelledMessage) {
                             CheckoutCancelledMessage m = (CheckoutCancelledMessage)message;
                             delegate.checkoutCancelled(m.reason);
