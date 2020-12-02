@@ -44,7 +44,7 @@ public class DelegationUnitTest {
     public void initialize() {
         delegate = new QuadPayCheckoutDelegate() {
             @Override
-            public void checkoutSuccessful(String orderId) {
+            public void checkoutSuccessful(String orderId, QuadPayCustomer customer) {
                 calledSuccess = true;
             }
 
@@ -70,7 +70,8 @@ public class DelegationUnitTest {
     public void when_receive_success_message_callback_fires() {
         clearCallbacks();
         MockIntent data = new MockIntent();
-        data.putExtra(QuadPay.QUADPAY_ACTIVITY_EXTRA, "{\"messageType\":\"CheckoutSuccessfulMessage\",\"message\":{\"orderId\":\"1234-1234\"}}");
+        data.putExtra(QuadPay.QUADPAY_ACTIVITY_EXTRA, "{\"messageType\":\"CheckoutSuccessfulMessage\",\"message\":{\"orderId\":\"1234-1234\",\"customer\":{\"firstName\":\"Quincy\",\"lastName\":\"Payman\",\"address1\":\"240 Meeker Avenue\",\"address2\":\"Apt 35\",\"city\":\"Brooklyn\",\"state\":\"NY\",\"postalCode\":\"11211\",\"country\":\"US\",\"email\":\"paul.sauer+ckkeee@quadpay.com\",\"phoneNumber\":\"+14076901147\"}}}");
+
         QuadPay.handleQuadPayActivityResults(delegate, QuadPay.QUADPAY_ACTIVITY_REQUEST_CODE, RESULT_OK, data);
         assertTrue(calledSuccess);
         assertFalse(calledCancelled);
