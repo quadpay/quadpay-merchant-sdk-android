@@ -1,14 +1,14 @@
 apply plugin: 'maven-publish'
 apply plugin: 'com.jfrog.bintray'
 
-version '0.3.2'
+version '0.3.4'
 group 'com.quadpay'
 
 publishing {
     publications {
         Production(MavenPublication) {
             artifact("$buildDir/outputs/aar/quadpay-release.aar")
-            artifact("$buildDir/libs/quadpay-0.3.2-sources.jar")
+            artifact("$buildDir/libs/quadpay-0.3.4-sources.jar")
             groupId this.group
             artifactId 'quadpay'
             version this.version
