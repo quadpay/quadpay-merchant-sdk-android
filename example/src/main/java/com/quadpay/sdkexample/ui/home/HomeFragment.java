@@ -51,6 +51,7 @@ public class HomeFragment extends Fragment {
         details.customerCity = "Brooklyn";
         details.customerState = "NY";
         details.customerCountry = "US";
+        details.merchantFeeForPaymentPlan = "1.0";
 
         button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
