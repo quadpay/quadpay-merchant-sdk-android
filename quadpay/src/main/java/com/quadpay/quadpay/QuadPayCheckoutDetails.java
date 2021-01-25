@@ -13,4 +13,5 @@ public class QuadPayCheckoutDetails {
     public String customerPostalCode;
     public String customerState;
     public String customerCountry;
+    public String merchantFeeForPaymentPlan;
 }

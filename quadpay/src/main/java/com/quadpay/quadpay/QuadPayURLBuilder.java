@@ -40,7 +40,8 @@ public class QuadPayURLBuilder {
                 + field("order.billingAddress.city", details.customerCity)
                 + field("order.billingAddress.postalCode", details.customerPostalCode)
                 + field("order.billingAddress.state", details.customerState)
-                + field("order.billingAddress.country", details.customerCountry);
+                + field("order.billingAddress.country", details.customerCountry)
+                + field("merchantFeeForPaymentPlan", details.merchantFeeForPaymentPlan);
     }
 
     static String buildCheckoutURL(QuadPayCheckoutDetails details) throws InvalidParameterException {
