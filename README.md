@@ -20,7 +20,7 @@ Simply navigate to the 'Run' tab of Android Studio and run the example - This wi
 7. Run `gradlew publish`. This will push all of the required artifacts for publish to a staging repository in Nexus.
 8. Visit Nexus at https://s01.oss.sonatype.org/index.html#stagingRepositories and login. Then click 'Staging Repositories' on the left sidebar.
 Note: You can only have two staging repositories per project at a time - If you need to push another and already have two, select one
-of the unused ones and click 'Drop' in the toolbar immediately above it, and then 'Refresh' to the left of that and the dropped repository should no longer be present.
+of the unused ones and click 'Drop' in the toolbar immediately above it, and then 'Refresh' to the left of that and see the dropped repository should no longer be present.
 9. Select the desired repository for release and then select 'Close' in the top toolbar. After about a minute, click 'Refresh' and you should see that validation has passed on the project.
 10. Select 'Release' on the top toolbar with the closed repository selected. Do not toggle defaults and confirm. This will clear your staging repository.
 11. After about 10 minutes, you should see your newly versioned project in its own folder [here](https://repo1.maven.org/maven2/com/quadpay/quadpay).
