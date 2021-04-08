@@ -1,56 +1,99 @@
+apply plugin: 'signing'
 apply plugin: 'maven-publish'
-apply plugin: 'com.jfrog.bintray'
 
-version '0.3.5'
-group 'com.quadpay'
+ext.isReleaseVersion = !version.endsWith("SNAPSHOT")
+group = "com.quadpay"
 
-publishing {
-    publications {
-        Production(MavenPublication) {
-            artifact("$buildDir/outputs/aar/quadpay-release.aar")
-            artifact("$buildDir/libs/quadpay-0.3.5-sources.jar")
-            groupId this.group
-            artifactId 'quadpay'
-            version this.version
+task androidJavadocs(type: Javadoc) {
+    source = android.sourceSets.main.java.srcDirs
+    classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
+    android.libraryVariants.all { variant ->
+        if (variant.name == 'release') {
+            owner.classpath += variant.javaCompileProvider.get().classpath
+        }
+    }
+    exclude '**/R.html', '**/R.*.html', '**/index.html'
+}
 
-            pom.withXml {
-                def dependenciesNode = asNode().appendNode('dependencies')
+task androidJavadocsJar(type: Jar, dependsOn: androidJavadocs) {
+    archiveClassifier.set('javadoc')
+    from androidJavadocs.destinationDir
+}
 
-                // Iterate over the implementation dependencies (we don't want the test ones),
-                // adding a <dependency> node for each
-                configurations.implementation.allDependencies.each {
-                    // Ensure dependencies such as fileTree are not included in the pom.
-                    if (it.name != 'unspecified') {
-                        def dependencyNode = dependenciesNode.appendNode('dependency')
-                        dependencyNode.appendNode('groupId', it.group)
-                        dependencyNode.appendNode('artifactId', it.name)
-                        dependencyNode.appendNode('version', it.version)
+task androidSourcesJar(type: Jar) {
+    archiveClassifier.set('sources')
+    from android.sourceSets.main.java.srcDirs
+}
+
+afterEvaluate {
+    publishing {
+        publications {
+            maven(MavenPublication) {
+                artifact androidJavadocsJar
+                artifact androidSourcesJar
+                artifact("$buildDir/outputs/aar/quadpay-release.aar")
+                artifact("$buildDir/libs/quadpay-${this.version}.jar")
+                pom {
+                    name = "com.quadpay.quadpay"
+                    groupId = this.group
+                    artifactId = 'quadpay'
+                    version = this.version
+                    description = 'Quadpay\'s open-source Android SDK'
+                    url = 'https://github.com/quadpay/quadpay-merchant-sdk-android'
+                    scm {
+                        connection = 'scm:git:https://github.com/quadpay/quadpay-merchant-sdk-android.git'
+                        developerConnection = 'scm:git:https://github.com/quadpay/quadpay-merchant-sdk-android.git'
+                        url = 'https://github.com/quadpay/quadpay-merchant-sdk-android'
+                    }
+                    licenses {
+                        license {
+                            name = 'MIT License'
+                            url = 'http://www.opensource.org/licenses/mit-license.php'
+                        }
+                    }
+
+                    developers {
+                        developer {
+                            id = 'samuelanoff'
+                            name = 'Samuel Anoff'
+                            email = 'samuel.anoff@quadpay.com'
+                        }
+                    }
+                }
+
+                pom.withXml {
+                    def dependenciesNode = asNode().appendNode('dependencies')
+
+                    // Iterate over the implementation dependencies (we don't want the test ones),
+                    // adding a <dependency> node for each
+                    configurations.implementation.allDependencies.each {
+                        // Ensure dependencies such as fileTree are not included in the pom.
+                        if (it.name != 'unspecified') {
+                            def dependencyNode = dependenciesNode.appendNode('dependency')
+                            dependencyNode.appendNode('groupId', it.group)
+                            dependencyNode.appendNode('artifactId', it.name)
+                            dependencyNode.appendNode('version', it.version)
+                        }
                     }
                 }
             }
         }
-    }
-}
-
-bintray {
-    user = project.hasProperty('user') ?: System.getenv('BINTRAY_USER')
-    key = project.hasProperty('apiKey') ?: System.getenv('BINTRAY_API_KEY')
-    publications = ['Production']
-    configurations = ['archives']
-    // Default: false. Whether to run this as dry-run, without deploying
-    dryRun = false
-    // Default: false. Whether to override version artifacts already published
-    override = false
-    // Default: false. Whether version should be auto published after an upload
-    publish = true
-    pkg {
-        repo = 'QuadPaySDK' // the name of the repository you created on Bintray
-        name = 'com.quadpay.quadpay' // the name of the package you created inside it
-        userOrg = 'quadpay'
-        version {
-            name = this.version
-            released = new Date()
-            vcsTag = this.version
+        repositories {
+            maven {
+                def releaseRepo = "https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/"
+                def snapshotRepo = "https://s01.oss.sonatype.org/content/repositories/snapshots/"
+                url = isReleaseVersion ? releaseRepo : snapshotRepo
+                credentials {
+                    username = project.hasProperty('ossrhUsername') ? ossrhUsername : "Unknown User"
+                    password = project.hasProperty('ossrhPassword') ? ossrhPassword : "Unknown Password"
+                }
+            }
         }
+    }
+    signing {
+        def signingKey = "Signing Key with newline at the end"
+        def signingPassword = "Signing Key Passphrase"
+        useInMemoryPgpKeys(signingKey, signingPassword)
+        sign publishing.publications.maven
     }
 }
