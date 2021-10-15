@@ -24,7 +24,8 @@ public final class QuadPay {
     }
 
     public enum Locale {
-        US
+        US,
+        MX
     }
 
     public enum Environment {
