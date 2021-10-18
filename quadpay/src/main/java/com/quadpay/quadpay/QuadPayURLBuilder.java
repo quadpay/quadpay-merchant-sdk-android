@@ -9,10 +9,25 @@ public class QuadPayURLBuilder {
     static String baseURL() {
         switch (QuadPay.configuration.environment) {
             case SANDBOX:
+                if (QuadPay.configuration.locale == QuadPay.Locale.MX) {
+                    return "https://gateway.sand.mx.zip.co";
+                } else if (QuadPay.configuration.locale == QuadPay.Locale.US) {
+                    return "https://sandbox.gateway.quadpay.com";
+                }
                 return "https://sandbox.gateway.quadpay.com";
             case PRODUCTION:
+                if (QuadPay.configuration.locale == QuadPay.Locale.MX) {
+                    return "https://gateway.mx.zip.co";
+                } else if (QuadPay.configuration.locale == QuadPay.Locale.US) {
+                    return "https://gateway.quadpay.com";   
+                }
                 return "https://gateway.quadpay.com";
             case CI:
+                if (QuadPay.configuration.locale == QuadPay.Locale.MX) {
+                    return "https://gateway.dev.mx.zip.co";
+                } else if (QuadPay.configuration.locale == QuadPay.Locale.US) {
+                    return "https://master.gateway.quadpay.xyz";
+                }
                 return "https://master.gateway.quadpay.xyz";
             default:
                 return "https://sandbox.gateway.quadpay.com";
