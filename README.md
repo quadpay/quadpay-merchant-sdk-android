@@ -5,7 +5,7 @@ This is standard Quadpay toolkit for Android, used for full integrations and con
 # Requirements to use and publish
 - [Gradle](https://gradle.org/releases/): Note - Mac / Unix / Linux users can download this with apt-get
 - [Android Studio](https://developer.android.com/studio/?gclid=Cj0KCQjwsLWDBhCmARIsAPSL3_0h0gvZcAQ8FS3T1-btXWWbwre8NlIogVC2Xi3_Sww1bPKmtIHlFI8aAubIEALw_wcB&gclsrc=aw.ds): For development and publishing
-- [Access to Sonacloud Nexus](https://s01.oss.sonatype.org/index.html): For publishing and releasing artifacts. You need to have valid user credentials with the com.quadpay organization to do this.
+- [Access to Sonatype Nexus](https://s01.oss.sonatype.org/index.html): For publishing and releasing artifacts. You need to have valid user credentials with the com.quadpay organization to do this.
 
 # How To Use
 Simply navigate to the 'Run' tab of Android Studio and run the example - This will begin an Android simulation of the Quadpay checkout.
