@@ -13,5 +13,6 @@ class VirtualCheckoutSuccessfulMessage extends QuadPayJSInterfaceMessage {
         card = new QuadPayCard(message.getJSONObject("card"));
         cardholder = new QuadPayCardholder(message.getJSONObject("cardholder"));
         customer = new QuadPayCustomer(message.getJSONObject("customer"));
+        orderId = message.getString("orderId");
     }
 }
