@@ -8,6 +8,7 @@ class VirtualCheckoutSuccessfulMessage extends QuadPayJSInterfaceMessage {
     QuadPayCard card;
     QuadPayCardholder cardholder;
     QuadPayCustomer customer;
+    String orderId;
     VirtualCheckoutSuccessfulMessage(JSONObject jsonMessage) throws JSONException {
         JSONObject message = jsonMessage.getJSONObject("message");
         card = new QuadPayCard(message.getJSONObject("card"));

@@ -68,7 +68,7 @@ public final class QuadPay {
                         // dispatch callback
                         if (message instanceof VirtualCheckoutSuccessfulMessage) {
                             VirtualCheckoutSuccessfulMessage m = (VirtualCheckoutSuccessfulMessage)message;
-                            delegate.checkoutSuccessful(m.card, m.cardholder, m.customer);
+                            delegate.checkoutSuccessful(m.card, m.cardholder, m.customer, m.orderId);
                         } else if (message instanceof CheckoutCancelledMessage) {
                             CheckoutCancelledMessage m = (CheckoutCancelledMessage)message;
                             delegate.checkoutCancelled(m.reason);
