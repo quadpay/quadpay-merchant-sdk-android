@@ -53,8 +53,8 @@ public class MainActivity extends AppCompatActivity implements QuadPayVirtualChe
 
 // This is what the callback would look like for virtual checkout -- not needed for the standard integration!
     @Override
-    public void checkoutSuccessful(QuadPayCard card, QuadPayCardholder cardholder, QuadPayCustomer customer) {
-        Log.d("SDKExample", "QuadPay virtual checkout successful - " + card.toString() + " for "  + cardholder.toString() + " customer: " + customer.toString());
+    public void checkoutSuccessful(QuadPayCard card, QuadPayCardholder cardholder, QuadPayCustomer customer, String orderId) {
+        Log.d("SDKExample", "QuadPay virtual checkout successful - " + card.toString() + " for "  + cardholder.toString() + " customer: " + customer.toString() + "for Order Id: " + orderId);
         alertTo("QuadPaySDK.checkoutSuccessful: " + card.number);
     }
 
