@@ -66,7 +66,7 @@ public class MainActivity extends AppCompatActivity implements QuadPayVirtualChe
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        QuadPay.initialize(new QuadPay.Configuration.Builder("44444444-4444-4444-4444-444444444444")
+        QuadPay.initialize(new QuadPay.Configuration.Builder("95086e6e-4edb-4852-a6e7-abdda8a72cb1")
                 .setEnvironment(QuadPay.Environment.CI)
                 .setLocale(QuadPay.Locale.US)
                 .build()

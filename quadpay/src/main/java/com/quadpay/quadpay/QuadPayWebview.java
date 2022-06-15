@@ -29,3 +29,4 @@ class QuadPayWebView extends WebView {
         setVerticalScrollBarEnabled(false);
     }
 }
+
