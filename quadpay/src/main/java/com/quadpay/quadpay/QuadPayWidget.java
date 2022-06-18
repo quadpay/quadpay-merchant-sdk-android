@@ -7,6 +7,8 @@ import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.text.Spannable;
 import android.text.TextPaint;
+import android.text.method.LinkMovementMethod;
+import android.text.style.DynamicDrawableSpan;
 import android.text.style.ImageSpan;
 import android.util.AttributeSet;
 import android.widget.FrameLayout;
@@ -15,62 +17,71 @@ import androidx.annotation.NonNull;
 import android.text.SpannableStringBuilder;
 import androidx.core.content.ContextCompat;
 
-class VerticalImageSpan extends ImageSpan {
+import java.lang.ref.WeakReference;
+ class CenteredImageSpan extends ImageSpan {
 
-    public VerticalImageSpan(Drawable drawable) {
-        super(drawable);
+    // Extra variables used to redefine the Font Metrics when an ImageSpan is added
+    private int initialDescent = 0;
+    private int extraSpace = 0;
+
+    public CenteredImageSpan(final Drawable drawable) {
+        this(drawable, DynamicDrawableSpan.ALIGN_BOTTOM);
     }
 
-    /**
-     * update the text line height
-     */
-    @Override
-    public int getSize(Paint paint, CharSequence text, int start, int end,
-                       Paint.FontMetricsInt fontMetricsInt) {
-        Drawable drawable = getDrawable();
-        Rect rect = drawable.getBounds();
-        if (fontMetricsInt != null) {
-            Paint.FontMetricsInt fmPaint = paint.getFontMetricsInt();
-            int fontHeight = fmPaint.descent - fmPaint.ascent;
-            int drHeight = rect.bottom - rect.top;
-            int centerY = fmPaint.ascent + fontHeight / 2;
+    public CenteredImageSpan(final Drawable drawable, final int verticalAlignment) {
+        super(drawable, verticalAlignment);
+    }
 
-            fontMetricsInt.ascent = centerY - drHeight / 2;
-            fontMetricsInt.top = fontMetricsInt.ascent;
-            fontMetricsInt.bottom = centerY + drHeight / 2;
-            fontMetricsInt.descent = fontMetricsInt.bottom;
+    @Override
+    public void draw(Canvas canvas, CharSequence text,
+                     int start, int end, float x,
+                     int top, int y, int bottom, Paint paint) {
+        getDrawable().draw(canvas);
+    }
+
+    // Method used to redefined the Font Metrics when an ImageSpan is added
+    @Override
+    public int getSize(Paint paint, CharSequence text,
+                       int start, int end,
+                       Paint.FontMetricsInt fm) {
+        Drawable d = getCachedDrawable();
+        Rect rect = d.getBounds();
+
+        if (fm != null) {
+            // Centers the text with the ImageSpan
+            if (rect.bottom - (fm.descent - fm.ascent) >= 0) {
+                // Stores the initial descent and computes the margin available
+                initialDescent = fm.descent;
+                extraSpace = rect.bottom - (fm.descent - fm.ascent);
+            }
+
+            fm.descent = extraSpace / 2 + initialDescent;
+            fm.bottom = fm.descent;
+
+            fm.ascent = -rect.bottom + fm.descent;
+            fm.top = fm.ascent;
         }
+
         return rect.right;
     }
 
-    /**
-     * see detail message in android.text.TextLine
-     *
-     * @param canvas the canvas, can be null if not rendering
-     * @param text the text to be draw
-     * @param start the text start position
-     * @param end the text end position
-     * @param x the edge of the replacement closest to the leading margin
-     * @param top the top of the line
-     * @param y the baseline
-     * @param bottom the bottom of the line
-     * @param paint the work paint
-     */
-    @Override
-    public void draw(Canvas canvas, CharSequence text, int start, int end,
-                     float x, int top, int y, int bottom, Paint paint) {
+    // Redefined locally because it is a private member from DynamicDrawableSpan
+    private Drawable getCachedDrawable() {
+        WeakReference<Drawable> wr = mDrawableRef;
+        Drawable d = null;
 
-        Drawable drawable = getDrawable();
-        canvas.save();
-        Paint.FontMetricsInt fmPaint = paint.getFontMetricsInt();
-        int fontHeight = fmPaint.descent - fmPaint.ascent;
-        int centerY = y + fmPaint.descent - fontHeight / 2;
-        int transY = centerY - (drawable.getBounds().bottom - drawable.getBounds().top) / 2;
-        canvas.translate(x, transY);
-        drawable.draw(canvas);
-        canvas.restore();
+        if (wr != null)
+            d = wr.get();
+
+        if (d == null) {
+            d = getDrawable();
+            mDrawableRef = new WeakReference<>(d);
+        }
+
+        return d;
     }
 
+    private WeakReference<Drawable> mDrawableRef;
 }
 class QuadPayWidget extends FrameLayout {
 
@@ -93,12 +104,14 @@ class QuadPayWidget extends FrameLayout {
 
         SpannableStringBuilder spannableStringBuilder = new SpannableStringBuilder();
 
-        VerticalImageSpan imageSpan = new VerticalImageSpan(logo);
+        CenteredImageSpan imageSpan = new CenteredImageSpan(logo);
 
-        spannableStringBuilder.append("djdjdjd ", imageSpan, Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
-
+        spannableStringBuilder.append("Zip pay", imageSpan, Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
+        spannableStringBuilder.append(" ");
+        spannableStringBuilder.append("more info", new QuadPayInfoSpan("https://static.afterpay.com/modal/en_US.html"), Spannable.SPAN_INCLUSIVE_EXCLUSIVE );
         textView.setText(spannableStringBuilder);
-
+        textView.setClickable(true);
+        textView.setMovementMethod(LinkMovementMethod.getInstance());
         addView(textView);
     }
 }

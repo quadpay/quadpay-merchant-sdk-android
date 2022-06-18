@@ -8,5 +8,10 @@
             android:launchMode="singleTop"
             android:windowSoftInputMode="adjustResize">
         </activity>
+        <activity
+                android:name=".ZipWidgetActivity"
+                android:configChanges="orientation|screenSize|screenLayout|keyboardHidden"
+                android:theme="@style/QuadPayDialog">
+        </activity>
     </application>
 </manifest>
