@@ -108,7 +108,8 @@ class QuadPayWidget extends FrameLayout {
 
         spannableStringBuilder.append("Zip pay", imageSpan, Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
         spannableStringBuilder.append(" ");
-        spannableStringBuilder.append("more info", new QuadPayInfoSpan("https://static.afterpay.com/modal/en_US.html"), Spannable.SPAN_INCLUSIVE_EXCLUSIVE );
+        //spannableStringBuilder.append("more info", new QuadPayInfoSpan("https://static.afterpay.com/modal/en_US.html"), Spannable.SPAN_INCLUSIVE_EXCLUSIVE );
+        spannableStringBuilder.append("more info", new QuadPayInfoSpan("https://laitangzip.github.io/laitang.widget/"), Spannable.SPAN_INCLUSIVE_EXCLUSIVE );
         textView.setText(spannableStringBuilder);
         textView.setClickable(true);
         textView.setMovementMethod(LinkMovementMethod.getInstance());
