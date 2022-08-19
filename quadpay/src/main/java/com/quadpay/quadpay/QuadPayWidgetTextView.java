@@ -2,33 +2,38 @@ package com.quadpay.quadpay;
 
 import android.content.Context;
 import android.content.res.TypedArray;
-import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
 import android.text.TextPaint;
+import android.text.method.LinkMovementMethod;
 import android.text.style.ForegroundColorSpan;
-import android.text.style.ImageSpan;
 import android.text.style.RelativeSizeSpan;
 import android.text.style.StyleSpan;
 import android.util.TypedValue;
 import android.view.Gravity;
-import android.widget.ImageView;
-import android.widget.TextView;
-
-
 import androidx.core.content.ContextCompat;
 
 import java.text.DecimalFormat;
 
+public class QuadPayWidgetTextView extends androidx.appcompat.widget.AppCompatTextView {
 
-public class Utils {
-    public static float getLogoSize(String size){
+    private SpannableStringBuilder sb = new SpannableStringBuilder();
+    private SpannableString amountString = null;
+    private String widgetText = null;
+
+    public QuadPayWidgetTextView(Context context, TypedArray attributes, Boolean result) {
+        super(context);
+        SetWidgetLayout(context,
+                attributes,
+                result);
+    }
+
+    private static float getLogoSize(String size){
         Float sizePercentage = Float.parseFloat((size.replace("%","")));
         if(sizePercentage<=90f){
             sizePercentage = 90/100f;
@@ -41,7 +46,7 @@ public class Utils {
         return sizePercentage;
     }
 
-    public static Float getTextSize(String size){
+    private Float getTextSizeFromAttributes(String size){
         Float sizePercentage = Float.parseFloat(size.replace("%",""));
 
         if(sizePercentage<90.0) {
@@ -55,16 +60,16 @@ public class Utils {
         return sizePercentage;
     }
 
-    public static void setTextViewSize(TextView textView, TypedArray attributes){
+    private void setTextViewSize(TypedArray attributes){
 
         String size = attributes.getString(R.styleable.QuadPayWidget_size);
 
         if(size!=null) {
-            textView.setTextSize(TypedValue.COMPLEX_UNIT_PX, textView.getTextSize() * (size.equals("") ? 100 / 100 : getTextSize(size)));
+            setTextSize(TypedValue.COMPLEX_UNIT_PX, getTextSize() * (size.equals("") ? 100 / 100 : getTextSizeFromAttributes(size)));
         }
     }
 
-    public static Drawable getLogo(String logoOption, Context context){
+    private static Drawable getLogo(String logoOption, Context context){
         Drawable logo=null;
 
         switch (logoOption) {
@@ -80,9 +85,9 @@ public class Utils {
         return logo;
     }
 
-    public static void SetDrawableBounds(Drawable drawable, TextView textView){
+    private void SetDrawableBounds(Drawable drawable){
         float aspectRatio = (float) drawable.getIntrinsicWidth() / (float) drawable.getIntrinsicHeight();
-        TextPaint paint = textView.getPaint();
+        TextPaint paint = getPaint();
         Paint.FontMetrics paintFontMetrics = paint.getFontMetrics();
 
         float drawableHeight = (paintFontMetrics.descent - paintFontMetrics.ascent);
@@ -90,9 +95,9 @@ public class Utils {
         drawable.setBounds(0, 0, (int) drawableWidth, (int) drawableHeight);
     }
 
-    public static void SetDrawableBoundsZip(Drawable drawable, TextView textView, String logoSize){
+    private void SetDrawableBoundsZip(Drawable drawable, String logoSize){
         float aspectRatio = (float) drawable.getIntrinsicWidth() / (float) drawable.getIntrinsicHeight();
-        TextPaint paint = textView.getPaint();
+        TextPaint paint = getPaint();
         Paint.FontMetrics paintFontMetrics = paint.getFontMetrics();
 
         float drawableHeight = (paintFontMetrics.descent - paintFontMetrics.ascent)* (logoSize.equals("")? 100/100f:getLogoSize(logoSize));
@@ -100,40 +105,39 @@ public class Utils {
         drawable.setBounds(0, 0, (int) drawableWidth, (int) drawableHeight);
     }
 
-    public static void setWidgetAlignment(TextView textView, TypedArray attributes){
+    private void setWidgetAlignment(TypedArray attributes){
         String alignment = attributes.getString(R.styleable.QuadPayWidget_alignment);
         if(alignment!=null) {
             switch (alignment) {
                 case "left":
-                    textView.setGravity(Gravity.LEFT);
+                    setGravity(Gravity.LEFT);
                     break;
                 case "right":
-                    textView.setGravity(Gravity.RIGHT);
+                    setGravity(Gravity.RIGHT);
                     break;
                 case "center":
-                    textView.setGravity(Gravity.CENTER);
+                    setGravity(Gravity.CENTER);
                     break;
             }
         }
     }
 
-    public static void setAmountStyle(SpannableString spannableString, TypedArray attributes){
+    private void setAmountStyle(TypedArray attributes){
         String priceColor = attributes.getString(R.styleable.QuadPayWidget_priceColor);
 
         StyleSpan boldStyle = new StyleSpan(Typeface.BOLD);
-        spannableString.setSpan(boldStyle,0,spannableString.length(), Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
+        amountString.setSpan(boldStyle,0,amountString.length(), Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
         if(priceColor!=null) {
             try{
                 ForegroundColorSpan colorSpan = new ForegroundColorSpan(Color.parseColor(priceColor));
-                spannableString.setSpan(colorSpan, 0, spannableString.length(), Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
+                amountString.setSpan(colorSpan, 0, amountString.length(), Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
             }catch(Exception e){
 
             }
-
         }
     }
 
-    public static Drawable Logo(String logoOption, Context context){
+    private static Drawable Logo(String logoOption, Context context){
         Drawable logo;
         if (logoOption != null) {
             logo = getLogo(logoOption,context);
@@ -144,7 +148,7 @@ public class Utils {
         return logo;
     }
 
-    public static void WidgetLogoFirst(SpannableStringBuilder sb , VerticalImageSpan imageSpanLogo, SpannableString amountString, VerticalImageSpan imageSpanInfo, String widgetText, TypedArray attributes){
+    private void WidgetLogoFirst(SpannableStringBuilder sb , VerticalImageSpan imageSpanLogo, SpannableString amountString, VerticalImageSpan imageSpanInfo, String widgetText, TypedArray attributes){
         String merchantId = attributes.getString(R.styleable.QuadPayWidget_merchantId);
         String learnMoreUrl =attributes.getString(R.styleable.QuadPayWidget_learnMoreUrl);
         String isMFPPMerchant =attributes.getString(R.styleable.QuadPayWidget_isMFPPMerchant);
@@ -163,9 +167,15 @@ public class Utils {
                 minModal) {
 
         },sb.length()-3,sb.length(),Spannable.SPAN_INCLUSIVE_INCLUSIVE);
+
+        setWidgetAlignment(attributes);
+        setTextViewSize(attributes);
+        setText(sb);
+        setClickable(true);
+        setMovementMethod(LinkMovementMethod.getInstance());
     }
 
-    public static void WidgetDefault(SpannableStringBuilder sb, VerticalImageSpan imageSpanLogo, SpannableString amountString, VerticalImageSpan imageSpanInfo, String widgetText, TypedArray attributes, Boolean subTextLayout,String widgetSubText) {
+    private void WidgetDefault(SpannableStringBuilder sb, VerticalImageSpan imageSpanLogo, SpannableString amountString, VerticalImageSpan imageSpanInfo, String widgetText, TypedArray attributes, Boolean subTextLayout,String widgetSubText) {
         String merchantId = attributes.getString(R.styleable.QuadPayWidget_merchantId);
         String learnMoreUrl =attributes.getString(R.styleable.QuadPayWidget_learnMoreUrl);
         String isMFPPMerchant =attributes.getString(R.styleable.QuadPayWidget_isMFPPMerchant);
@@ -203,9 +213,15 @@ public class Utils {
 
             }, sb.length() - 3, sb.length(), Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
         }
+
+        setWidgetAlignment(attributes);
+        setTextViewSize(attributes);
+        setText(sb);
+        setClickable(true);
+        setMovementMethod(LinkMovementMethod.getInstance());
     }
 
-    public static void WidgetWithMerchant(SpannableStringBuilder sb, VerticalImageSpan imageSpanLogo, SpannableString amountString, VerticalImageSpan imageSpanInfo, TypedArray attributes, String widget_subtext,VerticalImageSpan imageSpanMerchantLogo) {
+    private void WidgetWithMerchant(SpannableStringBuilder sb, VerticalImageSpan imageSpanLogo, SpannableString amountString, VerticalImageSpan imageSpanInfo, TypedArray attributes, String widget_subtext,VerticalImageSpan imageSpanMerchantLogo) {
         String merchantId = attributes.getString(R.styleable.QuadPayWidget_merchantId);
         String learnMoreUrl =attributes.getString(R.styleable.QuadPayWidget_learnMoreUrl);
         String isMFPPMerchant =attributes.getString(R.styleable.QuadPayWidget_isMFPPMerchant);
@@ -233,9 +249,16 @@ public class Utils {
                 minModal) {
 
         }, sb.length() - 3, sb.length(), Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
+
+        setWidgetAlignment(attributes);
+        setTextViewSize(attributes);
+        setText(sb);
+        setClickable(true);
+        setMovementMethod(LinkMovementMethod.getInstance());
+
     }
 
-    public static SpannableString SetAmount(TypedArray attributes) {
+    private void SetAmount(TypedArray attributes) {
 
         String amount = attributes.getString(R.styleable.QuadPayWidget_amount);
         String min = attributes.getString(R.styleable.QuadPayWidget_min);
@@ -252,30 +275,23 @@ public class Utils {
             maxOrder = max;
         }
 
-        SpannableString amountString;
         if (amount == null || amount.equals("")) {
 
             amountString = new SpannableString(" $" + minOrder);
-            return amountString;
+
         } else {
             if (Float.parseFloat(amount) < Float.parseFloat(minOrder))
             {
-
                 amountString = new SpannableString(" $" + minOrder);
-                return amountString;
             } else if (Float.parseFloat(amount) > Float.parseFloat(maxOrder)) {
-
                 amountString = new SpannableString(" $" + maxOrder);
-                return amountString;
             } else {
-
                 amountString = new SpannableString(" $" +decimalFormat.format((Float.parseFloat(amount) / 4)));
-                return amountString;
             }
         }
     }
 
-    public static String SetWidgetText( TypedArray attributes, Context context) {
+    private void SetWidgetText( TypedArray attributes, Context context) {
 
         String amount = attributes.getString(R.styleable.QuadPayWidget_amount);
         String widget_text = context.getString(R.string.widget_text);
@@ -295,24 +311,21 @@ public class Utils {
         }
 
         if (amount == null || amount.equals("")) {
-            return widget_text_min;
+            widgetText = widget_text_min;
 
         } else {
             if (Float.parseFloat(amount) < Float.parseFloat(minOrder))
             {
-                return widget_text_min;
-
+                widgetText = widget_text_min;
             } else if (Float.parseFloat(amount) > Float.parseFloat(maxOrder)) {
-                return widget_text_max;
-
+                widgetText = widget_text_max;
             } else {
-                return widget_text;
-
+                widgetText = widget_text;
             }
         }
     }
 
-    public static void SetWidgetLayout(Context context, TextView textView, SpannableStringBuilder sb, SpannableString amountString, String widgetText, TypedArray attributes,Boolean result) {
+    private void SetWidgetLayout(Context context, TypedArray attributes,Boolean result) {
         String subtextLayout = attributes.getString(R.styleable.QuadPayWidget_subTextLayout);
         Boolean subTextLayout = subtextLayout!=null && subtextLayout.equals("true")?true :false;
         String logoOption = attributes.getString(R.styleable.QuadPayWidget_logoOption);
@@ -321,15 +334,15 @@ public class Utils {
         String logoSize = attributes.getString(R.styleable.QuadPayWidget_logoSize);
 
         Drawable info = ContextCompat.getDrawable(context,R.drawable.info);
-        SetDrawableBounds(info,textView);
+        SetDrawableBounds(info);
         VerticalImageSpan imageSpanInfo = new VerticalImageSpan(info);
 
         Drawable logo = Logo(logoOption,context);
         if(logoSize!=null){
-        Utils.SetDrawableBoundsZip(logo,textView, logoSize);
+            SetDrawableBoundsZip(logo, logoSize);
         }
         else{
-            Utils.SetDrawableBounds(logo,textView);
+            SetDrawableBounds(logo);
         }
         VerticalImageSpan imageSpanLogo = new VerticalImageSpan(logo);
 
@@ -337,10 +350,13 @@ public class Utils {
 
         if(result){
             Drawable merchantLogo = ContextCompat.getDrawable(context,R.drawable.welcome_pay);
-            Utils.SetDrawableBounds(merchantLogo,textView);
+            SetDrawableBounds(merchantLogo);
             imageSpanMerchantLogo = new VerticalImageSpan(merchantLogo);
         }
-
+        setSingleLine(false);
+        SetWidgetText(attributes,context);
+        SetAmount(attributes);
+        setAmountStyle(attributes);
         if (displayMode != null && !subTextLayout  && !result) {
             switch (displayMode) {
                 case "logoFirst":
@@ -357,46 +373,5 @@ public class Utils {
                 WidgetDefault(sb,imageSpanLogo,amountString,imageSpanInfo,widgetText,attributes,subTextLayout,widget_subtext);
             }
         }
-    }
-}
-
-
-class VerticalImageSpan extends ImageSpan{
-    public VerticalImageSpan(Drawable drawable) {
-        super(drawable);
-    }
-
-    @Override
-    public int getSize(Paint paint, CharSequence text, int start, int end,
-                       Paint.FontMetricsInt fontMetricsInt) {
-        Drawable drawable = getDrawable();
-        Rect rect = drawable.getBounds();
-        if (fontMetricsInt != null) {
-            Paint.FontMetricsInt fmPaint = paint.getFontMetricsInt();
-            int fontHeight = fmPaint.descent - fmPaint.ascent;
-            int drHeight = rect.bottom - rect.top;
-            int centerY = fmPaint.ascent + fontHeight / 2;
-
-            fontMetricsInt.ascent = centerY - drHeight / 2;
-            fontMetricsInt.top = fontMetricsInt.ascent;
-            fontMetricsInt.bottom = centerY + drHeight / 2;
-            fontMetricsInt.descent = fontMetricsInt.bottom;
-        }
-        return rect.right;
-    }
-
-    @Override
-    public void draw(Canvas canvas, CharSequence text, int start, int end,
-                     float x, int top, int y, int bottom, Paint paint) {
-
-        Drawable drawable = getDrawable();
-        canvas.save();
-        Paint.FontMetricsInt fmPaint = paint.getFontMetricsInt();
-        int fontHeight = fmPaint.descent - fmPaint.ascent;
-        int centerY = y + fmPaint.descent - fontHeight / 2;
-        int transY = centerY - (drawable.getBounds().bottom - drawable.getBounds().top) / 2;
-        canvas.translate(x, transY);
-        drawable.draw(canvas);
-        canvas.restore();
     }
 }

@@ -19,6 +19,14 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+
+            buildConfigField "String", "CdnUrl", "\"\""
+            buildConfigField "String", "SegmentKey", "\"\""
+        }
+
+        debug{
+            buildConfigField "String", "CdnUrl", "\"https://qp-merchant-configs-dev.azureedge.net/\""
+            buildConfigField "String", "SegmentKey", "\"hq4OrM4xI33326C1mDyMQrOw0YbTP7o6\""
         }
     }
 }

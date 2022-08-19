@@ -1,42 +1,33 @@
 package com.quadpay.quadpay;
 
-import android.annotation.SuppressLint;
+
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebView;
-
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-
-import com.segment.analytics.Analytics;
-import com.segment.analytics.Properties;
-
-import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.nio.charset.StandardCharsets;
+
 
 public class ZipWidgetActivity extends AppCompatActivity {
     private WebView webView;
-    String html = null;
+    private String html = null;
 
     protected void onCreate(@Nullable Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         this.setContentView(R.layout.quadpay_activity_webview);
         this.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
-        View var10001 = this.findViewById(R.id.webview);
-        this.webView = ((WebView)var10001);
+        this.webView = (WebView) this.findViewById(R.id.webview);
         this.updateContent();
         this.loadUrl();
     };
 
     private final void loadUrl() {
-        Intent var10000 = this.getIntent();
-        String url = var10000.getStringExtra("URL");
+        Intent intent = this.getIntent();
+        String url = intent.getStringExtra("URL");
         if (url == null) {
             this.dismiss();
         } else {
@@ -51,11 +42,11 @@ public class ZipWidgetActivity extends AppCompatActivity {
     }
 
     private void updateContent(){
-        Intent var10000 = this.getIntent();
-        String merchantId = var10000.getStringExtra("MerchantId");
-        String learnMoreUrl = var10000.getStringExtra("learnMoreUrl");
-        String minModal = var10000.getStringExtra("minModal");
-        String isMFPPMerchant = var10000.getStringExtra("isMFPPMerchant");
+        Intent intent = this.getIntent();
+        String merchantId = intent.getStringExtra("MerchantId");
+        String learnMoreUrl = intent.getStringExtra("learnMoreUrl");
+        String minModal = intent.getStringExtra("minModal");
+        String isMFPPMerchant = intent.getStringExtra("isMFPPMerchant");
         try {
             InputStream inputStream = getApplication().getAssets().open("index.html");
             int sizeOfFile = inputStream.available();

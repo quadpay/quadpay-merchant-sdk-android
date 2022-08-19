@@ -6,7 +6,7 @@ import retrofit2.http.Path;
 
 public interface MerchantConfigApi {
 
-    String BASE_URL = "https://qp-merchant-configs-dev.azureedge.net/";
+    String BASE_URL = BuildConfig.CdnUrl;
     @GET("{merchantId}.json")
     Call<MerchantConfigResult> getMerchantAssets(@Path("merchantId") String merchantId);
 }

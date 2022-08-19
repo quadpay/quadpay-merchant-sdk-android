@@ -15,9 +15,6 @@ public class QuadPayInfoSpan extends URLSpan {
     String merchantId;
     String isMFPPMerchant;
     String minModal;
-    public QuadPayInfoSpan(String url){
-        super(url);
-    }
 
     public QuadPayInfoSpan(String url,String merchantId,String learnMoreUrl, String isMFPPMerchant,String minModal) {
         super(url);
@@ -29,8 +26,9 @@ public class QuadPayInfoSpan extends URLSpan {
 
     @Override
     public void onClick(View widget) {
-
-        //segmentAnalytics(widget.getContext());
+        if(!BuildConfig.DEBUG) {
+            segmentAnalytics(widget.getContext());
+        }
 
         Context context = widget.getContext();
 
@@ -51,7 +49,7 @@ public class QuadPayInfoSpan extends URLSpan {
 
     public void segmentAnalytics(Context context){
 
-        Analytics analytics = new Analytics.Builder(context, "hq4OrM4xI33326C1mDyMQrOw0YbTP7o6").build();
+        Analytics analytics = new Analytics.Builder(context, BuildConfig.SegmentKey).build();
 
         Analytics.setSingletonInstance(analytics);
 
