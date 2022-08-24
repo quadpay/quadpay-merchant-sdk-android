@@ -27,9 +27,9 @@ public class QuadPayInfoSpan extends URLSpan {
 
     @Override
     public void onClick(View widget) {
-
-        segmentAnalytics(widget.getContext());
-
+        if(BuildConfig.DEBUG != true){
+            segmentAnalytics(widget.getContext());
+        }
 
         Context context = widget.getContext();
 
