@@ -1,5 +1,6 @@
 package com.quadpay.quadpay;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Color;
@@ -16,11 +17,14 @@ import android.text.style.RelativeSizeSpan;
 import android.text.style.StyleSpan;
 import android.util.TypedValue;
 import android.view.Gravity;
+import android.widget.TextView;
+
 import androidx.core.content.ContextCompat;
 
 import java.text.DecimalFormat;
 
-public class QuadPayWidgetTextView extends androidx.appcompat.widget.AppCompatTextView {
+@SuppressLint("AppCompatCustomView")
+public class QuadPayWidgetTextView extends TextView {
 
     private SpannableStringBuilder sb = new SpannableStringBuilder();
     private SpannableString amountString = null;
@@ -33,7 +37,7 @@ public class QuadPayWidgetTextView extends androidx.appcompat.widget.AppCompatTe
                 result);
     }
 
-    private static float getLogoSize(String size){
+    public static float getLogoSize(String size){
         Float sizePercentage = Float.parseFloat((size.replace("%","")));
         if(sizePercentage<=90f){
             sizePercentage = 90/100f;
@@ -46,7 +50,7 @@ public class QuadPayWidgetTextView extends androidx.appcompat.widget.AppCompatTe
         return sizePercentage;
     }
 
-    private Float getTextSizeFromAttributes(String size){
+    public Float getTextSizeFromAttributes(String size){
         Float sizePercentage = Float.parseFloat(size.replace("%",""));
 
         if(sizePercentage<90.0) {
@@ -60,7 +64,7 @@ public class QuadPayWidgetTextView extends androidx.appcompat.widget.AppCompatTe
         return sizePercentage;
     }
 
-    private void setTextViewSize(TypedArray attributes){
+    public void setTextViewSize(TypedArray attributes){
 
         String size = attributes.getString(R.styleable.QuadPayWidget_size);
 
@@ -69,7 +73,7 @@ public class QuadPayWidgetTextView extends androidx.appcompat.widget.AppCompatTe
         }
     }
 
-    private static Drawable getLogo(String logoOption, Context context){
+    public static Drawable getLogo(String logoOption, Context context){
         Drawable logo=null;
 
         switch (logoOption) {
@@ -85,7 +89,7 @@ public class QuadPayWidgetTextView extends androidx.appcompat.widget.AppCompatTe
         return logo;
     }
 
-    private void SetDrawableBounds(Drawable drawable){
+    public void SetDrawableBounds(Drawable drawable){
         float aspectRatio = (float) drawable.getIntrinsicWidth() / (float) drawable.getIntrinsicHeight();
         TextPaint paint = getPaint();
         Paint.FontMetrics paintFontMetrics = paint.getFontMetrics();
@@ -95,7 +99,7 @@ public class QuadPayWidgetTextView extends androidx.appcompat.widget.AppCompatTe
         drawable.setBounds(0, 0, (int) drawableWidth, (int) drawableHeight);
     }
 
-    private void SetDrawableBoundsZip(Drawable drawable, String logoSize){
+    public void SetDrawableBoundsZip(Drawable drawable, String logoSize){
         float aspectRatio = (float) drawable.getIntrinsicWidth() / (float) drawable.getIntrinsicHeight();
         TextPaint paint = getPaint();
         Paint.FontMetrics paintFontMetrics = paint.getFontMetrics();
@@ -105,7 +109,7 @@ public class QuadPayWidgetTextView extends androidx.appcompat.widget.AppCompatTe
         drawable.setBounds(0, 0, (int) drawableWidth, (int) drawableHeight);
     }
 
-    private void setWidgetAlignment(TypedArray attributes){
+    public void setWidgetAlignment(TypedArray attributes){
         String alignment = attributes.getString(R.styleable.QuadPayWidget_alignment);
         if(alignment!=null) {
             switch (alignment) {
@@ -122,7 +126,7 @@ public class QuadPayWidgetTextView extends androidx.appcompat.widget.AppCompatTe
         }
     }
 
-    private void setAmountStyle(TypedArray attributes){
+    public void setAmountStyle(TypedArray attributes){
         String priceColor = attributes.getString(R.styleable.QuadPayWidget_priceColor);
 
         StyleSpan boldStyle = new StyleSpan(Typeface.BOLD);
@@ -137,7 +141,7 @@ public class QuadPayWidgetTextView extends androidx.appcompat.widget.AppCompatTe
         }
     }
 
-    private static Drawable Logo(String logoOption, Context context){
+    public static Drawable Logo(String logoOption, Context context){
         Drawable logo;
         if (logoOption != null) {
             logo = getLogo(logoOption,context);
@@ -148,7 +152,7 @@ public class QuadPayWidgetTextView extends androidx.appcompat.widget.AppCompatTe
         return logo;
     }
 
-    private void WidgetLogoFirst(SpannableStringBuilder sb , VerticalImageSpan imageSpanLogo, SpannableString amountString, VerticalImageSpan imageSpanInfo, String widgetText, TypedArray attributes){
+    public void WidgetLogoFirst(SpannableStringBuilder sb , VerticalImageSpan imageSpanLogo, SpannableString amountString, VerticalImageSpan imageSpanInfo, String widgetText, TypedArray attributes){
         String merchantId = attributes.getString(R.styleable.QuadPayWidget_merchantId);
         String learnMoreUrl =attributes.getString(R.styleable.QuadPayWidget_learnMoreUrl);
         String isMFPPMerchant =attributes.getString(R.styleable.QuadPayWidget_isMFPPMerchant);
@@ -175,7 +179,7 @@ public class QuadPayWidgetTextView extends androidx.appcompat.widget.AppCompatTe
         setMovementMethod(LinkMovementMethod.getInstance());
     }
 
-    private void WidgetDefault(SpannableStringBuilder sb, VerticalImageSpan imageSpanLogo, SpannableString amountString, VerticalImageSpan imageSpanInfo, String widgetText, TypedArray attributes, Boolean subTextLayout,String widgetSubText) {
+    public void WidgetDefault(SpannableStringBuilder sb, VerticalImageSpan imageSpanLogo, SpannableString amountString, VerticalImageSpan imageSpanInfo, String widgetText, TypedArray attributes, Boolean subTextLayout,String widgetSubText) {
         String merchantId = attributes.getString(R.styleable.QuadPayWidget_merchantId);
         String learnMoreUrl =attributes.getString(R.styleable.QuadPayWidget_learnMoreUrl);
         String isMFPPMerchant =attributes.getString(R.styleable.QuadPayWidget_isMFPPMerchant);
@@ -221,7 +225,7 @@ public class QuadPayWidgetTextView extends androidx.appcompat.widget.AppCompatTe
         setMovementMethod(LinkMovementMethod.getInstance());
     }
 
-    private void WidgetWithMerchant(SpannableStringBuilder sb, VerticalImageSpan imageSpanLogo, SpannableString amountString, VerticalImageSpan imageSpanInfo, TypedArray attributes, String widget_subtext,VerticalImageSpan imageSpanMerchantLogo) {
+    public void WidgetWithMerchant(SpannableStringBuilder sb, VerticalImageSpan imageSpanLogo, SpannableString amountString, VerticalImageSpan imageSpanInfo, TypedArray attributes, String widget_subtext,VerticalImageSpan imageSpanMerchantLogo) {
         String merchantId = attributes.getString(R.styleable.QuadPayWidget_merchantId);
         String learnMoreUrl =attributes.getString(R.styleable.QuadPayWidget_learnMoreUrl);
         String isMFPPMerchant =attributes.getString(R.styleable.QuadPayWidget_isMFPPMerchant);
@@ -258,7 +262,7 @@ public class QuadPayWidgetTextView extends androidx.appcompat.widget.AppCompatTe
 
     }
 
-    private void SetAmount(TypedArray attributes) {
+    public void SetAmount(TypedArray attributes) {
 
         String amount = attributes.getString(R.styleable.QuadPayWidget_amount);
         String min = attributes.getString(R.styleable.QuadPayWidget_min);
@@ -291,7 +295,7 @@ public class QuadPayWidgetTextView extends androidx.appcompat.widget.AppCompatTe
         }
     }
 
-    private void SetWidgetText( TypedArray attributes, Context context) {
+    public void SetWidgetText( TypedArray attributes, Context context) {
 
         String amount = attributes.getString(R.styleable.QuadPayWidget_amount);
         String widget_text = context.getString(R.string.widget_text);
@@ -325,7 +329,7 @@ public class QuadPayWidgetTextView extends androidx.appcompat.widget.AppCompatTe
         }
     }
 
-    private void SetWidgetLayout(Context context, TypedArray attributes,Boolean result) {
+    public void SetWidgetLayout(Context context, TypedArray attributes,Boolean result) {
         String subtextLayout = attributes.getString(R.styleable.QuadPayWidget_subTextLayout);
         Boolean subTextLayout = subtextLayout!=null && subtextLayout.equals("true")?true :false;
         String logoOption = attributes.getString(R.styleable.QuadPayWidget_logoOption);

@@ -107,7 +107,7 @@
         app:amount=""
         app:size="150%"
         app:logoSize="10%"
-        app:displayMode="logoFirt"
+        app:displayMode="logoFirst"
         />
 
     <com.quadpay.quadpay.QuadPayWidget

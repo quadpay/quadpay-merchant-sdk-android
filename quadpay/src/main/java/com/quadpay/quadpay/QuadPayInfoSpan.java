@@ -2,12 +2,12 @@ package com.quadpay.quadpay;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.TypedArray;
 import android.text.style.URLSpan;
 import android.view.View;
-
 import com.segment.analytics.Analytics;
 import com.segment.analytics.Properties;
+
+
 
 public class QuadPayInfoSpan extends URLSpan {
 
@@ -17,7 +17,7 @@ public class QuadPayInfoSpan extends URLSpan {
     String minModal;
     private Analytics analytics;
 
-    public QuadPayInfoSpan(String url,String merchantId,String learnMoreUrl, String isMFPPMerchant,String minModal) {
+    public QuadPayInfoSpan(String url, String merchantId, String learnMoreUrl, String isMFPPMerchant, String minModal) {
         super(url);
         this.merchantId= merchantId;
         this.learnMoreUrl = learnMoreUrl;

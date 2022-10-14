@@ -34,7 +34,7 @@ afterEvaluate {
                 artifact("$buildDir/outputs/aar/quadpay-release.aar")
                 artifact("$buildDir/libs/quadpay-${this.version}.jar")
                 pom {
-                    name = "com.quadpay.quadpay"
+                    name = "com.quadpay.quadpay-beta"
                     groupId = this.group
                     artifactId = 'quadpay'
                     version = this.version
