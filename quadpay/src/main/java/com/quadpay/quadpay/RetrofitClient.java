@@ -8,7 +8,7 @@ public class RetrofitClient {
     private MerchantConfigApi merchantConfigApi;
 
     private RetrofitClient() {
-        Retrofit retrofit = new Retrofit.Builder().baseUrl(MerchantConfigApi.BASE_URL)
+        Retrofit retrofit = new Retrofit.Builder().baseUrl(BuildConfig.CdnUrl)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         merchantConfigApi = retrofit.create(MerchantConfigApi.class);
