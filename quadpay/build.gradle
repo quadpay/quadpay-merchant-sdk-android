@@ -1,15 +1,13 @@
 apply plugin: 'com.android.library'
 
-version = "0.4.1"
+version = "0.4.5"
 
 android {
-    compileSdkVersion 30
+    compileSdkVersion 32
 
     defaultConfig {
         minSdkVersion 23
-        targetSdkVersion 30
-        versionCode 32
-        versionName "${this.version}"
+        targetSdkVersion 32
         buildConfigField 'String', 'VERSION_NAME', "\"${this.version}\""
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles 'consumer-rules.pro'
@@ -49,7 +47,7 @@ task createJar(type: Copy) {
     from "$buildDir/intermediates/aar_main_jar/release"
     include "classes.jar"
     destinationDir file("$buildDir/libs")
-    rename "classes.jar", "quadpay-${this.version}-beta.jar"
+    rename "classes.jar", "quadpay-${this.version}.jar"
 }
 
 apply from: 'publish.gradle'

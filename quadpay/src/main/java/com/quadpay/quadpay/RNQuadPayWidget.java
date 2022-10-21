@@ -16,10 +16,10 @@ import android.util.TypedValue;
 import android.view.Gravity;
 import android.widget.FrameLayout;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import java.text.DecimalFormat;
+
 
 public class RNQuadPayWidget extends FrameLayout {
 

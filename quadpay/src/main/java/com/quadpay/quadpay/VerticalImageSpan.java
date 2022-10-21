@@ -6,7 +6,7 @@ import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.text.style.ImageSpan;
 
-class VerticalImageSpan extends ImageSpan {
+public class VerticalImageSpan extends ImageSpan {
     public VerticalImageSpan(Drawable drawable) {
         super(drawable);
     }
