@@ -202,7 +202,7 @@ public class QuadPayWidgetTextView extends TextView {
                     minModal) {
 
             }, sb.length() - 3, sb.length(), Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
-            sb.append("\n" + widgetText);
+            sb.append("\n" + widgetText.replace("4 payments ", ""));
             sb.append(amountString);
         } else {
             SpannableString ss = new SpannableString("or "+ widgetText);
