@@ -6,8 +6,7 @@ import android.text.style.URLSpan;
 import android.view.View;
 import com.segment.analytics.Analytics;
 import com.segment.analytics.Properties;
-
-
+import com.segment.analytics.Analytics.Builder;
 
 public class QuadPayInfoSpan extends URLSpan {
 
@@ -50,7 +49,7 @@ public class QuadPayInfoSpan extends URLSpan {
 
     public void segmentAnalytics(Context context){
         if(analytics==null) {
-            analytics = new Analytics.Builder(context, BuildConfig.SegmentKey).build();
+            analytics = new Builder(context, BuildConfig.SegmentKey).build();
             Analytics.setSingletonInstance(analytics);
         }
 

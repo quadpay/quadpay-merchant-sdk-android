@@ -18,14 +18,13 @@ import android.text.style.StyleSpan;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.widget.TextView;
-
 import androidx.core.content.ContextCompat;
-
 import java.text.DecimalFormat;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+
 
 @SuppressLint("AppCompatCustomView")
 public class QuadPayWidgetTextView extends TextView {
@@ -88,6 +87,10 @@ public class QuadPayWidgetTextView extends TextView {
                 break;
             case "black-white":
                 logo = ContextCompat.getDrawable(context, R.drawable.black_white);
+                break;
+            default:
+                logo = ContextCompat.getDrawable(context, R.drawable.zip_logo);
+                break;
         }
         return logo;
     }
@@ -148,7 +151,6 @@ public class QuadPayWidgetTextView extends TextView {
         Drawable logo;
         if (logoOption != null) {
             logo = getLogo(logoOption,context);
-
         } else {
             logo = ContextCompat.getDrawable(context,R.drawable.zip_logo);
         }
