@@ -94,7 +94,7 @@ public class RNQuadPayWidget extends FrameLayout {
                 sb.append("or " + widgetText);
                 sb.append(" ");
                 sb.append(amountString);
-                sb.append(" ");
+                sb.append(" with ");
                 sb.append("Zip pay", imageSpanLogo, Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
             }
             sb.append(" ");
@@ -107,6 +107,8 @@ public class RNQuadPayWidget extends FrameLayout {
             ) {
             }, sb.length() - 3, sb.length(), Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
         }else{
+            sb.append("or " + widgetText);
+            sb.append(" ");
             sb.append(amountString);
             sb.append("\n");
             sb.append("with ");
