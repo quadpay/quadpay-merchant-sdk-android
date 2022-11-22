@@ -20,7 +20,10 @@ public class ZipWidgetActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         this.setContentView(R.layout.quadpay_activity_webview);
         this.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
-        this.webView = (WebView) this.findViewById(R.id.webview);
+        this.webView = this.findViewById(R.id.webview);
+        this.webView.getSettings().setAllowFileAccess(true);
+        this.webView.getSettings().setJavaScriptEnabled(true);
+
         this.updateContent();
         this.loadUrl();
     };
@@ -31,8 +34,7 @@ public class ZipWidgetActivity extends AppCompatActivity {
         if (url == null) {
             this.dismiss();
         } else {
-            WebView infoView = this.webView;
-            infoView.loadData(html, "text/html; charset-UTF-8", null);
+            this.webView.loadDataWithBaseURL(null, html, "text/html","utf-8",null);
         }
     }
 
@@ -54,10 +56,10 @@ public class ZipWidgetActivity extends AppCompatActivity {
             inputStream.read(bufferData);
             inputStream.close();
             html = new String(bufferData,"UTF-8");
-            html = html.replace("merchantId=''", merchantId !=null? "merchantId='"+merchantId+"'": "merchantId=''");
-            html = html.replace("learnMoreUrl=''", learnMoreUrl !=null? "learnMoreUrl='"+learnMoreUrl+"'": "learnMoreUrl=''");
-            html = html.replace("isMFPPMerchant=''", isMFPPMerchant !=null? "isMFPPMerchant='"+isMFPPMerchant+"'": "isMFPPMerchant=''");
-            html = html.replace("minModal=''", minModal !=null? "minModal='"+minModal+"'": "minModal=''");
+            html = html.replace("%merchantId%", merchantId !=null? merchantId: "");
+            html = html.replace("%learnMoreUrl%", learnMoreUrl !=null? learnMoreUrl: "");
+            html = html.replace("%isMFPPMerchant%", isMFPPMerchant !=null? isMFPPMerchant: "");
+            html = html.replace("%minModal%", minModal !=null? minModal: "");
         } catch (IOException e) {
             e.printStackTrace();
         }
