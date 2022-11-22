@@ -162,6 +162,27 @@ public class RNQuadPayWidget extends FrameLayout {
         }
     }
 
+    public void setLearnMoreUrl(String learnMoreUrl){
+        if(learnMoreUrl != null) {
+            this.learnMoreUrl = learnMoreUrl;
+        }
+        setWidgetText();
+    }
+
+    public void setIsMFPPMerchant(String isMFPPMerchant){
+        if(isMFPPMerchant !=null) {
+            this.isMFPPMerchant = isMFPPMerchant;
+        }
+        setWidgetText();
+    }
+
+    public void setMinModal(String minModal){
+        if(minModal != null) {
+            this.minModal = minModal;
+        }
+        setWidgetText();
+    }
+
     public void setSize(String size){
         Float sizePercentage = Float.parseFloat(size.replace("%",""));
 
@@ -313,6 +334,4 @@ public class RNQuadPayWidget extends FrameLayout {
         }
         setWidgetText();
     }
-
-
 }
