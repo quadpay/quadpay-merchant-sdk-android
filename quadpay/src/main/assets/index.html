@@ -1,10 +1,6 @@
 <!DOCTYPE html>
-
 <html>
-
 <body>
-
-
 <shadow-test></shadow-test>
 <script type="text/javascript">
     customElements.define('shadow-test', class extends HTMLElement {
@@ -18,14 +14,13 @@
             const modalOptions = {
               isMFPPMerchant: '%isMFPPMerchant%',
               learnMoreUrl: '%learnMoreUrl%',
-              minModal: '%minModal%'
+              minModal: '%minModal%' ,
+              isMobileSDK: 'true'
             }
 
             const merchantId = '%merchantId%'
 
-
             window.quadpay.insertModal(merchantId, modalOptions);
-
           }
 
           document.body.appendChild(script)
@@ -34,21 +29,7 @@
     });
   </script>
 </body>
-
 </html>
-
-
-<!--<html>-->
-
-<!--<body>-->
-<!--<quadpay-widget-v3 amount='100' minModal='' merchantId='9f7c8dcc-a546-45e4-a789-b65055abe0db' isMFPPMerchant=''-->
-<!--                   learnMoreUrl=''>-->
-<!--</quadpay-widget-v3>-->
-
-<!--</body>-->
-
-
 <!--<script type='text/javascript' src='https://cdn.dev.us.zip.co/v1/quadpay.js'></script>-->
-<!--&lt;!&ndash; <script src='https://cdn.us.zip.co/v1/quadpay.js'></script>&ndash;&gt;-->
+<!--<script src='https://cdn.us.zip.co/v1/quadpay.js'></script>-->
 
-<!--</html>-->
