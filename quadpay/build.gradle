@@ -21,11 +21,13 @@ android {
 
             buildConfigField "String", "CdnUrl", "\"https://qp-merchant-configs-dev.azureedge.net/\""
             buildConfigField "String", "SegmentKey", "\"hq4OrM4xI33326C1mDyMQrOw0YbTP7o6\""
+            buildConfigField "String", "QuadPayJSUrl", "https://cdn.dev.us.zip.co/v1/quadpay.js"
         }
 
         debug{
             buildConfigField "String", "CdnUrl", "\"https://qp-merchant-configs-dev.azureedge.net/\""
             buildConfigField "String", "SegmentKey", "\"hq4OrM4xI33326C1mDyMQrOw0YbTP7o6\""
+            buildConfigField "String", "QuadPayJSUrl", "\"https://cdn.dev.us.zip.co/v1/quadpay.js\""
         }
     }
 }

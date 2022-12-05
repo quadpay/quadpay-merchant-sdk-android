@@ -12,13 +12,14 @@
         const shadow = this.attachShadow({ mode: 'open' });
         document.addEventListener('DOMContentLoaded', () => {
           const script = document.createElement('script')
-          script.src = 'https://cdn.dev.us.zip.co/v1/quadpay.js'
+          script.src = '%QuadPayJSUrl%'
 
           script.onload = function () {
             const modalOptions = {
               isMFPPMerchant: '%isMFPPMerchant%',
               learnMoreUrl: '%learnMoreUrl%',
-              minModal: '%minModal%'
+              minModal: '%minModal%',
+              isMobileSDK: 'true'
             }
 
             const merchantId = '%merchantId%'
