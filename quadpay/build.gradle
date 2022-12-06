@@ -19,8 +19,8 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
 
-            buildConfigField "String", "CdnUrl", "\"https://qp-merchant-configs-dev.azureedge.net/\""
-            buildConfigField "String", "SegmentKey", "\"hq4OrM4xI33326C1mDyMQrOw0YbTP7o6\""
+            buildConfigField "String", "CdnUrl", "\"https://qpmerchconfigsprd.blob.core.windows.net/\""
+            buildConfigField "String", "SegmentKey", "\"cjapZeHIFnoWRALIB95zrsCX7fFS47SE\""
             buildConfigField "String", "QuadPayJSUrl", "https://cdn.dev.us.zip.co/v1/quadpay.js"
         }
 

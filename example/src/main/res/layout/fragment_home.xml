@@ -32,7 +32,7 @@
         app:logoOption="secondary"
         app:size="100%"
         app:displayMode="logoFirst"
-        app:learnMoreUrl ="www.google.com"
+        app:learnMoreUrl ="https://www.google.com"
         app:isMFPPMerchant="true"
         app:logoSize="150%"
         app:alignment="right"
