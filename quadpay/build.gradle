@@ -1,6 +1,6 @@
 apply plugin: 'com.android.library'
 
-version = "0.5.7"
+version = "0.5.9"
 
 android {
     compileSdkVersion 31
@@ -19,7 +19,7 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
 
-            buildConfigField "String", "CdnUrl", "\"${project.QuadPayJSUrl_Prod}\""
+            buildConfigField "String", "CdnUrl", "\"${project.CdnUrl_Prod}\""
             buildConfigField "String","SegmentKey", "\"${project.SegmentKey_Prod}\""
             buildConfigField "String", "QuadPayJSUrl", "\"${project.QuadPayJSUrl_Prod}\""
         }
