@@ -1,6 +1,7 @@
 package com.quadpay.quadpay;
 
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -9,28 +10,61 @@ import android.graphics.drawable.Drawable;
 import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.shapes.OvalShape;
 import android.text.style.ImageSpan;
+import android.util.AttributeSet;
+import android.util.DisplayMetrics;
 import android.view.View;
+import android.view.WindowManager;
+import android.widget.FrameLayout;
 
 public class Timelapse extends View {
-    Paint paint = new Paint();
 
-    public Timelapse(Context context) {
+    Paint paint;
+    Boolean skew;
+
+    public Timelapse(Context context, TypedArray attrs){
         super(context);
+        init(attrs);
     }
 
+    public void init(TypedArray attrs){
+        paint = new Paint();
+        String color = attrs.getString(R.styleable.QuadPayWidget_timelineColor);
+        String merchantId = attrs.getString(R.styleable.QuadPayWidget_merchantId);
+
+        if(merchantId == null){
+            skew = false;
+        }else{
+            skew = true;
+        }
+        if(color!=null)
+        {
+            if(color.equalsIgnoreCase("black")){
+                paint.setColor(Color.BLACK);
+            }else{
+                paint.setColor(Color.parseColor("#AA8FFF"));
+            }
+        }
+        else{
+            paint.setColor(Color.parseColor("#AA8FFF"));
+        }
+    }
+
+    @Override
     protected void onDraw(Canvas canvas) {
-        paint.setColor(Color.BLACK);
-        canvas.drawRect(0,130,20,150,paint);
-        canvas.drawRect(300,130,320,150,paint);
-        canvas.drawRect(600,130,620,150,paint);
-        canvas.drawRect(900,130,920,150,paint);
-        canvas.drawLine(10, 140, 920, 140, paint);
 
+        super.onDraw(canvas);
+        if(skew){
+            canvas.skew(0.2F, 0F);
+        }
+        int windowWidth = getRootView().getMeasuredWidth();
+        int windowHeight = getRootView().getMeasuredHeight();
+        System.out.println("Look here 2 " + windowWidth + ","+ windowHeight);
 
-        canvas.drawRect(0,230,20,250,paint);
-        canvas.drawRect(290,230,320,250,paint);
-        canvas.drawRect(600,230,620,250,paint);
-        canvas.drawRect(900,230,920,250,paint);
-        canvas.drawLine(10, 240, 920, 240, paint);
+        canvas.drawRect(0,190,20,210,paint);
+        canvas.drawRect(windowWidth/4,190,windowWidth/4+20,210,paint);
+        canvas.drawRect(windowWidth/4*2,190,windowWidth/4*2+20,210,paint);
+        canvas.drawRect(windowWidth/4*3,190,windowWidth/4*3+20,210,paint);
+        canvas.drawLine(0, 200, windowWidth/4*3, 200, paint);
+
     }
 }
