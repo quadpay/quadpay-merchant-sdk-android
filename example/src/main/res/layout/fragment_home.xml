@@ -63,11 +63,13 @@
         android:layout_height="100dp"
         android:layout_marginHorizontal="24dp"
         android:layout_marginVertical="12dp"
-        android:layout_marginBottom="32dp"
+        android:layout_marginBottom="12dp"
         app:layout_constraintBottom_toTopOf="@+id/payment_widget"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        />
+        app:amount="110">
+
+    </com.quadpay.quadpay.QuadPayPaymentWidget>
 
     <com.quadpay.quadpay.QuadPayPaymentWidget
         android:id="@+id/payment_widget"
@@ -81,6 +83,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:learnMoreUrl ="www.google.com"
         app:merchantId="9f7c8dcc-a546-45e4-a789-b65055abe0db"
+        app:amount="105"
+        app:timelineColor = "black"
         />
 
     <Button
