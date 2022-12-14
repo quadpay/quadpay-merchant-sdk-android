@@ -36,6 +36,11 @@ public class Timelapse extends View {
         String color = attrs.getString(R.styleable.QuadPayWidget_timelineColor);
         String merchantId = attrs.getString(R.styleable.QuadPayWidget_merchantId);
         amount = attrs.getString(R.styleable.QuadPayWidget_amount);
+        if(amount == null){
+            amount = "0";
+        }else{
+            amount = decimalFormat.format((Float.parseFloat(amount) / 4));
+        }
         if(merchantId == null){
             skew = true;
             extraHeight = -10;
@@ -59,17 +64,16 @@ public class Timelapse extends View {
 
     @Override
     protected void onDraw(Canvas canvas) {
-        if(amount!= null) {
 
             super.onDraw(canvas);
             int windowWidth = canvas.getWidth();
             int windowHeight = canvas.getHeight() + extraHeight;
             int amountHeight = windowHeight / 2 + 60;
             int timelineTextHeight = windowHeight / 2 + 90;
-            canvas.drawText("$" + decimalFormat.format((Float.parseFloat(amount) / 4)), 0+extraWidth, amountHeight, amountPaint);
-            canvas.drawText("$" + decimalFormat.format((Float.parseFloat(amount) / 4)), windowWidth / 4+extraWidth, amountHeight, amountPaint);
-            canvas.drawText("$" + decimalFormat.format((Float.parseFloat(amount) / 4)), windowWidth / 4 * 2+extraWidth, amountHeight, amountPaint);
-            canvas.drawText("$" + decimalFormat.format((Float.parseFloat(amount) / 4)), windowWidth / 4 * 3+extraWidth, amountHeight, amountPaint);
+            canvas.drawText("$" + amount, 0+extraWidth, amountHeight, amountPaint);
+            canvas.drawText("$" + amount, windowWidth / 4+extraWidth, amountHeight, amountPaint);
+            canvas.drawText("$" + amount, windowWidth / 4 * 2+extraWidth, amountHeight, amountPaint);
+            canvas.drawText("$" + amount, windowWidth / 4 * 3+extraWidth, amountHeight, amountPaint);
             canvas.drawText("Due today", 0+extraWidth, timelineTextHeight, timelineText);
             canvas.drawText("In 2 weeks", windowWidth / 4+extraWidth, timelineTextHeight, timelineText);
             canvas.drawText("In 4 weeks", windowWidth / 4 * 2+extraWidth, timelineTextHeight, timelineText);
@@ -87,5 +91,5 @@ public class Timelapse extends View {
             canvas.drawLine(0, ((windowHeight / 2 + 20) + (windowHeight / 2)) / 2, windowWidth / 4 * 3, ((windowHeight / 2 + 20) + (windowHeight / 2)) / 2, paint);
         }
 
-    }
+
 }
