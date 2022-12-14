@@ -22,6 +22,7 @@ public class Timelapse extends View {
 
     public Timelapse(Context context, TypedArray attrs){
         super(context);
+        setMinimumHeight(100);
         init(attrs);
     }
 
@@ -43,7 +44,7 @@ public class Timelapse extends View {
         }
         if(merchantId == null){
             skew = true;
-            extraHeight = -10;
+            extraHeight = -30;
             extraWidth =15;
         }else{
             skew = false;
