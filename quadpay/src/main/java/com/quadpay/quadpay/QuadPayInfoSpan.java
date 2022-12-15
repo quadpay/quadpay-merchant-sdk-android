@@ -4,9 +4,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.text.style.URLSpan;
 import android.view.View;
-import com.segment.analytics.Analytics;
-import com.segment.analytics.Properties;
-import com.segment.analytics.Analytics.Builder;
+//import com.segment.analytics.Analytics;
+//import com.segment.analytics.Properties;
+//import com.segment.analytics.Analytics.Builder;
 
 public class QuadPayInfoSpan extends URLSpan {
 
@@ -14,7 +14,7 @@ public class QuadPayInfoSpan extends URLSpan {
     String merchantId;
     String isMFPPMerchant;
     String minModal;
-    private Analytics analytics;
+    //private Analytics analytics;
 
     public QuadPayInfoSpan(String url, String merchantId, String learnMoreUrl, String isMFPPMerchant, String minModal) {
         super(url);
@@ -26,9 +26,9 @@ public class QuadPayInfoSpan extends URLSpan {
 
     @Override
     public void onClick(View widget) {
-        if(BuildConfig.DEBUG != true){
-            segmentAnalytics(widget.getContext());
-        }
+//        if(BuildConfig.DEBUG != true){
+//            segmentAnalytics(widget.getContext());
+//        }
 
         Context context = widget.getContext();
 
@@ -47,16 +47,17 @@ public class QuadPayInfoSpan extends URLSpan {
         }
     }
 
-    public void segmentAnalytics(Context context){
-        if(analytics==null) {
-            analytics = new Builder(context, BuildConfig.SegmentKey).build();
-            Analytics.setSingletonInstance(analytics);
-        }
-
-
-        // Safely call Analytics.with(context) from anywhere within your app!
-        analytics.with(context).track("Widget Pressed from SDK",new Properties()
-                .putValue("Merchant", this.merchantId ));
-        analytics.reset();
-    }
+//Segment code that is removed.
+//    public void segmentAnalytics(Context context){
+//        if(analytics==null) {
+//            analytics = new Builder(context, BuildConfig.SegmentKey).build();
+//            Analytics.setSingletonInstance(analytics);
+//        }
+//
+//
+//        // Safely call Analytics.with(context) from anywhere within your app!
+//        analytics.with(context).track("Widget Pressed from SDK",new Properties()
+//                .putValue("Merchant", this.merchantId ));
+//        analytics.reset();
+//    }
 }
