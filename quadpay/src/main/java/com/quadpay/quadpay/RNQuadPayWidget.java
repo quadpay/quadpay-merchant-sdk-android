@@ -114,7 +114,7 @@ public class RNQuadPayWidget extends FrameLayout {
             sb.append("with ");
             sb.append("Info", imageSpanMerchant, Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
             poweredBy = new SpannableString(" powered by ");
-            RelativeSizeSpan sizeSpan = new RelativeSizeSpan(0.6F);
+            RelativeSizeSpan sizeSpan = new RelativeSizeSpan(0.8F);
             poweredBy.setSpan(sizeSpan, 0, poweredBy.length(), SpannableString.SPAN_INCLUSIVE_INCLUSIVE);
 
             sb.append(poweredBy);
@@ -195,7 +195,7 @@ public class RNQuadPayWidget extends FrameLayout {
             sizePercentage = sizePercentage/100;
         }
 
-        this.textView.setTextSize(TypedValue.COMPLEX_UNIT_PX, 39.0f * (size.equals("") ? 100 / 100 : sizePercentage));
+        this.textView.setTextSize(TypedValue.COMPLEX_UNIT_PX, 59.0f * (size.equals("") ? 100 / 100 : sizePercentage));
         this.textView.setMovementMethod(LinkMovementMethod.getInstance());
     }
 
