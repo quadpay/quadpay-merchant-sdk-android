@@ -32,10 +32,6 @@ android {
     }
 }
 
-configurations {
-    myConfig
-}
-
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation 'androidx.appcompat:appcompat:1.3.1'
