@@ -36,7 +36,6 @@ class QuadPayWebView extends WebView {
             {
                 WebView.HitTestResult result = view.getHitTestResult();
                 String data = result.getExtra();
-                System.out.println(data);
                 Context context = view.getContext();
                 Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(data));
                 context.startActivity(browserIntent); // opens in external browser

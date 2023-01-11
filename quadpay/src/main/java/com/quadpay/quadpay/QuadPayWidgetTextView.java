@@ -71,7 +71,7 @@ public class QuadPayWidgetTextView extends TextView {
         String size = attributes.getString(R.styleable.QuadPayWidget_size);
 
         if(size!=null) {
-            setTextSize(TypedValue.COMPLEX_UNIT_PX, getTextSize() * (size.equals("") ? 100 / 100 : getTextSizeFromAttributes(size)));
+            setTextSize(TypedValue.COMPLEX_UNIT_PX, getTextSize() * (size.equals("") ? 1 : getTextSizeFromAttributes(size)));
         }
     }
 
