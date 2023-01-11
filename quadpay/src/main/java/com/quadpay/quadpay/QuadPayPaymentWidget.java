@@ -25,7 +25,6 @@ public class QuadPayPaymentWidget extends FrameLayout {
 
         WindowManager windowManager =
                 (WindowManager)  context.getSystemService(Context.WINDOW_SERVICE);
-        System.out.println("PEtros " +windowManager.getCurrentWindowMetrics().getBounds().width()+ " " +windowManager.getCurrentWindowMetrics().getBounds().height());
         PaymentWidget paymentWidget = new PaymentWidget(context, attributes);
         addView(paymentWidget);
         Timelapse timelapse = new Timelapse(context, attributes);
