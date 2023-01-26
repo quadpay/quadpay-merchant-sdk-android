@@ -1,23 +1,22 @@
-package com.quadpay.quadpay;
+package com.quadpay.quadpay.PaymentWidget;
 
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.util.AttributeSet;
-import android.util.DisplayMetrics;
-import android.view.Display;
 import android.view.WindowManager;
-import android.view.WindowMetrics;
 import android.widget.FrameLayout;
 
 
 import androidx.annotation.NonNull;
+
+import com.quadpay.quadpay.R;
 
 public class QuadPayPaymentWidget extends FrameLayout {
 
     public QuadPayPaymentWidget(@NonNull Context context, AttributeSet attrs) {
         super(context,attrs);
 
-        TypedArray attributes = context.obtainStyledAttributes(attrs,R.styleable.QuadPayWidget);
+        TypedArray attributes = context.obtainStyledAttributes(attrs, R.styleable.QuadPayWidget);
         PaymentWidget(context,attributes);
     }
 
@@ -28,7 +27,7 @@ public class QuadPayPaymentWidget extends FrameLayout {
         PaymentWidget paymentWidget = new PaymentWidget(context, attributes);
         addView(paymentWidget);
         Timelapse timelapse = new Timelapse(context, attributes);
-        timelapse.setLayoutParams(new LayoutParams(windowManager.getCurrentWindowMetrics().getBounds().width()-30,300));
+        timelapse.setLayoutParams(new LayoutParams(windowManager.getCurrentWindowMetrics().getBounds().width()-30,330));
         addView(timelapse);
     }
 }

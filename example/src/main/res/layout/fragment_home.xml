@@ -34,7 +34,7 @@
         app:displayMode="logoFirst"
         app:learnMoreUrl ="www.google.com"
         app:isMFPPMerchant="true"
-        app:logoSize="150%"
+        app:logoSize="100%"
         app:alignment="right"
         />
 
@@ -50,14 +50,13 @@
         android:layout_marginBottom="32dp"
         app:amount="99"
         app:displayMode="logoFirst"
-        app:logoOption="secondary"
         app:size="150%"
         app:logoSize="150%"
         app:priceColor="#A06020"
         app:merchantId="9f7c8dcc-a546-45e4-a789-b65055abe0db"
         />
 
-    <com.quadpay.quadpay.QuadPayPaymentWidget
+    <com.quadpay.quadpay.PaymentWidget.QuadPayPaymentWidget
         android:id="@+id/payment_widget2"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -69,9 +68,9 @@
         app:layout_constraintStart_toStartOf="parent"
         app:amount="110">
 
-    </com.quadpay.quadpay.QuadPayPaymentWidget>
+    </com.quadpay.quadpay.PaymentWidget.QuadPayPaymentWidget>
 
-    <com.quadpay.quadpay.QuadPayPaymentWidget
+    <com.quadpay.quadpay.PaymentWidget.QuadPayPaymentWidget
         android:id="@+id/payment_widget"
         android:layout_width="0dp"
         android:layout_height="wrap_content"

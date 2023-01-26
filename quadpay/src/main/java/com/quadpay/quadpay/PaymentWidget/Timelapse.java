@@ -1,11 +1,15 @@
-package com.quadpay.quadpay;
+package com.quadpay.quadpay.PaymentWidget;
 
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Typeface;
 import android.view.View;
+
+import com.quadpay.quadpay.R;
+
 import java.text.DecimalFormat;
 
 
@@ -19,10 +23,11 @@ public class Timelapse extends View {
     DecimalFormat decimalFormat = new DecimalFormat("#.##");
     int extraHeight = 0;
     int extraWidth = 0;
+    int sideWidth = 30;
 
     public Timelapse(Context context, TypedArray attrs){
         super(context);
-        setMinimumHeight(100);
+        setMinimumHeight(110);
         init(attrs);
     }
 
@@ -31,20 +36,22 @@ public class Timelapse extends View {
         amountPaint = new Paint();
         timelineText = new Paint();
         amountPaint.setColor(Color.BLACK);
-        amountPaint.setTextSize(32);
+        amountPaint.setTextSize(35);
+        amountPaint.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.BOLD));
         timelineText.setColor(Color.GRAY);
-        timelineText.setTextSize(32);
+        timelineText.setTextSize(35);
         String color = attrs.getString(R.styleable.QuadPayWidget_timelineColor);
         String merchantId = attrs.getString(R.styleable.QuadPayWidget_merchantId);
         amount = attrs.getString(R.styleable.QuadPayWidget_amount);
         if(amount == null){
             amount = "0";
         }else{
+            decimalFormat.setMinimumFractionDigits(2);
             amount = decimalFormat.format((Float.parseFloat(amount) / 4));
         }
         if(merchantId == null){
             skew = true;
-            extraHeight = -30;
+            extraHeight = 0;
             extraWidth =15;
         }else{
             skew = false;
@@ -67,12 +74,12 @@ public class Timelapse extends View {
     protected void onDraw(Canvas canvas) {
 
             super.onDraw(canvas);
-            int windowWidth = canvas.getWidth();
+            int windowWidth = canvas.getWidth() -60;
             int windowHeight = canvas.getHeight() + extraHeight;
-            int amountHeight = windowHeight / 2 + 60;
-            int timelineTextHeight = windowHeight / 2 + 90;
-            canvas.drawText("$" + amount, 0+extraWidth, amountHeight, amountPaint);
-            canvas.drawText("$" + amount, windowWidth / 4+extraWidth, amountHeight, amountPaint);
+            int amountHeight = windowHeight / 2 + 40+ sideWidth;
+            int timelineTextHeight = windowHeight / 2 + 80+ sideWidth;
+            canvas.drawText("$" + amount, 0 + extraWidth, amountHeight, amountPaint);
+            canvas.drawText("$" + amount, windowWidth / 4+ extraWidth, amountHeight, amountPaint);
             canvas.drawText("$" + amount, windowWidth / 4 * 2+extraWidth, amountHeight, amountPaint);
             canvas.drawText("$" + amount, windowWidth / 4 * 3+extraWidth, amountHeight, amountPaint);
             canvas.drawText("Due today", 0+extraWidth, timelineTextHeight, timelineText);
@@ -82,14 +89,14 @@ public class Timelapse extends View {
             if (skew) {
                 canvas.skew(0.1F, 0F);
             }
+            paint.setStrokeWidth(4f);
+            canvas.drawRect(0, windowHeight / 2, sideWidth, windowHeight / 2 + sideWidth, paint);
+            canvas.drawRect(windowWidth / 4, windowHeight / 2, windowWidth / 4 + sideWidth, windowHeight / 2 + sideWidth, paint);
+            canvas.drawRect(windowWidth / 4 * 2, windowHeight / 2, windowWidth / 4 * 2 + sideWidth, windowHeight / 2 + sideWidth, paint);
+            canvas.drawRect(windowWidth / 4 * 3, windowHeight / 2, windowWidth / 4 * 3 + sideWidth, windowHeight / 2 + sideWidth, paint);
 
-            System.out.println("Look here 2 " + canvas.getWidth() + "," + canvas.getHeight());
+            canvas.drawLine(0, ((windowHeight / 2 + sideWidth) + (windowHeight / 2)) / 2, windowWidth / 4 * 3, ((windowHeight / 2 + sideWidth) + (windowHeight / 2)) / 2, paint);
 
-            canvas.drawRect(0, windowHeight / 2, 20, windowHeight / 2 + 20, paint);
-            canvas.drawRect(windowWidth / 4, windowHeight / 2, windowWidth / 4 + 20, windowHeight / 2 + 20, paint);
-            canvas.drawRect(windowWidth / 4 * 2, windowHeight / 2, windowWidth / 4 * 2 + 20, windowHeight / 2 + 20, paint);
-            canvas.drawRect(windowWidth / 4 * 3, windowHeight / 2, windowWidth / 4 * 3 + 20, windowHeight / 2 + 20, paint);
-            canvas.drawLine(0, ((windowHeight / 2 + 20) + (windowHeight / 2)) / 2, windowWidth / 4 * 3, ((windowHeight / 2 + 20) + (windowHeight / 2)) / 2, paint);
         }
 
 

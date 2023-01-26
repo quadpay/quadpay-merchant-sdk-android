@@ -15,5 +15,8 @@
         <attr name="minModal" format="string"></attr>
         <attr name="priceColor" format="string"></attr>
         <attr name="timelineColor" format="string"></attr>
+        <attr name="hideHeader" format="string"></attr>
+        <attr name="hideSubtitle" format="string"></attr>
+        <attr name="hideTimeline" format="string"></attr>
     </declare-styleable>
 </resources>
