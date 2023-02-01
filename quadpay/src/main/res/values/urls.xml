@@ -1,5 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <string name="quadpay_url_widget" translatable="false">https://portal.sandbox.afterpay.com/afterpay.js?merchant_key=demo</string>
-    <string name="quadpay_cdn" translatable="false">https://qp-merchant-configs-dev.azureedge.net/</string>
-</resources>

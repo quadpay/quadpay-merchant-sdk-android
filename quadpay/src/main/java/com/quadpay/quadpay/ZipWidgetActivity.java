@@ -64,6 +64,7 @@ public class ZipWidgetActivity extends AppCompatActivity {
             html = html.replace("%learnMoreUrl%", learnMoreUrl !=null? learnMoreUrl: "");
             html = html.replace("%isMFPPMerchant%", isMFPPMerchant !=null? isMFPPMerchant: "");
             html = html.replace("%minModal%", minModal !=null? minModal: "");
+            html = html.replace("%QuadPayJSUrl%", BuildConfig.QuadPayJSUrl);
         } catch (IOException e) {
             e.printStackTrace();
         }
