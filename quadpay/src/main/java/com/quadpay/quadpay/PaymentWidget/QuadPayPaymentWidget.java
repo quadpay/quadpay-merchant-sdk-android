@@ -30,7 +30,10 @@ public class QuadPayPaymentWidget extends LinearLayout {
         String hideTimelineText = attributes.getString(R.styleable.QuadPayWidget_hideTimeline);
         Boolean hideTimeline = hideTimelineText != null && hideTimelineText.equalsIgnoreCase("true");
         if(!hideTimeline) {
-            Timelapse timelapse = new Timelapse(context, attributes);
+            String color = attributes.getString(R.styleable.QuadPayWidget_timelineColor);
+            String merchantId = attributes.getString(R.styleable.QuadPayWidget_merchantId);
+            String amount = attributes.getString(R.styleable.QuadPayWidget_amount);
+            Timelapse timelapse = new Timelapse(context, color,merchantId , amount);
             addView(timelapse);
         }
     }

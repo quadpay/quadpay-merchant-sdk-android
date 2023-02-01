@@ -32,6 +32,9 @@ public class QuadPayWidgetTextView extends TextView {
     private SpannableStringBuilder sb = new SpannableStringBuilder();
     private SpannableString amountString = null;
     private String widgetText = null;
+    private StyleSpan boldStyle = new StyleSpan(Typeface.BOLD);
+    private ForegroundColorSpan colorSpanBlack = new ForegroundColorSpan(Color.BLACK);
+
 
     public QuadPayWidgetTextView(Context context, TypedArray attributes) {
         super(context);
@@ -50,6 +53,13 @@ public class QuadPayWidgetTextView extends TextView {
             sizePercentage =sizePercentage/100f;
         }
         return sizePercentage;
+    }
+
+    public void appendWith(SpannableStringBuilder stringBuilder){
+        SpannableString withString = new SpannableString(" with ");
+        ForegroundColorSpan colorSpanBlack2 = new ForegroundColorSpan(Color.BLACK);
+        withString.setSpan(colorSpanBlack2, 0 , withString.length(),Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
+        stringBuilder.append(withString);
     }
 
     public Float getTextSizeFromAttributes(String size){
@@ -135,7 +145,6 @@ public class QuadPayWidgetTextView extends TextView {
     public void setAmountStyle(TypedArray attributes){
         String priceColor = attributes.getString(R.styleable.QuadPayWidget_priceColor);
 
-        StyleSpan boldStyle = new StyleSpan(Typeface.BOLD);
         amountString.setSpan(boldStyle,0,amountString.length(), Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
         if(priceColor!=null) {
             try{
@@ -144,6 +153,9 @@ public class QuadPayWidgetTextView extends TextView {
             }catch(Exception e){
 
             }
+        }else{
+            ForegroundColorSpan colorSpan = new ForegroundColorSpan(Color.BLACK);
+            amountString.setSpan(colorSpan, 0, amountString.length(), Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
         }
     }
 
@@ -162,12 +174,14 @@ public class QuadPayWidgetTextView extends TextView {
         String learnMoreUrl =attributes.getString(R.styleable.QuadPayWidget_learnMoreUrl);
         String isMFPPMerchant =attributes.getString(R.styleable.QuadPayWidget_isMFPPMerchant);
         String minModal = attributes.getString(R.styleable.QuadPayWidget_minModal);
-
+        // add zip logo to the string builder
         sb.append("Zip pay", imageSpanLogo, Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
         SpannableString ss =new SpannableString(" "+ widgetText );
         sb.append(ss);
+        sb.setSpan(colorSpanBlack, 0, sb.length(), Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
         sb.append(amountString);
         sb.append(" ");
+        // add the info icon to the string builder
         sb.append("Info",imageSpanInfo,Spannable.SPAN_INCLUSIVE_INCLUSIVE);
         sb.setSpan(new QuadPayInfoSpan("file:///android_asset/index.html",
                 merchantId,
@@ -193,9 +207,14 @@ public class QuadPayWidgetTextView extends TextView {
         if (subTextLayout) {
             SpannableString ss = new SpannableString(widgetSubText);
             sb.append(ss);
-            sb.append(" with ");
+            sb.setSpan(colorSpanBlack, 0, sb.length(), Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
+
+
+            appendWith(sb);
+            // add zip logo to the string builder
             sb.append("Zip pay", imageSpanLogo, Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
             sb.append(" ");
+            // add the info icon to the string builder
             sb.append("Info", imageSpanInfo, Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
             sb.setSpan(new QuadPayInfoSpan("file:///android_asset/index.html",
                     merchantId,
@@ -209,10 +228,15 @@ public class QuadPayWidgetTextView extends TextView {
         } else {
             SpannableString ss = new SpannableString("or "+ widgetText);
             sb.append(ss);
+
+            sb.setSpan(colorSpanBlack, 0, sb.length(), Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
             sb.append(amountString);
-            sb.append(" with ");
+            // add with text in the widget
+            appendWith(sb);
+            // add zip logo to the string builder
             sb.append("Zip pay", imageSpanLogo, Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
             sb.append(" ");
+            // add the info icon to the string builder
             sb.append("Info", imageSpanInfo, Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
             sb.setSpan(new QuadPayInfoSpan("file:///android_asset/index.html",
                     merchantId,
@@ -235,20 +259,28 @@ public class QuadPayWidgetTextView extends TextView {
         String learnMoreUrl =attributes.getString(R.styleable.QuadPayWidget_learnMoreUrl);
         String isMFPPMerchant =attributes.getString(R.styleable.QuadPayWidget_isMFPPMerchant);
         String minModal = attributes.getString(R.styleable.QuadPayWidget_minModal);
-
+        SpannableString withString = new SpannableString(" with ");
+        withString.setSpan(colorSpanBlack, 0, withString.length(), Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
+        // add widget text
         SpannableString ss = new SpannableString(widget_subtext);
         sb.append(ss);
+        sb.setSpan(colorSpanBlack, 0, sb.length(), Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
         sb.append(amountString);
         sb.append("\n");
-        sb.append("with ");
+        // add with text in the widget
+        appendWith(sb);
         sb.append("Info", imageSpanMerchantLogo, Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
+        //powered by text
         ss = new SpannableString(" powered by ");
         RelativeSizeSpan sizeSpan = new RelativeSizeSpan(0.6F);
         ss.setSpan(sizeSpan, 0, ss.length(), SpannableString.SPAN_INCLUSIVE_INCLUSIVE);
 
+        // add powered by text to the string builder
         sb.append(ss);
+        // add zip logo to the string builder
         sb.append("Zip pay", imageSpanLogo, Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
         sb.append(" ");
+        // add the info icon to the string builder
         sb.append("Info", imageSpanInfo, Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
         sb.setSpan(new QuadPayInfoSpan("file:///android_asset/index.html",
                 merchantId,

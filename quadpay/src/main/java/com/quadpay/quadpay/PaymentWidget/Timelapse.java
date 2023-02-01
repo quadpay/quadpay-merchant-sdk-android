@@ -19,18 +19,18 @@ public class Timelapse extends View {
     Paint amountPaint;
     Paint timelineText;
     Boolean skew;
-    String amount;
+    String orderAmount;
     DecimalFormat decimalFormat = new DecimalFormat("#.##");
     int extraWidth = 0;
     int sideWidth = 30;
 
-    public Timelapse(Context context, TypedArray attrs){
+    public Timelapse(Context context, String color, String merchantId, String amount){
         super(context);
         setMinimumHeight(200);
-        init(attrs);
+        init(color, merchantId, amount);
     }
 
-    public void init(TypedArray attrs){
+    public void init(String color, String merchantId, String amount ){
         paint = new Paint();
         amountPaint = new Paint();
         timelineText = new Paint();
@@ -39,14 +39,11 @@ public class Timelapse extends View {
         amountPaint.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.BOLD));
         timelineText.setColor(Color.GRAY);
         timelineText.setTextSize(35);
-        String color = attrs.getString(R.styleable.QuadPayWidget_timelineColor);
-        String merchantId = attrs.getString(R.styleable.QuadPayWidget_merchantId);
-        amount = attrs.getString(R.styleable.QuadPayWidget_amount);
         if(amount == null){
-            amount = "0";
+            orderAmount = "0";
         }else{
             decimalFormat.setMinimumFractionDigits(2);
-            amount = decimalFormat.format((Float.parseFloat(amount) / 4));
+            orderAmount = decimalFormat.format((Float.parseFloat(amount) / 4));
         }
         if(merchantId == null){
             skew = true;
@@ -80,10 +77,10 @@ public class Timelapse extends View {
             if (skew) {
                 skewAdjustment= 10;
             }
-            canvas.drawText("$" + amount, 0 + extraWidth -skewAdjustment, amountHeight, amountPaint);
-            canvas.drawText("$" + amount, windowWidth / 4+ extraWidth -skewAdjustment, amountHeight, amountPaint);
-            canvas.drawText("$" + amount, windowWidth / 4 * 2+extraWidth -skewAdjustment, amountHeight, amountPaint);
-            canvas.drawText("$" + amount, windowWidth / 4 * 3+extraWidth -skewAdjustment, amountHeight, amountPaint);
+            canvas.drawText("$" + orderAmount, 0 + extraWidth -skewAdjustment, amountHeight, amountPaint);
+            canvas.drawText("$" + orderAmount, windowWidth / 4+ extraWidth -skewAdjustment, amountHeight, amountPaint);
+            canvas.drawText("$" + orderAmount, windowWidth / 4 * 2+extraWidth -skewAdjustment, amountHeight, amountPaint);
+            canvas.drawText("$" + orderAmount, windowWidth / 4 * 3+extraWidth -skewAdjustment, amountHeight, amountPaint);
             canvas.drawText("Due today", 0+extraWidth -skewAdjustment, timelineTextHeight, timelineText);
             canvas.drawText("In 2 weeks", windowWidth / 4+extraWidth-skewAdjustment, timelineTextHeight, timelineText);
             canvas.drawText("In 4 weeks", windowWidth / 4 * 2+extraWidth-skewAdjustment, timelineTextHeight, timelineText);
