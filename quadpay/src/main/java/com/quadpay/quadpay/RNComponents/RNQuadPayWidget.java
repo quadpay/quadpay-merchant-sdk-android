@@ -1,4 +1,4 @@
-package com.quadpay.quadpay;
+package com.quadpay.quadpay.RNComponents;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -19,6 +19,13 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
+
+import com.quadpay.quadpay.MerchantConfigResult;
+import com.quadpay.quadpay.QuadPayInfoSpan;
+import com.quadpay.quadpay.R;
+import com.quadpay.quadpay.RetrofitClient;
+import com.quadpay.quadpay.VerticalImageSpan;
+
 import java.text.DecimalFormat;
 
 import retrofit2.Call;
@@ -52,7 +59,7 @@ public class RNQuadPayWidget extends FrameLayout {
     private VerticalImageSpan imageSpanLogo = null;
     private VerticalImageSpan imageSpanInfo = null;
     private VerticalImageSpan imageSpanMerchant = null;
-    private Drawable info = ContextCompat.getDrawable(getContext(),R.drawable.info);
+    private Drawable info = ContextCompat.getDrawable(getContext(), R.drawable.info);
     private Drawable grayLabel = ContextCompat.getDrawable(getContext(),R.drawable.welcome_pay);
 
     public RNQuadPayWidget(@NonNull Context context) {

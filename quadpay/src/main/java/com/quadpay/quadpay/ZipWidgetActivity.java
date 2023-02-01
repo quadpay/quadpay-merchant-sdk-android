@@ -1,9 +1,11 @@
 package com.quadpay.quadpay;
 
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.webkit.WebView;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -19,7 +21,9 @@ public class ZipWidgetActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         this.setContentView(R.layout.quadpay_activity_webview);
-        this.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+        WindowManager windowManager = (WindowManager) getApplicationContext().getSystemService(Context.WINDOW_SERVICE);
+        this.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT,  windowManager.getCurrentWindowMetrics().getBounds().height()*80/100);
+
         this.webView = this.findViewById(R.id.webview);
         this.webView.getSettings().setAllowFileAccess(true);
         this.webView.getSettings().setJavaScriptEnabled(true);

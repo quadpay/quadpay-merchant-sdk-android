@@ -5,12 +5,13 @@ import android.content.Intent;
 import android.text.style.URLSpan;
 import android.view.View;
 
+
 public class QuadPayInfoSpan extends URLSpan {
 
-    private String learnMoreUrl;
-    private String merchantId;
-    private String isMFPPMerchant;
-    private String minModal;
+    String learnMoreUrl;
+    String merchantId;
+    String isMFPPMerchant;
+    String minModal;
 
 
     public QuadPayInfoSpan(String url, String merchantId, String learnMoreUrl, String isMFPPMerchant, String minModal) {
@@ -23,10 +24,7 @@ public class QuadPayInfoSpan extends URLSpan {
 
     @Override
     public void onClick(View widget) {
-
         Context context = widget.getContext();
-
-
         Intent intent = new Intent(context, ZipWidgetActivity.class);
         intent.putExtra("URL", this.getURL());
         intent.putExtra("MerchantId",this.merchantId);
@@ -40,5 +38,4 @@ public class QuadPayInfoSpan extends URLSpan {
             super.onClick(widget);
         }
     }
-
 }

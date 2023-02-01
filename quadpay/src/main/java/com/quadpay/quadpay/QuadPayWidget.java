@@ -2,6 +2,7 @@ package com.quadpay.quadpay;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.graphics.Color;
 import android.util.AttributeSet;
 import android.widget.FrameLayout;
 import androidx.annotation.NonNull;
