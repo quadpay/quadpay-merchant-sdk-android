@@ -10,7 +10,7 @@ import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 
-class QuadPayWebView extends WebView {
+public class QuadPayWebView extends WebView {
     private static final String USER_AGENT_PREFIX = "QuadPay-SDK-"
             + BuildConfig.VERSION_NAME;
 

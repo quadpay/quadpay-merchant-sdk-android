@@ -8,10 +8,10 @@ import android.view.View;
 
 public class QuadPayInfoSpan extends URLSpan {
 
-    String learnMoreUrl;
-    String merchantId;
-    String isMFPPMerchant;
-    String minModal;
+    private String learnMoreUrl;
+    private String merchantId;
+    private String isMFPPMerchant;
+    private String minModal;
 
 
     public QuadPayInfoSpan(String url, String merchantId, String learnMoreUrl, String isMFPPMerchant, String minModal) {

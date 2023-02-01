@@ -80,9 +80,6 @@
                 app:learnMoreUrl="www.google.com"
                 />
 
-
-
-
             <com.quadpay.quadpay.PaymentWidget.QuadPayPaymentWidget
                 android:id="@+id/payment_widget3"
                 android:layout_width="match_parent"
