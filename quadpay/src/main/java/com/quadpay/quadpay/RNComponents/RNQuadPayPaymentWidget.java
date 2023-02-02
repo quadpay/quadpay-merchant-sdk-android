@@ -6,16 +6,13 @@ import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.text.Spannable;
-import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
 import android.text.TextPaint;
 import android.text.method.LinkMovementMethod;
 import android.text.style.ForegroundColorSpan;
-import android.text.style.RelativeSizeSpan;
 import android.text.style.StyleSpan;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 
@@ -26,6 +23,7 @@ import com.quadpay.quadpay.R;
 import com.quadpay.quadpay.RetrofitClient;
 import com.quadpay.quadpay.VerticalImageSpan;
 
+import java.sql.Time;
 import java.text.DecimalFormat;
 
 import retrofit2.Call;
@@ -57,11 +55,7 @@ public class RNQuadPayPaymentWidget extends LinearLayout {
         setOrientation(LinearLayout.VERTICAL);
         this.setPadding(16,16,16,16);
         this.textView = new TextView(context);
-        this.addView(this.textView);
-        if(!hideTimeline){
-            this.timelapse = new Timelapse(context,timelineColor,merchantId,amount);
-            this.addView(timelapse);
-        }
+        this.timelapse = new Timelapse(context, null, null,null);
     }
 
     private void setWidgetText(){
@@ -112,6 +106,14 @@ public class RNQuadPayPaymentWidget extends LinearLayout {
         this.textView.setClickable(true);
         this.textView.setText(sb);
         this.textView.setMovementMethod(LinkMovementMethod.getInstance());
+
+        this.addView(this.textView);
+
+        if(!hideTimeline) {
+            this.timelapse = new Timelapse(getContext(),timelineColor,merchantId,amount);
+            addView(this.timelapse);
+        }
+
     }
 
     private void SetDrawableBounds(Drawable drawable){
