@@ -22,7 +22,7 @@ public class Timelapse extends View {
     String orderAmount;
     DecimalFormat decimalFormat = new DecimalFormat("#.##");
     int extraWidth = 0;
-    int sideWidth = 30;
+    int sideWidth = 35;
 
     public Timelapse(Context context, String color, String merchantId, String amount){
         super(context);
@@ -35,10 +35,10 @@ public class Timelapse extends View {
         amountPaint = new Paint();
         timelineText = new Paint();
         amountPaint.setColor(Color.BLACK);
-        amountPaint.setTextSize(35);
+        amountPaint.setTextSize(45);
         amountPaint.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.BOLD));
         timelineText.setColor(Color.GRAY);
-        timelineText.setTextSize(35);
+        timelineText.setTextSize(45);
         if(amount == null){
             orderAmount = "0";
         }else{
@@ -72,7 +72,7 @@ public class Timelapse extends View {
             int windowWidth = canvas.getWidth() -60;
             int windowHeight = canvas.getHeight();
             int amountHeight = windowHeight / 3 + 40+ sideWidth;
-            int timelineTextHeight = windowHeight / 3 + 80+ sideWidth;
+            int timelineTextHeight = windowHeight / 3 + 85+ sideWidth;
             int skewAdjustment = 0;
             if (skew) {
                 skewAdjustment= 10;
@@ -82,9 +82,9 @@ public class Timelapse extends View {
             canvas.drawText("$" + orderAmount, windowWidth / 4 * 2+extraWidth -skewAdjustment, amountHeight, amountPaint);
             canvas.drawText("$" + orderAmount, windowWidth / 4 * 3+extraWidth -skewAdjustment, amountHeight, amountPaint);
             canvas.drawText("Due today", 0+extraWidth -skewAdjustment, timelineTextHeight, timelineText);
-            canvas.drawText("In 2 weeks", windowWidth / 4+extraWidth-skewAdjustment, timelineTextHeight, timelineText);
-            canvas.drawText("In 4 weeks", windowWidth / 4 * 2+extraWidth-skewAdjustment, timelineTextHeight, timelineText);
-            canvas.drawText("In 6 weeks", windowWidth / 4 * 3+extraWidth-skewAdjustment, timelineTextHeight, timelineText);
+            canvas.drawText("2 weeks", windowWidth / 4+extraWidth-skewAdjustment, timelineTextHeight, timelineText);
+            canvas.drawText("4 weeks", windowWidth / 4 * 2+extraWidth-skewAdjustment, timelineTextHeight, timelineText);
+            canvas.drawText("6 weeks", windowWidth / 4 * 3+extraWidth-skewAdjustment, timelineTextHeight, timelineText);
             if (skew) {
                 canvas.skew(0.2F, 0F);
             }

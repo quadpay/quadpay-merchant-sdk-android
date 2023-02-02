@@ -57,8 +57,8 @@ public class QuadPayWidgetTextView extends TextView {
 
     public void appendWith(SpannableStringBuilder stringBuilder){
         SpannableString withString = new SpannableString(" with ");
-        ForegroundColorSpan colorSpanBlack2 = new ForegroundColorSpan(Color.BLACK);
-        withString.setSpan(colorSpanBlack2, 0 , withString.length(),Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
+        ForegroundColorSpan colorSpanBlack = new ForegroundColorSpan(Color.BLACK);
+        withString.setSpan(colorSpanBlack, 0 , withString.length(),Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
         stringBuilder.append(withString);
     }
 

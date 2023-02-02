@@ -65,6 +65,7 @@ public class RNQuadPayPaymentWidget extends LinearLayout {
     }
 
     private void setWidgetText(){
+        this.sb = new SpannableStringBuilder();
         SetDrawableBounds(info);
         imageSpanInfo = new VerticalImageSpan(info);
         if(!applyGrayLabel) {
@@ -84,10 +85,6 @@ public class RNQuadPayPaymentWidget extends LinearLayout {
                 ) {
                 }, sb.length() - 3, sb.length(), Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
             }
-            if(!hideSubtitle){
-            sb.append("\n");
-            sb.append("You will be redirected to Zip to complete your order.");
-            }
         }else{
             if(!hideHeader) {
                 sb.append("Split your order in 4 easy payments with Zip.");
@@ -106,11 +103,11 @@ public class RNQuadPayPaymentWidget extends LinearLayout {
 
                 }, sb.length() - 3, sb.length(), Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
             }
-            if(!hideSubtitle) {
-                sb.append("\n");
-                sb.append("You will be redirected to Zip to complete your order.");
-            }
 
+        }
+        if(!hideSubtitle){
+        sb.append("\n");
+        sb.append("You will be redirected to Zip to complete your order.");
         }
         this.textView.setClickable(true);
         this.textView.setText(sb);
@@ -177,31 +174,32 @@ public class RNQuadPayPaymentWidget extends LinearLayout {
 
     public void setHideHeader(String hideHeader){
         if(hideHeader!=null){
-            this.hideHeader = hideHeader.equalsIgnoreCase("true")? true : false;
+            this.hideHeader = hideHeader.equalsIgnoreCase("true") ? true : false;
         }
         setWidgetText();
     }
 
     public void setHideSubtitle(String hideSubtitle){
         if(hideSubtitle!=null){
-            this.hideSubtitle = hideSubtitle.equalsIgnoreCase("true")? true : false;
+            this.hideSubtitle = hideSubtitle.equalsIgnoreCase("true") ? true : false;
         }
         setWidgetText();
     }
 
     public void setHideTimeline(String hideTimeline){
         if(hideTimeline!=null){
-            this.hideTimeline = hideTimeline.equalsIgnoreCase("true")? true : false;
+            this.hideTimeline = hideTimeline.equalsIgnoreCase("true") ? true : false;
         }
         setWidgetText();
     }
 
     public void setTimelineColor(String timelineColor){
         this.timelineColor = timelineColor;
-
+        setWidgetText();
     }
 
     public void setAmount(String amount){
         this.amount = amount;
+        setWidgetText();
     }
 }
