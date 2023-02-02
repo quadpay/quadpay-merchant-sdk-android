@@ -42,7 +42,7 @@ public class HomeFragment extends Fragment {
         details.merchantReference = "customer-order-492101";
         details.customerEmail = "paul.sauer+mobile-sdk-example@quadpay.com";
         details.customerLastName = "Payman";
-        details.customerPhoneNumber = "+14076901147";
+        details.customerPhoneNumber = "+18146225937";
         details.customerAddressLine1 = "240 Meeker Ave";
         details.customerAddressLine2 = "Apt 35";
         details.customerPostalCode = "11211";
@@ -50,6 +50,7 @@ public class HomeFragment extends Fragment {
         details.customerState = "NY";
         details.customerCountry = "US";
         details.merchantFeeForPaymentPlan = "1.0";
+        details.checkoutFlow = "express";
 
         button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
