@@ -1,4 +1,5 @@
 package com.quadpay.quadpay.RNComponents;
+
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -37,6 +38,7 @@ public class RNQuadPayPaymentWidget extends LinearLayout {
     private String learnMoreUrl = "";
     private String minModal = "";
     private Boolean applyGrayLabel = false;
+    private Boolean allowedToAddView = false;
     private Drawable info = ContextCompat.getDrawable(getContext(), R.drawable.info);
     private SpannableStringBuilder sb = new SpannableStringBuilder();
     private VerticalImageSpan imageSpanInfo = null;
@@ -48,7 +50,7 @@ public class RNQuadPayPaymentWidget extends LinearLayout {
     public RNQuadPayPaymentWidget(@NonNull Context context) {
         super(context);
         setOrientation(LinearLayout.VERTICAL);
-        this.setPadding(16,16,16,16);
+
         this.textView = new TextView(context);
         this.timelapse = new Timelapse(context, this.timelineColor, false,this.amount);
         setWidgetText();
@@ -76,6 +78,8 @@ public class RNQuadPayPaymentWidget extends LinearLayout {
                 ) {
                 }, sb.length() - 3, sb.length(), Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
                 sb.setSpan(colorSpan, 0, sb.length(), Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
+                sb.append("\n");
+                sb.append("\n");
             }
         }else{
             if(!hideHeader) {
@@ -92,21 +96,28 @@ public class RNQuadPayPaymentWidget extends LinearLayout {
                         minModal) {
 
                 }, sb.length() - 3, sb.length(), Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
+                sb.append("\n");
             }
         }
-
         if(!hideSubtitle){
-            sb.append("\n");
+
             sb.append("You will be redirected to Zip to complete your order.");
         }
 
         if(!hideTimeline) {
             this.timelapse.invalidate();
             this.timelapse.init(timelineColor,applyGrayLabel,amount);
+            if(allowedToAddView){
+                addView(this.timelapse);
+            }
+        }else{
+            removeView(this.timelapse);
+            allowedToAddView = true;
         }
 
         this.textView.setClickable(true);
         this.textView.setText(sb);
+
         this.textView.setMovementMethod(LinkMovementMethod.getInstance());
     }
 
@@ -150,6 +161,8 @@ public class RNQuadPayPaymentWidget extends LinearLayout {
     public void setLearnMoreUrl(String learnMoreUrl){
         if(learnMoreUrl != null) {
             this.learnMoreUrl = learnMoreUrl;
+        }else{
+            this.learnMoreUrl = "";
         }
         setWidgetText();
     }
@@ -157,6 +170,8 @@ public class RNQuadPayPaymentWidget extends LinearLayout {
     public void setIsMFPPMerchant(String isMFPPMerchant){
         if(isMFPPMerchant !=null) {
             this.isMFPPMerchant = isMFPPMerchant;
+        }else{
+            this.isMFPPMerchant = "";
         }
         setWidgetText();
     }
@@ -164,6 +179,8 @@ public class RNQuadPayPaymentWidget extends LinearLayout {
     public void setMinModal(String minModal){
         if(minModal != null) {
             this.minModal = minModal;
+        }else{
+            this.minModal = "";
         }
         setWidgetText();
     }
@@ -171,6 +188,8 @@ public class RNQuadPayPaymentWidget extends LinearLayout {
     public void setHideHeader(String hideHeader){
         if(hideHeader!=null){
             this.hideHeader = hideHeader.equalsIgnoreCase("true") ? true : false;
+        }else{
+            this.hideHeader = false;
         }
         setWidgetText();
     }
@@ -178,6 +197,8 @@ public class RNQuadPayPaymentWidget extends LinearLayout {
     public void setHideSubtitle(String hideSubtitle){
         if(hideSubtitle!=null){
             this.hideSubtitle = hideSubtitle.equalsIgnoreCase("true") ? true : false;
+        }else {
+            this.hideSubtitle = false;
         }
         setWidgetText();
     }
@@ -185,6 +206,8 @@ public class RNQuadPayPaymentWidget extends LinearLayout {
     public void setHideTimeline(String hideTimeline){
         if(hideTimeline!=null){
             this.hideTimeline = hideTimeline.equalsIgnoreCase("true") ? true : false;
+        }else {
+            this.hideTimeline = false;
         }
         setWidgetText();
     }
