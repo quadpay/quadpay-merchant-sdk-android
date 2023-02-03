@@ -1,5 +1,4 @@
 package com.quadpay.quadpay.RNComponents;
-
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -23,16 +22,13 @@ import com.quadpay.quadpay.R;
 import com.quadpay.quadpay.RetrofitClient;
 import com.quadpay.quadpay.VerticalImageSpan;
 
-import java.sql.Time;
-import java.text.DecimalFormat;
-
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 public class RNQuadPayPaymentWidget extends LinearLayout {
 
-    Timelapse timelapse = null;
+    private Timelapse timelapse;
     private TextView textView;
     private String merchantId = "";
     private String amount = null;
@@ -41,13 +37,12 @@ public class RNQuadPayPaymentWidget extends LinearLayout {
     private String learnMoreUrl = "";
     private String minModal = "";
     private Boolean applyGrayLabel = false;
-    private VerticalImageSpan imageSpanMerchant = null;
     private Drawable info = ContextCompat.getDrawable(getContext(), R.drawable.info);
     private SpannableStringBuilder sb = new SpannableStringBuilder();
     private VerticalImageSpan imageSpanInfo = null;
-    Boolean hideHeader = false;
-    Boolean hideSubtitle = false;
-    Boolean hideTimeline = false;
+    private Boolean hideHeader = false;
+    private Boolean hideSubtitle = false;
+    private Boolean hideTimeline = false;
 
 
     public RNQuadPayPaymentWidget(@NonNull Context context) {
@@ -55,7 +50,10 @@ public class RNQuadPayPaymentWidget extends LinearLayout {
         setOrientation(LinearLayout.VERTICAL);
         this.setPadding(16,16,16,16);
         this.textView = new TextView(context);
-        this.timelapse = new Timelapse(context, null, null,null);
+        this.timelapse = new Timelapse(context, this.timelineColor, false,this.amount);
+        setWidgetText();
+        addView(this.textView);
+        addView(this.timelapse);
     }
 
     private void setWidgetText(){
@@ -64,10 +62,9 @@ public class RNQuadPayPaymentWidget extends LinearLayout {
         imageSpanInfo = new VerticalImageSpan(info);
         if(!applyGrayLabel) {
             if(!hideHeader) {
-                sb.append("Split your order in 4 easy payments with Welcome Pay (powered by Zip).");
+                sb.append("Split your order in 4 easy payments with Zip.");
                 StyleSpan boldStyle = new StyleSpan(Typeface.BOLD);
                 ForegroundColorSpan colorSpan = new ForegroundColorSpan(Color.BLACK);
-                sb.setSpan(colorSpan, 0, sb.length(), Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
                 sb.setSpan(boldStyle, 0, sb.length(), Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
                 sb.append(" ");
                 sb.append("Zip pay", imageSpanInfo, Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
@@ -78,16 +75,15 @@ public class RNQuadPayPaymentWidget extends LinearLayout {
                         minModal
                 ) {
                 }, sb.length() - 3, sb.length(), Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
+                sb.setSpan(colorSpan, 0, sb.length(), Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
             }
         }else{
             if(!hideHeader) {
-                sb.append("Split your order in 4 easy payments with Zip.");
-                StyleSpan boldStyle = new StyleSpan(Typeface.BOLD);
+                sb.append("Split your order in 4 easy payments with Welcome Pay (powered by Zip).");
                 ForegroundColorSpan colorSpan = new ForegroundColorSpan(Color.BLACK);
-                sb.setSpan(colorSpan, 0, sb.length(), Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
+                StyleSpan boldStyle = new StyleSpan(Typeface.BOLD);
                 sb.setSpan(boldStyle, 0, sb.length(), Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
-                sb.append("Info", imageSpanMerchant, Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
-
+                sb.setSpan(colorSpan, 0, sb.length(), Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
                 sb.append("Info", imageSpanInfo, Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
                 sb.setSpan(new QuadPayInfoSpan("file:///android_asset/index.html",
                         merchantId,
@@ -97,23 +93,21 @@ public class RNQuadPayPaymentWidget extends LinearLayout {
 
                 }, sb.length() - 3, sb.length(), Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
             }
-
         }
         if(!hideSubtitle){
-        sb.append("\n");
-        sb.append("You will be redirected to Zip to complete your order.");
+            sb.append("\n");
+            sb.append("You will be redirected to Zip to complete your order.");
         }
-        this.textView.setClickable(true);
-        this.textView.setText(sb);
-        this.textView.setMovementMethod(LinkMovementMethod.getInstance());
-
-        this.addView(this.textView);
 
         if(!hideTimeline) {
-            this.timelapse = new Timelapse(getContext(),timelineColor,merchantId,amount);
-            addView(this.timelapse);
+            this.timelapse.invalidate();
+            this.timelapse.init(timelineColor,applyGrayLabel,amount);
         }
 
+        this.textView.setClickable(true);
+        this.textView.setText(sb);
+
+        this.textView.setMovementMethod(LinkMovementMethod.getInstance());
     }
 
     private void SetDrawableBounds(Drawable drawable){
@@ -201,7 +195,11 @@ public class RNQuadPayPaymentWidget extends LinearLayout {
     }
 
     public void setAmount(String amount){
-        this.amount = amount;
+        if(amount != null){
+            this.amount = amount;
+        }else{
+            this.amount = "0";
+        }
         setWidgetText();
     }
 }

@@ -31,12 +31,12 @@ import retrofit2.Response;
 public class PaymentWidget extends TextView{
 
     private SpannableStringBuilder sb = new SpannableStringBuilder();
-    public PaymentWidget(Context context, TypedArray attributes) {
+    public PaymentWidget(Context context, TypedArray attributes, Boolean applyGrayLabel) {
         super(context);
-        CreatePaymentWidget(context, attributes);
+        CreatePaymentWidget(context, attributes,applyGrayLabel);
     }
 
-    private void CreatePaymentWidget(Context context, TypedArray attributes){
+    private void CreatePaymentWidget(Context context, TypedArray attributes, Boolean applyGrayLabel){
         String merchantId = attributes.getString(R.styleable.QuadPayWidget_merchantId);
         String learnMoreUrl =attributes.getString(R.styleable.QuadPayWidget_learnMoreUrl);
         String isMFPPMerchant =attributes.getString(R.styleable.QuadPayWidget_isMFPPMerchant);
@@ -48,23 +48,8 @@ public class PaymentWidget extends TextView{
         Drawable info = ContextCompat.getDrawable(context,R.drawable.info);
         SetDrawableBounds(info);
         VerticalImageSpan imageSpanInfo = new VerticalImageSpan(info);
-        if(merchantId !=null){
-            Call<MerchantConfigResult> call = RetrofitClient.getInstance().getMerchantConfigApi().getMerchantAssets(merchantId);
-            call.enqueue(new Callback<MerchantConfigResult>() {
-                @Override
-                public void onResponse(Call<MerchantConfigResult> call, Response<MerchantConfigResult> response) {
-                    if(response.isSuccessful()){
-                        PaymentWithMerchant(imageSpanInfo,merchantId,learnMoreUrl,isMFPPMerchant, minModal,hideHeader,hideSubtitle);
-                    }else{
-                        PaymentWidgetWithOutMerchant(imageSpanInfo,merchantId,learnMoreUrl,isMFPPMerchant, minModal,hideHeader,hideSubtitle);
-                    }
-                }
-
-                @Override
-                public void onFailure(Call<MerchantConfigResult> call, Throwable t) {
-                    PaymentWidgetWithOutMerchant(imageSpanInfo,merchantId,learnMoreUrl,isMFPPMerchant, minModal,hideHeader,hideSubtitle);
-                }
-            });
+        if(applyGrayLabel){
+            PaymentWithMerchant(imageSpanInfo,merchantId,learnMoreUrl,isMFPPMerchant, minModal,hideHeader,hideSubtitle);
         }else {
             PaymentWidgetWithOutMerchant(imageSpanInfo,null,learnMoreUrl,isMFPPMerchant, minModal, hideHeader, hideSubtitle);
         }

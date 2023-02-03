@@ -11,7 +11,13 @@ import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
 
+import com.quadpay.quadpay.MerchantConfigResult;
 import com.quadpay.quadpay.R;
+import com.quadpay.quadpay.RetrofitClient;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class QuadPayPaymentWidget extends LinearLayout {
 
@@ -23,18 +29,53 @@ public class QuadPayPaymentWidget extends LinearLayout {
     }
 
     private void PaymentWidget(Context context, TypedArray attributes) {
-
-
-        PaymentWidget paymentWidget = new PaymentWidget(context, attributes);
-        addView(paymentWidget);
+        String merchantId = attributes.getString(R.styleable.QuadPayWidget_merchantId);
         String hideTimelineText = attributes.getString(R.styleable.QuadPayWidget_hideTimeline);
-        Boolean hideTimeline = hideTimelineText != null && hideTimelineText.equalsIgnoreCase("true");
-        if(!hideTimeline) {
-            String color = attributes.getString(R.styleable.QuadPayWidget_timelineColor);
-            String merchantId = attributes.getString(R.styleable.QuadPayWidget_merchantId);
-            String amount = attributes.getString(R.styleable.QuadPayWidget_amount);
-            Timelapse timelapse = new Timelapse(context, color,merchantId , amount);
-            addView(timelapse);
+        String color = attributes.getString(R.styleable.QuadPayWidget_timelineColor);
+        String amount = attributes.getString(R.styleable.QuadPayWidget_amount);
+        if(merchantId!= null){
+            Call<MerchantConfigResult> call = RetrofitClient.getInstance().getMerchantConfigApi().getMerchantAssets(merchantId);
+            call.enqueue(new Callback<MerchantConfigResult>() {
+                @Override
+                public void onResponse(Call<MerchantConfigResult> call, Response<MerchantConfigResult> response) {
+                    if(response.isSuccessful()){
+                        PaymentWidget paymentWidget = new PaymentWidget(context, attributes, true);
+                        addView(paymentWidget);
+                        Boolean hideTimeline = hideTimelineText != null && hideTimelineText.equalsIgnoreCase("true");
+                        if(!hideTimeline) {
+                            Timelapse timelapse = new Timelapse(context, color,true , amount);
+                            addView(timelapse);
+                        }
+                    }else{
+                        PaymentWidget paymentWidget = new PaymentWidget(context, attributes, false);
+                        addView(paymentWidget);
+                        Boolean hideTimeline = hideTimelineText != null && hideTimelineText.equalsIgnoreCase("true");
+                        if(!hideTimeline) {
+                            Timelapse timelapse = new Timelapse(context, color,false , amount);
+                            addView(timelapse);
+                        }
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<MerchantConfigResult> call, Throwable t) {
+                    PaymentWidget paymentWidget = new PaymentWidget(context, attributes, false);
+                    addView(paymentWidget);
+                    Boolean hideTimeline = hideTimelineText != null && hideTimelineText.equalsIgnoreCase("true");
+                    if(!hideTimeline) {
+                        Timelapse timelapse = new Timelapse(context, color,false , amount);
+                        addView(timelapse);
+                    }
+                }
+            });
+        }else{
+            PaymentWidget paymentWidget = new PaymentWidget(context, attributes, false);
+            addView(paymentWidget);
+            Boolean hideTimeline = hideTimelineText != null && hideTimelineText.equalsIgnoreCase("true");
+            if(!hideTimeline) {
+                Timelapse timelapse = new Timelapse(context, color,false , amount);
+                addView(timelapse);
+            }
         }
     }
 }

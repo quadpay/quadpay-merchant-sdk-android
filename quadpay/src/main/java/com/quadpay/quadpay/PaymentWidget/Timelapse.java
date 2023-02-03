@@ -24,13 +24,13 @@ public class Timelapse extends View {
     int extraWidth = 0;
     int sideWidth = 35;
 
-    public Timelapse(Context context, String color, String merchantId, String amount){
+    public Timelapse(Context context, String color, Boolean applyGrayLabel, String amount){
         super(context);
         setMinimumHeight(200);
-        init(color, merchantId, amount);
+        init(color, applyGrayLabel, amount);
     }
 
-    public void init(String color, String merchantId, String amount ){
+    public void init(String color, Boolean applyGrayLabel, String amount ){
         paint = new Paint();
         amountPaint = new Paint();
         timelineText = new Paint();
@@ -45,7 +45,7 @@ public class Timelapse extends View {
             decimalFormat.setMinimumFractionDigits(2);
             orderAmount = decimalFormat.format((Float.parseFloat(amount) / 4));
         }
-        if(merchantId == null){
+        if(!applyGrayLabel){
             skew = true;
             extraWidth =15;
         }else{
