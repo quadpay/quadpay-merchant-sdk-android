@@ -94,6 +94,7 @@ public class RNQuadPayPaymentWidget extends LinearLayout {
                 }, sb.length() - 3, sb.length(), Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
             }
         }
+
         if(!hideSubtitle){
             sb.append("\n");
             sb.append("You will be redirected to Zip to complete your order.");
@@ -106,7 +107,6 @@ public class RNQuadPayPaymentWidget extends LinearLayout {
 
         this.textView.setClickable(true);
         this.textView.setText(sb);
-
         this.textView.setMovementMethod(LinkMovementMethod.getInstance());
     }
 

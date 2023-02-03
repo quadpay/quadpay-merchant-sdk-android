@@ -50,7 +50,7 @@ public class Timelapse extends View {
             extraWidth =15;
         }else{
             skew = false;
-
+            extraWidth = 0;
         }
         if(color!=null)
         {
