@@ -1,18 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
 
     <ScrollView
+        android:id="@+id/scrollView2"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@+id/button">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical" >
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/text_home"
@@ -54,7 +57,7 @@
                 app:logoSize="150%"
                 app:merchantId="9f7c8dcc-a546-45e4-a789-b65055abe0db"
                 app:priceColor="#A06020"
-                app:size="150%" >
+                app:size="150%">
 
             </com.quadpay.quadpay.QuadPayWidget>
 
@@ -67,8 +70,8 @@
                 android:layout_marginBottom="32dp"
                 app:learnMoreUrl="www.google.com"
                 app:merchantId="9f7c8dcc-a546-45e4-a789-b65055abe0db"
-                app:timelineColor = "black"
-               />
+                app:timelineColor="black"
+                />
 
             <com.quadpay.quadpay.PaymentWidget.QuadPayPaymentWidget
                 android:id="@+id/payment_widget2"
@@ -77,8 +80,7 @@
                 android:layout_marginHorizontal="24dp"
                 android:layout_marginVertical="12dp"
                 android:layout_marginBottom="32dp"
-                app:learnMoreUrl="www.google.com"
-                />
+                app:learnMoreUrl="www.google.com" />
 
             <com.quadpay.quadpay.PaymentWidget.QuadPayPaymentWidget
                 android:id="@+id/payment_widget3"
@@ -87,20 +89,37 @@
                 android:layout_marginHorizontal="24dp"
                 android:layout_marginVertical="12dp"
                 android:layout_marginBottom="12dp"
-                app:hideSubtitle = "true"
-                app:amount="110">
+                app:amount="110"
+                app:hideSubtitle="true">
 
             </com.quadpay.quadpay.PaymentWidget.QuadPayPaymentWidget>
 
-            <Button
-                android:id="@+id/button"
+            <com.quadpay.quadpay.PaymentWidget.QuadPayPaymentWidget
+                android:id="@+id/payment_widget4"
                 android:layout_width="match_parent"
-                android:layout_height="75dp"
-                android:layout_marginBottom="90dp"
-                android:text="Start Checkout"
-                android:layout_marginHorizontal="24dp" />
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="24dp"
+                android:layout_marginVertical="12dp"
+                android:layout_marginBottom="32dp"
+                app:learnMoreUrl="www.google.com"
+                app:merchantId="9f7c8dcc-a546-45e4-a789-b65055abe0db"
+                app:timelineColor="black"
+                />
+
+
         </LinearLayout>
     </ScrollView>
 
+    <Button
+        android:id="@+id/button"
+        android:layout_width="match_parent"
+        android:layout_height="75dp"
+        android:layout_marginHorizontal="24dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="90dp"
+        android:text="Start Checkout"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

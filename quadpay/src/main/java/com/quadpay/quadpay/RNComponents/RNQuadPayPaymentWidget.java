@@ -52,7 +52,7 @@ public class RNQuadPayPaymentWidget extends LinearLayout {
         setOrientation(LinearLayout.VERTICAL);
 
         this.textView = new TextView(context);
-        this.timelapse = new Timelapse(context, this.timelineColor, false,this.amount);
+        this.timelapse = new Timelapse(context, this.timelineColor, false,this.amount, this.textView.getTextSize());
         setWidgetText();
         addView(this.textView);
         addView(this.timelapse);
@@ -106,9 +106,10 @@ public class RNQuadPayPaymentWidget extends LinearLayout {
 
         if(!hideTimeline) {
             this.timelapse.invalidate();
-            this.timelapse.init(timelineColor,applyGrayLabel,amount);
+            this.timelapse.init(timelineColor,applyGrayLabel,amount, this.textView.getTextSize());
             if(allowedToAddView){
                 addView(this.timelapse);
+                allowedToAddView = false;
             }
         }else{
             removeView(this.timelapse);

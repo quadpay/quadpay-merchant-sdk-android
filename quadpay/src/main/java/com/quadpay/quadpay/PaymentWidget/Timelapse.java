@@ -22,23 +22,24 @@ public class Timelapse extends View {
     String orderAmount;
     DecimalFormat decimalFormat = new DecimalFormat("#.##");
     int extraWidth = 0;
-    int sideWidth = 35;
+    int sideWidth = 30;
 
-    public Timelapse(Context context, String color, Boolean applyGrayLabel, String amount){
+
+    public Timelapse(Context context, String color, Boolean applyGrayLabel, String amount, Float textSize){
         super(context);
-        setMinimumHeight(200);
-        init(color, applyGrayLabel, amount);
+        setMinimumHeight(240);
+        init(color, applyGrayLabel, amount, textSize);
     }
 
-    public void init(String color, Boolean applyGrayLabel, String amount ){
+    public void init(String color, Boolean applyGrayLabel, String amount, Float textSize ){
         paint = new Paint();
         amountPaint = new Paint();
         timelineText = new Paint();
         amountPaint.setColor(Color.BLACK);
-        amountPaint.setTextSize(45);
+        amountPaint.setTextSize(textSize);
         amountPaint.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.BOLD));
         timelineText.setColor(Color.GRAY);
-        timelineText.setTextSize(45);
+        timelineText.setTextSize(textSize);
         if(amount == null){
             orderAmount = "0";
         }else{
@@ -69,10 +70,13 @@ public class Timelapse extends View {
     protected void onDraw(Canvas canvas) {
 
             super.onDraw(canvas);
+            //tablets 850
+            //phones 60
+
             int windowWidth = canvas.getWidth() -60;
             int windowHeight = canvas.getHeight();
-            int amountHeight = windowHeight / 3 + 40+ sideWidth;
-            int timelineTextHeight = windowHeight / 3 + 85+ sideWidth;
+            int amountHeight = windowHeight / 3 + 50+ sideWidth;
+            int timelineTextHeight = windowHeight / 3 + 115+ sideWidth;
             int skewAdjustment = 0;
             if (skew) {
                 skewAdjustment= 10;
@@ -88,7 +92,7 @@ public class Timelapse extends View {
             if (skew) {
                 canvas.skew(0.2F, 0F);
             }
-            paint.setStrokeWidth(4f);
+            paint.setStrokeWidth(6F);
             canvas.drawRect(0 - skewAdjustment, windowHeight / 3 -sideWidth/2 , sideWidth -skewAdjustment, windowHeight / 3 + sideWidth/2, paint);
             canvas.drawRect(windowWidth / 4- skewAdjustment, windowHeight / 3 -sideWidth/2, windowWidth / 4 + sideWidth -skewAdjustment, windowHeight / 3 + sideWidth/2, paint);
             canvas.drawRect(windowWidth / 4 * 2 - skewAdjustment, windowHeight / 3 -sideWidth/2, windowWidth / 4 * 2 + sideWidth -skewAdjustment, windowHeight / 3 + sideWidth/2, paint);
