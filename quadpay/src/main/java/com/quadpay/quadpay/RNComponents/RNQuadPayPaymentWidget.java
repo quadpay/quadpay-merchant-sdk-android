@@ -68,7 +68,6 @@ public class RNQuadPayPaymentWidget extends LinearLayout {
                 StyleSpan boldStyle = new StyleSpan(Typeface.BOLD);
                 ForegroundColorSpan colorSpan = new ForegroundColorSpan(Color.BLACK);
                 sb.setSpan(boldStyle, 0, sb.length(), Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
-                sb.append(" ");
                 sb.append("Zip pay", imageSpanInfo, Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
                 sb.setSpan(new QuadPayInfoSpan("file///android_asset/index.html",
                         merchantId,
@@ -100,7 +99,6 @@ public class RNQuadPayPaymentWidget extends LinearLayout {
             }
         }
         if(!hideSubtitle){
-
             sb.append("You will be redirected to Zip to complete your order.");
         }
 
