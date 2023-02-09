@@ -6,6 +6,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Typeface;
+import android.util.DisplayMetrics;
 import android.view.View;
 
 import com.quadpay.quadpay.R;
@@ -73,7 +74,12 @@ public class Timelapse extends View {
             //tablets 850
             //phones 60
 
-            int windowWidth = canvas.getWidth() -60;
+            float windowWidth = canvas.getWidth();
+
+            if(canvas.getWidth()> 1500){
+                windowWidth = windowWidth - windowWidth * 0.3F;
+            }
+
             int windowHeight = canvas.getHeight();
             int amountHeight = windowHeight / 3 + 50+ sideWidth;
             int timelineTextHeight = windowHeight / 3 + 115+ sideWidth;
@@ -97,8 +103,7 @@ public class Timelapse extends View {
             canvas.drawRect(windowWidth / 4- skewAdjustment, windowHeight / 3 -sideWidth/2, windowWidth / 4 + sideWidth -skewAdjustment, windowHeight / 3 + sideWidth/2, paint);
             canvas.drawRect(windowWidth / 4 * 2 - skewAdjustment, windowHeight / 3 -sideWidth/2, windowWidth / 4 * 2 + sideWidth -skewAdjustment, windowHeight / 3 + sideWidth/2, paint);
             canvas.drawRect(windowWidth / 4 * 3 - skewAdjustment, windowHeight / 3 -sideWidth/2, windowWidth / 4 * 3 + sideWidth -skewAdjustment, windowHeight / 3 + sideWidth/2, paint);
-
-            //canvas.drawLine(0, ((windowHeight / 2 + sideWidth) + (windowHeight / 2)) / 2, windowWidth / 4 * 3, ((windowHeight / 2 + sideWidth) + (windowHeight / 2)) / 2, paint);
+            
             canvas.drawLine(0, windowHeight / 3, windowWidth / 4 * 3, windowHeight / 3, paint);
 
         }

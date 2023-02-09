@@ -13,6 +13,7 @@ import android.text.TextPaint;
 import android.text.method.LinkMovementMethod;
 import android.text.style.ForegroundColorSpan;
 import android.text.style.StyleSpan;
+import android.util.DisplayMetrics;
 import android.util.TypedValue;
 import android.widget.TextView;
 
@@ -28,6 +29,8 @@ public class PaymentWidgetHeader extends TextView{
     private SpannableStringBuilder sb = new SpannableStringBuilder();
     public PaymentWidgetHeader(Context context, String merchantId, String learnMoreUrl, String isMFPPMerchant, String minModal, Boolean applyGrayLabel) {
         super(context);
+
+        setTextSize(TypedValue.COMPLEX_UNIT_DIP, 17);
         CreatePaymentWidgetHeader(context, merchantId, learnMoreUrl, isMFPPMerchant,minModal,applyGrayLabel);
     }
 

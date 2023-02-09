@@ -14,6 +14,9 @@ public class PaymentWidgetSubtitle extends TextView{
     private SpannableStringBuilder sb = new SpannableStringBuilder();
     public PaymentWidgetSubtitle(Context context) {
         super(context);
+        float b = getTextSize();
+        setTextSize(TypedValue.COMPLEX_UNIT_DIP, 17);
+        float c = getTextSize();
         CreatePaymentWidgetSubtitle();
     }
 
