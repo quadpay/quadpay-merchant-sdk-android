@@ -50,6 +50,7 @@ public class RNQuadPayWidget extends FrameLayout {
     private String learnMoreUrl = "";
     private String minModal = "";
     private Boolean applyGrayLabel = false;
+    private Boolean baseline = false;
 
     private SpannableStringBuilder sb = new SpannableStringBuilder();
     private SpannableString amountString = null;
@@ -64,8 +65,9 @@ public class RNQuadPayWidget extends FrameLayout {
 
     public RNQuadPayWidget(@NonNull Context context) {
         super(context);
-        this.setPadding(16,16,16,16);
-
+        this.setPadding(16,30,16,30);
+        this.textView.setTextColor(Color.BLACK);
+        this.textView.setLineSpacing(1f,1.2f);
         this.textView = new TextView(context);
         this.addView(this.textView);
     }
@@ -73,13 +75,13 @@ public class RNQuadPayWidget extends FrameLayout {
     private void setWidgetText(){
         Drawable drawableLogo = getLogo();
         SetDrawableBoundsLogo(drawableLogo);
-        imageSpanLogo = new VerticalImageSpan(drawableLogo);
+        imageSpanLogo = new VerticalImageSpan(drawableLogo,this.baseline);
 
         SetDrawableBoundsLogo(grayLabel);
-        imageSpanMerchant = new VerticalImageSpan(grayLabel);
+        imageSpanMerchant = new VerticalImageSpan(grayLabel,false);
 
         SetDrawableBounds(info);
-        imageSpanInfo = new VerticalImageSpan(info);
+        imageSpanInfo = new VerticalImageSpan(info,false);
         this.sb = new SpannableStringBuilder();
         if (amount== null || amount.equals("")){
             widgetText = new SpannableString("4 payments on order over");
@@ -208,17 +210,15 @@ public class RNQuadPayWidget extends FrameLayout {
 
     public void setAlignment(String alignment){
         switch(alignment.toLowerCase()){
-            case "left":
-                this.textView.setGravity(Gravity.LEFT);
-                break;
             case "right":
-                this.textView.setGravity(Gravity.RIGHT);
+                this.textView.setGravity(Gravity.RIGHT | Gravity.CENTER_VERTICAL);
                 break;
             case "center":
-                this.textView.setGravity(Gravity.CENTER);
+                this.textView.setGravity(Gravity.CENTER | Gravity.CENTER_VERTICAL);
                 break;
+            default:
+                this.textView.setGravity(Gravity.LEFT | Gravity.CENTER_VERTICAL);
         }
-        this.textView.setMovementMethod(LinkMovementMethod.getInstance());
     }
 
     public void setLogoOption(String logoOption){
@@ -228,7 +228,6 @@ public class RNQuadPayWidget extends FrameLayout {
             this.logoOption = "zip";
         }
         setWidgetText();
-        this.textView.setMovementMethod(LinkMovementMethod.getInstance());
     }
 
     public void SetDrawableBounds(Drawable drawable){
@@ -256,15 +255,19 @@ public class RNQuadPayWidget extends FrameLayout {
         switch(logoOption) {
             case "secondary":
                 logo = ContextCompat.getDrawable(getContext(), R.drawable.secondary_logo);
+                this.baseline = false;
                 break;
             case "secondary-light":
                 logo = ContextCompat.getDrawable(getContext(),R.drawable.secondary_light);
+                this.baseline = false;
                 break;
             case "black-white":
                 logo = ContextCompat.getDrawable(getContext(),R.drawable.black_white);
+                this.baseline = true;
                 break;
             default:
                 logo = ContextCompat.getDrawable(getContext(),R.drawable.zip_logo);
+                this.baseline = true;
                 break;
         }
         return logo;
@@ -286,25 +289,21 @@ public class RNQuadPayWidget extends FrameLayout {
         ForegroundColorSpan colorSpan = new ForegroundColorSpan(Color.parseColor(color));
         amountString.setSpan(colorSpan,0,amountString.length(), Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
         setWidgetText();
-        this.textView.setMovementMethod(LinkMovementMethod.getInstance());
     }
 
     public void setMin(String min){
         this.min = min;
         setAmount(this.amount);
-        this.textView.setMovementMethod(LinkMovementMethod.getInstance());
     }
 
     public void setMax(String max){
         this.max = max;
         setAmount(this.amount);
-        this.textView.setMovementMethod(LinkMovementMethod.getInstance());
     }
 
     public void setColorPrice(String colorPrice){
         this.color = colorPrice;
         setAmount(this.amount);
-        this.textView.setMovementMethod(LinkMovementMethod.getInstance());
     }
 
     public void setDisplayMode(String displayMode){
@@ -322,16 +321,15 @@ public class RNQuadPayWidget extends FrameLayout {
         }
 
         setWidgetText();
-        this.textView.setMovementMethod(LinkMovementMethod.getInstance());
     }
 
     public void setLogoSize(String logoSize){
         if(logoSize != null) {
             Float sizePercentage = Float.parseFloat(logoSize.replace("%", ""));
 
-            if (sizePercentage < 100.0) {
-                this.logoSize = 100f / 100;
-            } else if (sizePercentage > 150.0) {
+            if (sizePercentage <= 90.0) {
+                this.logoSize = 90f / 100;
+            } else if (sizePercentage >= 120.0) {
                 this.logoSize = 120f / 100;
             } else {
                 this.logoSize = sizePercentage / 100;

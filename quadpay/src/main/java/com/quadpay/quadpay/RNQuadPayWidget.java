@@ -66,13 +66,13 @@ public class RNQuadPayWidget extends FrameLayout {
     private void setWidgetText(){
         Drawable drawableLogo = getLogo();
         SetDrawableBoundsLogo(drawableLogo);
-        imageSpanLogo = new VerticalImageSpan(drawableLogo);
+        imageSpanLogo = new VerticalImageSpan(drawableLogo,false);
 
         SetDrawableBoundsLogo(grayLabel);
-        imageSpanMerchant = new VerticalImageSpan(grayLabel);
+        imageSpanMerchant = new VerticalImageSpan(grayLabel,false);
 
         SetDrawableBounds(info);
-        imageSpanInfo = new VerticalImageSpan(info);
+        imageSpanInfo = new VerticalImageSpan(info,false);
         this.sb = new SpannableStringBuilder();
         if (amount== null || amount.equals("")){
             widgetText = new SpannableString("4 payments on order over");

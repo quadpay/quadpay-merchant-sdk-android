@@ -61,7 +61,7 @@ public class RNQuadPayPaymentWidget extends LinearLayout {
     private void setWidgetText(){
         this.sb = new SpannableStringBuilder();
         SetDrawableBounds(info);
-        imageSpanInfo = new VerticalImageSpan(info);
+        imageSpanInfo = new VerticalImageSpan(info,false);
         if(!applyGrayLabel) {
             if(!hideHeader) {
                 sb.append("Split your order in 4 easy payments with Zip.");

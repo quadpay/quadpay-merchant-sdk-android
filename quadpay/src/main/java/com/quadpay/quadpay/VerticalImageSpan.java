@@ -6,9 +6,15 @@ import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.text.style.ImageSpan;
 
+import androidx.annotation.NonNull;
+
+import java.lang.ref.WeakReference;
+
 public class VerticalImageSpan extends ImageSpan {
-    public VerticalImageSpan(Drawable drawable) {
+    Boolean baselineImageSpan;
+    public VerticalImageSpan(Drawable drawable,Boolean baselineImageSpan) {
         super(drawable);
+        this.baselineImageSpan = baselineImageSpan;
     }
 
     @Override
@@ -37,11 +43,18 @@ public class VerticalImageSpan extends ImageSpan {
         Drawable drawable = getDrawable();
         canvas.save();
         Paint.FontMetricsInt fmPaint = paint.getFontMetricsInt();
-        int fontHeight = fmPaint.descent - fmPaint.ascent;
-        int centerY = y + fmPaint.descent - fontHeight / 2;
-        int transY = centerY - (drawable.getBounds().bottom - drawable.getBounds().top) / 2;
-        canvas.translate(x, transY);
-        drawable.draw(canvas);
-        canvas.restore();
+        if(!baselineImageSpan) {
+            int fontHeight = fmPaint.descent - fmPaint.ascent;
+            int centerY = y + fmPaint.descent - fontHeight / 2;
+            int transY = centerY - (drawable.getBounds().bottom - drawable.getBounds().top) / 2;
+            canvas.translate(x, transY);
+            drawable.draw(canvas);
+            canvas.restore();
+        }else {
+            int transY = y - drawable.getBounds().bottom ;
+            canvas.translate(x, transY);
+            drawable.draw(canvas);
+            canvas.restore();
+        }
     }
 }

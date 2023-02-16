@@ -3,18 +3,21 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="#FDFDFD">
 
 
     <ScrollView
         android:id="@+id/scrollView2"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@+id/button">
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/button"
+        app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:gravity="center"
             android:orientation="vertical">
 
             <TextView
@@ -32,34 +35,159 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="24dp"
-                android:layout_marginVertical="12dp"
-                android:layout_marginBottom="32dp"
+
                 app:alignment="right"
                 app:amount="100"
                 app:displayMode="logoFirst"
                 app:isMFPPMerchant="true"
                 app:learnMoreUrl="www.google.com"
                 app:logoOption="secondary"
-                app:logoSize="100%"
-                app:size="100%">
+
+                >
 
             </com.quadpay.quadpay.QuadPayWidget>
 
             <com.quadpay.quadpay.QuadPayWidget
-                android:id="@+id/quadpay_widget1"
+                android:id="@+id/quadpay_widget2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="24dp"
-                android:layout_marginVertical="12dp"
-                android:layout_marginBottom="32dp"
+                app:alignment="right"
+                app:amount="100"
+                app:isMFPPMerchant="true"
+                app:learnMoreUrl="www.google.com"
+                app:logoOption="secondary"
+                app:logoSize="150%"
+                app:size="0%"/>
+
+            <com.quadpay.quadpay.QuadPayWidget
+                android:id="@+id/quadpay_widget3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="24dp"
+                app:alignment="right"
+                app:amount="100"
+                app:isMFPPMerchant="true"
+                app:learnMoreUrl="www.google.com"
+                app:logoOption="secondary"
+                app:logoSize="120%"
+                app:size="150%"
+                app:merchantId="9f7c8dcc-a546-45e4-a789-b65055abe0db" />
+
+            <com.quadpay.quadpay.QuadPayWidget
+                android:id="@+id/quadpay_widget4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="24dp"
+                android:padding="2pt"
                 app:amount="99"
                 app:displayMode="logoFirst"
-                app:logoSize="150%"
-                app:merchantId="9f7c8dcc-a546-45e4-a789-b65055abe0db"
+                app:logoSize="120%"
                 app:priceColor="#A06020"
                 app:size="150%">
 
             </com.quadpay.quadpay.QuadPayWidget>
+
+            <com.quadpay.quadpay.QuadPayWidget
+                android:id="@+id/quadpay_widget5"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="24dp"
+                app:amount="99"
+                app:logoSize="150%"
+                app:priceColor="#A06020"
+                app:size="155%"></com.quadpay.quadpay.QuadPayWidget>
+
+            <com.quadpay.quadpay.QuadPayWidget
+                android:id="@+id/quadpay_widget6"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="24dp"
+                app:amount="99"
+                app:logoSize="150%"
+                app:logoOption="testing"
+                app:merchantId="9f7c8dcc-a546-45e4-a789-b65055abe0db"
+                app:priceColor="#A06020"
+                app:size="105%">
+            </com.quadpay.quadpay.QuadPayWidget>
+
+            <com.quadpay.quadpay.QuadPayWidget
+                android:id="@+id/quadpay_widget7"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="24dp"
+                app:alignment="center"
+                app:amount="99"
+                app:displayMode="logoFirst"
+                app:logoOption="secondary-light"
+                app:priceColor="#A06020"
+                app:size="105%">
+            </com.quadpay.quadpay.QuadPayWidget>
+
+            <com.quadpay.quadpay.QuadPayWidget
+                android:id="@+id/quadpay_widget8"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="24dp"
+                app:alignment="center"
+                app:amount="99"
+                app:logoOption="secondary-light"
+                app:logoSize="90%"
+                app:priceColor="#A06020"
+                app:size="150%"></com.quadpay.quadpay.QuadPayWidget>
+
+            <com.quadpay.quadpay.QuadPayWidget
+                android:id="@+id/quadpay_widget9"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="24dp"
+                app:alignment="center"
+                app:amount="99"
+                app:logoOption="secondary-light"
+                app:merchantId="9f7c8dcc-a546-45e4-a789-b65055abe0db"
+                app:priceColor="#A06020"
+                app:size="105%">
+
+            </com.quadpay.quadpay.QuadPayWidget>
+
+            <com.quadpay.quadpay.QuadPayWidget
+                android:id="@+id/quadpay_widget10"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="24dp"
+                app:amount="99"
+                app:displayMode="logoFirst"
+                app:logoOption="black-white"
+                app:logoSize="100%"
+                app:priceColor="#A06020"
+                app:size="90%">
+
+            </com.quadpay.quadpay.QuadPayWidget>
+
+            <com.quadpay.quadpay.QuadPayWidget
+                android:id="@+id/quadpay_widget11"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="24dp"
+                app:amount="99"
+                app:logoOption="black-white"
+                app:logoSize="100%"
+                app:priceColor="#A06020"
+                app:size="100%"></com.quadpay.quadpay.QuadPayWidget>
+
+            <com.quadpay.quadpay.QuadPayWidget
+                android:id="@+id/quadpay_widget12"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="24dp"
+                app:amount="99"
+                app:logoOption="black-white"
+                app:merchantId="9f7c8dcc-a546-45e4-a789-b65055abe0db"
+                app:priceColor="#A06020"
+                app:size="105%">
+
+            </com.quadpay.quadpay.QuadPayWidget>
+
 
             <com.quadpay.quadpay.PaymentWidget.QuadPayPaymentWidget
                 android:id="@+id/payment_widget"
@@ -70,8 +198,7 @@
                 android:layout_marginBottom="32dp"
                 app:learnMoreUrl="www.google.com"
                 app:merchantId="9f7c8dcc-a546-45e4-a789-b65055abe0db"
-                app:timelineColor="black"
-                />
+                app:timelineColor="black" />
 
             <com.quadpay.quadpay.PaymentWidget.QuadPayPaymentWidget
                 android:id="@+id/payment_widget2"
@@ -103,8 +230,7 @@
                 android:layout_marginBottom="32dp"
                 app:learnMoreUrl="www.google.com"
                 app:merchantId="9f7c8dcc-a546-45e4-a789-b65055abe0db"
-                app:timelineColor="black"
-                />
+                app:timelineColor="black" />
 
 
         </LinearLayout>

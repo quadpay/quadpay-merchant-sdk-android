@@ -38,7 +38,7 @@ public class PaymentWidgetHeader extends TextView{
 
         Drawable info = ContextCompat.getDrawable(context,R.drawable.info);
         SetDrawableBounds(info);
-        VerticalImageSpan imageSpanInfo = new VerticalImageSpan(info);
+        VerticalImageSpan imageSpanInfo = new VerticalImageSpan(info,false);
         if(applyGrayLabel){
             PaymentWithMerchant(imageSpanInfo,merchantId,learnMoreUrl,isMFPPMerchant, minModal);
         }else {
