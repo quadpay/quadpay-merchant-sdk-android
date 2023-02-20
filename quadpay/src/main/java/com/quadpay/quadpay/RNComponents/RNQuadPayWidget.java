@@ -65,10 +65,10 @@ public class RNQuadPayWidget extends FrameLayout {
 
     public RNQuadPayWidget(@NonNull Context context) {
         super(context);
-        this.setPadding(16,30,16,30);
+        this.textView = new TextView(context);
         this.textView.setTextColor(Color.BLACK);
         this.textView.setLineSpacing(1f,1.2f);
-        this.textView = new TextView(context);
+        this.textView.setPadding(0,30,0,30);
         this.addView(this.textView);
     }
 
