@@ -265,6 +265,7 @@ public class RNQuadPayWidget extends FrameLayout {
 
     public void setAmount(String amount){
         this.amount = amount;
+        decimalFormat.setMinimumFractionDigits(2);
         if(amount== null|| amount.equals("")){
             amountString = new SpannableString(currencySymbol + decimalFormat.format(Float.parseFloat(this.min)));
         }else if (Float.parseFloat(amount)< Float.parseFloat(this.min)){

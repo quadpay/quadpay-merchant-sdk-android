@@ -261,9 +261,10 @@ public class QuadPayWidgetTextView extends TextView {
         String min = attributes.getString(R.styleable.QuadPayWidget_min);
         String max = attributes.getString(R.styleable.QuadPayWidget_max);
         DecimalFormat decimalFormat = new DecimalFormat("#.##");
-
+        decimalFormat.setMinimumFractionDigits(2);
         String minOrder = "35";
         String maxOrder = "1500";
+
         if (min != null) {
             minOrder = min;
         }
@@ -274,15 +275,16 @@ public class QuadPayWidgetTextView extends TextView {
 
         if (amount == null || amount.equals("")) {
 
-            amountString = new SpannableString(" $" + minOrder);
+            amountString = new SpannableString(" $" + decimalFormat.format(Float.parseFloat(minOrder)));
 
         } else {
             if (Float.parseFloat(amount) < Float.parseFloat(minOrder))
             {
-                amountString = new SpannableString(" $" + minOrder);
+                amountString = new SpannableString(" $" + decimalFormat.format(Float.parseFloat(minOrder)));
             } else if (Float.parseFloat(amount) > Float.parseFloat(maxOrder)) {
-                amountString = new SpannableString(" $" + maxOrder);
+                amountString = new SpannableString(" $" + decimalFormat.format(Float.parseFloat(maxOrder)));
             } else {
+                decimalFormat.setMinimumFractionDigits(2);
                 amountString = new SpannableString(" $" +decimalFormat.format((Float.parseFloat(amount) / 4)));
             }
         }
