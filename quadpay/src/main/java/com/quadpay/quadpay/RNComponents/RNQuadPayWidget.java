@@ -84,11 +84,11 @@ public class RNQuadPayWidget extends FrameLayout {
         imageSpanInfo = new VerticalImageSpan(info,false);
         this.sb = new SpannableStringBuilder();
         if (amount== null || amount.equals("")){
-            widgetText = new SpannableString("4 payments on order over");
+            widgetText = new SpannableString("4 payments on orders over");
         }else if(Float.parseFloat(amount)< Float.parseFloat(min)){
-            widgetText = new SpannableString("4 payments on order over");
+            widgetText = new SpannableString("4 payments on orders over");
         }else if(Float.parseFloat(amount)> Float.parseFloat(max)){
-            widgetText = new SpannableString("4 payments on order up to");
+            widgetText = new SpannableString("4 payments on orders up to");
         }else{
             widgetText = new SpannableString("4 payments of");
         }
@@ -193,19 +193,22 @@ public class RNQuadPayWidget extends FrameLayout {
     }
 
     public void setSize(String size){
-        Float sizePercentage = Float.parseFloat(size.replace("%",""));
+        Float sizePercentage;
+        if(size == null || size.equals("")){
+            sizePercentage = 100f / 100;
+        }else {
+            sizePercentage = Float.parseFloat(size.replace("%", ""));
 
-        if(sizePercentage<100.0) {
-            sizePercentage = 100f/100;
-        }else if(sizePercentage>150.0)
-        {
-            sizePercentage =150f/100;
-        }else{
-            sizePercentage = sizePercentage/100;
+            if (sizePercentage < 100.0) {
+                sizePercentage = 100f / 100;
+            } else if (sizePercentage > 130.0) {
+                sizePercentage = 130f / 100;
+            } else {
+                sizePercentage = sizePercentage / 100;
+            }
         }
-
         this.textView.setTextSize(TypedValue.COMPLEX_UNIT_PX, 59.0f * (size.equals("") ? 100 / 100 : sizePercentage));
-        this.textView.setMovementMethod(LinkMovementMethod.getInstance());
+
     }
 
     public void setAlignment(String alignment){
@@ -222,10 +225,10 @@ public class RNQuadPayWidget extends FrameLayout {
     }
 
     public void setLogoOption(String logoOption){
-        if(logoOption !=null) {
-            this.logoOption = logoOption;
-        }else{
+        if(logoOption ==null || logoOption.equals("")) {
             this.logoOption = "zip";
+        }else{
+            this.logoOption = logoOption;
         }
         setWidgetText();
     }
@@ -275,6 +278,7 @@ public class RNQuadPayWidget extends FrameLayout {
 
     public void setAmount(String amount){
         this.amount = amount;
+        decimalFormat.setMinimumFractionDigits(2);
         if(amount== null|| amount.equals("")){
             amountString = new SpannableString(currencySymbol + decimalFormat.format(Float.parseFloat(this.min)));
         }else if (Float.parseFloat(amount)< Float.parseFloat(this.min)){
@@ -286,23 +290,41 @@ public class RNQuadPayWidget extends FrameLayout {
         }
 
         amountString.setSpan(boldStyle,0,amountString.length(), Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
-        ForegroundColorSpan colorSpan = new ForegroundColorSpan(Color.parseColor(color));
-        amountString.setSpan(colorSpan,0,amountString.length(), Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
+        try{
+            ForegroundColorSpan colorSpan = new ForegroundColorSpan(Color.parseColor(color));
+            amountString.setSpan(colorSpan,0,amountString.length(), Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
+        }catch(Exception e){
+            ForegroundColorSpan colorSpan = new ForegroundColorSpan(Color.parseColor("#000000"));
+            amountString.setSpan(colorSpan,0,amountString.length(), Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
+        }
+
         setWidgetText();
     }
 
     public void setMin(String min){
-        this.min = min;
+        if(min==null || min.equals("")){
+            this.min = "35";
+        }else {
+            this.min = min;
+        }
         setAmount(this.amount);
     }
 
     public void setMax(String max){
-        this.max = max;
+        if(max == null ||max.equals("")){
+            this.max = "1500";
+        }else {
+            this.max = max;
+        }
         setAmount(this.amount);
     }
 
     public void setColorPrice(String colorPrice){
-        this.color = colorPrice;
+        if(colorPrice == null || colorPrice.equals("")){
+            this.color = "#000000";
+        }else {
+            this.color = colorPrice;
+        }
         setAmount(this.amount);
     }
 
@@ -324,18 +346,23 @@ public class RNQuadPayWidget extends FrameLayout {
     }
 
     public void setLogoSize(String logoSize){
-        if(logoSize != null) {
-            Float sizePercentage = Float.parseFloat(logoSize.replace("%", ""));
-
-            if (sizePercentage <= 90.0) {
-                this.logoSize = 90f / 100;
-            } else if (sizePercentage >= 120.0) {
-                this.logoSize = 120f / 100;
-            } else {
-                this.logoSize = sizePercentage / 100;
-            }
-        }else{
+        if(logoSize == null || logoSize.equals("")) {
             this.logoSize = 100f/100;
+
+        }else{
+            try {
+                Float sizePercentage = Float.parseFloat(logoSize.replace("%", ""));
+
+                if (sizePercentage <= 90.0) {
+                    this.logoSize = 90f / 100;
+                } else if (sizePercentage >= 120.0) {
+                    this.logoSize = 120f / 100;
+                } else {
+                    this.logoSize = sizePercentage / 100;
+                }
+            }catch(Exception e){
+                this.logoSize = 100f/100;
+            }
         }
         setWidgetText();
     }
