@@ -1,0 +1,22 @@
+<resources>
+    <declare-styleable name="QuadPayWidget">
+        <attr name="merchantId" format="string"></attr>
+        <attr name="learnMoreUrl" format="string"></attr>
+        <attr name="amount" format="string"></attr>
+        <attr name="logoOption" format="string"></attr>
+        <attr name="displayMode" format="string"></attr>
+        <attr name="min" format="string"></attr>
+        <attr name="max" format="string"></attr>
+        <attr name="logoSize" format="string"></attr>
+        <attr name="size" format="string"></attr>
+        <attr name="subTextLayout" format="string"></attr>
+        <attr name="alignment" format="string"></attr>
+        <attr name="isMFPPMerchant" format="string"></attr>
+        <attr name="minModal" format="string"></attr>
+        <attr name="priceColor" format="string"></attr>
+        <attr name="hideHeader" format="string"></attr>
+        <attr name="hideSubtitle" format="string"></attr>
+        <attr name="hideTimeline" format="string"></attr>
+        <attr name="timelineColor" format="string"></attr>
+    </declare-styleable>
+</resources>
