@@ -1,9 +1,11 @@
 package com.quadpay.quadpay;
 
 import android.annotation.SuppressLint;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Message;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.webkit.WebChromeClient;
@@ -27,19 +29,20 @@ class QuadPayWebView extends WebView {
         clearCache(true);
         getSettings().setJavaScriptEnabled(true);
         getSettings().setDomStorageEnabled(true);
+        getSettings().setJavaScriptCanOpenWindowsAutomatically(true);
         getSettings().setSupportMultipleWindows(true);
         getSettings().setCacheMode(WebSettings.LOAD_NO_CACHE);
         setVerticalScrollBarEnabled(false);
         setWebChromeClient(new WebChromeClient() {
+
             @Override
-            public boolean onCreateWindow(WebView view, boolean dialog, boolean userGesture, android.os.Message resultMsg)
-            {
-                WebView.HitTestResult result = view.getHitTestResult();
-                String data = result.getExtra();
-                Context context = view.getContext();
-                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(data));
-                context.startActivity(browserIntent); // opens in external browser
-                return false;
+            public boolean onCreateWindow(WebView view, boolean isDialog, boolean isUserGesture, Message resultMsg) {
+                WebView newWebView = new WebView(context);
+                WebSettings webSettings = newWebView.getSettings();
+                webSettings.setJavaScriptEnabled(true);
+                ((WebView.WebViewTransport)resultMsg.obj).setWebView(newWebView);
+                resultMsg.sendToTarget();
+                return true;
             }
         });
     }
