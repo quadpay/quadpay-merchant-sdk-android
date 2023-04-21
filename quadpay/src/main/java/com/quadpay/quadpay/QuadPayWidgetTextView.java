@@ -412,7 +412,7 @@ public class QuadPayWidgetTextView extends TextView {
 
         if (merchantId != null) {
             Retrofit retrofit = new Retrofit.Builder()
-                    .baseUrl("https://gateway.dev.us.zip.co/")
+                    .baseUrl(BuildConfig.GatewayUrl)
                     .addConverterFactory(GsonConverterFactory.create())
                     .build();
 

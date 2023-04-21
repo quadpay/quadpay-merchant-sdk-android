@@ -9,6 +9,7 @@ import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
 
+import com.quadpay.quadpay.BuildConfig;
 import com.quadpay.quadpay.MerchantConfigResult;
 import com.quadpay.quadpay.R;
 import com.quadpay.quadpay.RetrofitClient;
@@ -65,86 +66,13 @@ public class QuadPayPaymentWidget extends LinearLayout {
     private void PaymentWidget(Context context, String merchantId,String learnMoreUrl,String isMFPPMerchant,String minModal,String color,String amount, Boolean hideHeader,Boolean hideSubtitle,Boolean hideTimeline ) {
         if(merchantId!= null){
             Retrofit retrofit = new Retrofit.Builder()
-                    .baseUrl("https://gateway.dev.us.zip.co/")
+                    .baseUrl(BuildConfig.GatewayUrl)
                     .addConverterFactory(GsonConverterFactory.create())
                     .build();
 
             widgetDataApi = retrofit.create(WidgetDataApi.class);
             getWidgetData(merchantId, context);
 
-//            Call<MerchantConfigResult> call = RetrofitClient.getInstance().getMerchantConfigApi().getMerchantAssets(merchantId);
-//            call.enqueue(new Callback<MerchantConfigResult>() {
-//                @Override
-//                public void onResponse(Call<MerchantConfigResult> call, Response<MerchantConfigResult> response) {
-//                    if(response.isSuccessful()){
-//                        PaymentWidgetHeader paymentWidgetHeader = new PaymentWidgetHeader(context,merchantId,learnMoreUrl,isMFPPMerchant,minModal,true);
-//                        PaymentWidgetSubtitle paymentWidgetSubtitle = new PaymentWidgetSubtitle(context);
-//                        Timelapse timelapse = new Timelapse(context, color,true , amount, paymentWidgetHeader.getTextSize());
-//
-//                        addView(paymentWidgetHeader);
-//                        addView(paymentWidgetSubtitle);
-//                        addView(timelapse);
-//                        if(hideHeader){
-//                            paymentWidgetHeader.setVisibility(View.GONE);
-//                        }else{
-//                            paymentWidgetHeader.setVisibility(View.VISIBLE);
-//                        }
-//                        if(hideSubtitle){
-//                            paymentWidgetSubtitle.setVisibility(View.GONE);
-//                        }else{
-//                            paymentWidgetSubtitle.setVisibility(View.VISIBLE);
-//                        }
-//
-//                        if(hideTimeline) {
-//                            timelapse.setVisibility(View.GONE);
-//                        }
-//
-//                    }else{
-//                        PaymentWidgetHeader paymentWidgetHeader = new PaymentWidgetHeader(context, merchantId,learnMoreUrl,isMFPPMerchant,minModal, false);
-//                        PaymentWidgetSubtitle paymentWidgetSubtitle = new PaymentWidgetSubtitle(context);
-//                        Timelapse timelapse = new Timelapse(context, color,false , amount,paymentWidgetHeader.getTextSize());
-//
-//                        addView(paymentWidgetHeader);
-//                        addView(paymentWidgetSubtitle);
-//                        addView(timelapse);
-//
-//                        if(hideHeader){
-//                            paymentWidgetHeader.setVisibility(View.GONE);
-//                        }
-//
-//                        if(hideSubtitle){
-//                            paymentWidgetSubtitle.setVisibility(View.GONE);
-//                        }
-//
-//                        if(hideTimeline) {
-//                            timelapse.setVisibility(View.GONE);
-//                        }
-//                    }
-//                }
-//
-//                @Override
-//                public void onFailure(Call<MerchantConfigResult> call, Throwable t) {
-//                    PaymentWidgetHeader paymentWidgetHeader = new PaymentWidgetHeader(context, merchantId,learnMoreUrl,isMFPPMerchant,minModal, false);
-//                    PaymentWidgetSubtitle paymentWidgetSubtitle = new PaymentWidgetSubtitle(context);
-//                    Timelapse timelapse = new Timelapse(context, color,false , amount,paymentWidgetHeader.getTextSize());
-//
-//                    addView(paymentWidgetHeader);
-//                    addView(paymentWidgetSubtitle);
-//                    addView(timelapse);
-//
-//                    if(hideHeader){
-//                        paymentWidgetHeader.setVisibility(View.GONE);
-//                    }
-//
-//                    if(hideSubtitle){
-//                        paymentWidgetSubtitle.setVisibility(View.GONE);
-//                    }
-//
-//                    if(hideTimeline) {
-//                        timelapse.setVisibility(View.GONE);
-//                    }
-//                }
-//            });
         }else{
             PaymentWidgetHeader paymentWidgetHeader = new PaymentWidgetHeader(context, null,learnMoreUrl,isMFPPMerchant,minModal, false);
             PaymentWidgetSubtitle paymentWidgetSubtitle = new PaymentWidgetSubtitle(context);
