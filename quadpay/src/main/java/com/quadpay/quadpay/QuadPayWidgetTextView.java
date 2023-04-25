@@ -20,6 +20,12 @@ import android.view.Gravity;
 import android.widget.TextView;
 import androidx.core.content.ContextCompat;
 
+import com.quadpay.quadpay.Network.MerchantConfigResult;
+import com.quadpay.quadpay.Network.MerchantConfigClient;
+import com.quadpay.quadpay.Network.WidgetData;
+import com.quadpay.quadpay.Network.GatewayApi;
+import com.quadpay.quadpay.Network.GatewayClient;
+
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -28,8 +34,7 @@ import java.util.Map;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
+
 
 
 @SuppressLint("AppCompatCustomView")
@@ -61,7 +66,7 @@ public class QuadPayWidgetTextView extends TextView {
 
 
     private String widgetText = null;
-    private WidgetDataApi widgetDataApi;
+    private GatewayApi widgetDataApi;
     private ArrayList<WidgetData.FeeTier> feeTiers = null;
 
     public QuadPayWidgetTextView(Context context, TypedArray attributes) {
@@ -411,15 +416,7 @@ public class QuadPayWidgetTextView extends TextView {
 
 
         if (merchantId != null) {
-            Retrofit retrofit = new Retrofit.Builder()
-                    .baseUrl(BuildConfig.GatewayUrl)
-                    .addConverterFactory(GsonConverterFactory.create())
-                    .build();
-
-            widgetDataApi = retrofit.create(WidgetDataApi.class);
             getWidgetData(imageSpanLogo,context,imageSpanInfo);
-
-
         }
         else{
             SetAmount();
@@ -440,7 +437,7 @@ public class QuadPayWidgetTextView extends TextView {
     }
 
     private void getMerchantConfig(VerticalImageSpan imageSpanLogo, Context context, VerticalImageSpan imageSpanInfo) {
-        Call<MerchantConfigResult> call = RetrofitClient.getInstance().getMerchantConfigApi().getMerchantAssets(merchantId);
+        Call<MerchantConfigResult> call = MerchantConfigClient.getInstance().getMerchantConfigApi().getMerchantAssets(merchantId);
         VerticalImageSpan finalImageSpanLogo = imageSpanLogo;
         call.enqueue(new Callback<MerchantConfigResult>() {
             @Override
@@ -494,13 +491,12 @@ public class QuadPayWidgetTextView extends TextView {
         parameters.put("environmentName","");
         parameters.put("userId","");
 
-        Call<WidgetData> call = widgetDataApi.getWidgetData(parameters);
 
+        Call<WidgetData> call = GatewayClient.getInstance().getWidgetDataApi().getWidgetData(parameters);
         call.enqueue(new Callback<WidgetData>(){
             @Override
             public void onResponse(Call<WidgetData> call , Response<WidgetData> response){
                 if(!response.isSuccessful()){
-                    //do something#
                     SetAmount();
                     setAmountStyle();
                     getMerchantConfig(imageSpanLogo,context,imageSpanInfo);

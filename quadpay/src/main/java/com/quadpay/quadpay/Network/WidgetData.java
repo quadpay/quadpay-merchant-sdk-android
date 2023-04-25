@@ -1,4 +1,4 @@
-package com.quadpay.quadpay;
+package com.quadpay.quadpay.Network;
 
 import java.util.ArrayList;
 import java.util.List;
