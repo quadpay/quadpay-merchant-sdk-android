@@ -64,7 +64,7 @@ public class QuadPayPaymentWidget extends LinearLayout {
             getWidgetData(merchantId, context);
 
         }else{
-            setLayout(context, false);
+            setLayout(context, false, null);
         }
     }
 
@@ -74,16 +74,16 @@ public class QuadPayPaymentWidget extends LinearLayout {
             @Override
             public void onResponse(Call<MerchantConfigResult> call, Response<MerchantConfigResult> response) {
                 if(response.isSuccessful()){
-                    setLayout(context, true);
+                    setLayout(context, true, merchantId);
 
                 }else{
-                    setLayout(context, false);
+                    setLayout(context, false, null);
                 }
             }
 
             @Override
             public void onFailure(Call<MerchantConfigResult> call, Throwable t) {
-                setLayout(context, false);
+                setLayout(context, false,null);
             }
         });
     }
@@ -133,8 +133,8 @@ public class QuadPayPaymentWidget extends LinearLayout {
         });
     }
 
-    private void setLayout(Context context, Boolean applyGrayLabel){
-        PaymentWidgetHeader paymentWidgetHeader = new PaymentWidgetHeader(context, null,learnMoreUrl,isMFPPMerchant,minModal, applyGrayLabel);
+    private void setLayout(Context context, Boolean applyGrayLabel, String merchantId){
+        PaymentWidgetHeader paymentWidgetHeader = new PaymentWidgetHeader(context, merchantId,learnMoreUrl,isMFPPMerchant,minModal, applyGrayLabel);
         PaymentWidgetSubtitle paymentWidgetSubtitle = new PaymentWidgetSubtitle(context);
         Timelapse timelapse = new Timelapse(context, color,applyGrayLabel , amount,paymentWidgetHeader.getTextSize());
 
