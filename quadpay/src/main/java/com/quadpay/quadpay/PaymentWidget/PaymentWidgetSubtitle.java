@@ -12,6 +12,7 @@ import android.widget.TextView;
 public class PaymentWidgetSubtitle extends TextView{
 
     private SpannableStringBuilder sb = new SpannableStringBuilder();
+
     public PaymentWidgetSubtitle(Context context) {
         super(context);
         float b = getTextSize();
