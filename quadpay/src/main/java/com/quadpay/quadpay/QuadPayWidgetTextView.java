@@ -45,14 +45,14 @@ public class QuadPayWidgetTextView extends TextView {
     private String amount = null;
     private String min = null;
     private String max = null;
-    private String widget_text = null;
-    private String widget_text_min = null;
-    private String widget_text_max = null;
+    private String widgetVerbiage = null;
+    private String widgetTextMin = null;
+    private String widgetTextMax = null;
     private String subtextLayout = null;
     private Boolean subTextLayout = false;
     private String logoOption = null;
     private String displayMode = null;
-    private String widget_subtext = null;
+    private String widgetSubtext = null;
     private String logoSize = null;
     private Drawable info = null;
     private String size =null;
@@ -66,7 +66,6 @@ public class QuadPayWidgetTextView extends TextView {
 
 
     private String widgetText = null;
-    private GatewayApi widgetDataApi;
     private ArrayList<WidgetData.FeeTier> feeTiers = null;
 
     public QuadPayWidgetTextView(Context context, TypedArray attributes) {
@@ -74,14 +73,14 @@ public class QuadPayWidgetTextView extends TextView {
         amount = attributes.getString(R.styleable.QuadPayWidget_amount);
         min = attributes.getString(R.styleable.QuadPayWidget_min);
         max = attributes.getString(R.styleable.QuadPayWidget_max);
-        widget_text = context.getString(R.string.widget_text);
-        widget_text_min = context.getString(R.string.widget_text_min);
-        widget_text_max = context.getString(R.string.widget_text_max);
+        widgetVerbiage = context.getString(R.string.widget_text);
+        widgetTextMin = context.getString(R.string.widget_text_min);
+        widgetTextMax = context.getString(R.string.widget_text_max);
         subtextLayout = attributes.getString(R.styleable.QuadPayWidget_subTextLayout);
         subTextLayout = subtextLayout!=null && subtextLayout.equals("true")?true :false;
         logoOption = attributes.getString(R.styleable.QuadPayWidget_logoOption);
         displayMode = attributes.getString(R.styleable.QuadPayWidget_displayMode);
-        widget_subtext = context.getString(R.string.widget_subtext);
+        widgetSubtext = context.getString(R.string.widget_subtext);
         logoSize = attributes.getString(R.styleable.QuadPayWidget_logoSize);
         info = ContextCompat.getDrawable(context,R.drawable.info);
         size = attributes.getString(R.styleable.QuadPayWidget_size);
@@ -279,36 +278,36 @@ public class QuadPayWidgetTextView extends TextView {
         setMovementMethod(LinkMovementMethod.getInstance());
     }
 
-    public void WidgetWithMerchant(SpannableStringBuilder sb, VerticalImageSpan imageSpanLogo, SpannableString amountString, VerticalImageSpan imageSpanInfo, String size, String widget_subtext, VerticalImageSpan imageSpanMerchantLogo, String isMFPPMerchant, String learnMoreUrl, String minModal, String merchantId, String alignment) {
-        SpannableString ss = new SpannableString(widget_subtext);
-        sb.append(ss);
-        sb.append(amountString);
-        sb.append("\n");
-        sb.append("with ");
-        sb.append("Info", imageSpanMerchantLogo, Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
-        ss = new SpannableString(" powered by ");
-        RelativeSizeSpan sizeSpan = new RelativeSizeSpan(0.8F);
-        ss.setSpan(sizeSpan, 0, ss.length(), SpannableString.SPAN_INCLUSIVE_INCLUSIVE);
-
-        sb.append(ss);
-        sb.append("Zip pay", imageSpanLogo, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-        sb.append(" ");
-        sb.append("Info", imageSpanInfo, Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
-        sb.setSpan(new QuadPayInfoSpan("file:///android_asset/index.html",
-                merchantId,
-                learnMoreUrl,
-                isMFPPMerchant,
-                minModal) {
-
-        }, sb.length() - 3, sb.length(), Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
-
-        setWidgetAlignment(alignment);
-        setTextViewSize(size);
-        setText(sb);
-        setClickable(true);
-        setMovementMethod(LinkMovementMethod.getInstance());
-
-    }
+//    public void WidgetWithMerchant(SpannableStringBuilder sb, VerticalImageSpan imageSpanLogo, SpannableString amountString, VerticalImageSpan imageSpanInfo, String size, String widget_subtext, VerticalImageSpan imageSpanMerchantLogo, String isMFPPMerchant, String learnMoreUrl, String minModal, String merchantId, String alignment) {
+//        SpannableString ss = new SpannableString(widget_subtext);
+//        sb.append(ss);
+//        sb.append(amountString);
+//        sb.append("\n");
+//        sb.append("with ");
+//        sb.append("Info", imageSpanMerchantLogo, Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
+//        ss = new SpannableString(" powered by ");
+//        RelativeSizeSpan sizeSpan = new RelativeSizeSpan(0.8F);
+//        ss.setSpan(sizeSpan, 0, ss.length(), SpannableString.SPAN_INCLUSIVE_INCLUSIVE);
+//
+//        sb.append(ss);
+//        sb.append("Zip pay", imageSpanLogo, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+//        sb.append(" ");
+//        sb.append("Info", imageSpanInfo, Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
+//        sb.setSpan(new QuadPayInfoSpan("file:///android_asset/index.html",
+//                merchantId,
+//                learnMoreUrl,
+//                isMFPPMerchant,
+//                minModal) {
+//
+//        }, sb.length() - 3, sb.length(), Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
+//
+//        setWidgetAlignment(alignment);
+//        setTextViewSize(size);
+//        setText(sb);
+//        setClickable(true);
+//        setMovementMethod(LinkMovementMethod.getInstance());
+//
+//    }
 
     public void SetAmount() {
         DecimalFormat decimalFormat = new DecimalFormat("#.##");
@@ -319,7 +318,7 @@ public class QuadPayWidgetTextView extends TextView {
         Float maxTier = 0f;
         Float maxFee = 0f;
 
-        if(feeTiers!=null) {
+        if(feeTiers!=null && amount != null) {
             for(WidgetData.FeeTier feeTier : feeTiers){
                 float tierAmount = feeTier.getFeeStartsAt();
                 if(tierAmount <= Float.parseFloat(amount)){
@@ -371,22 +370,21 @@ public class QuadPayWidgetTextView extends TextView {
         }
 
         if (amount == null || amount.equals("")) {
-            widgetText = widget_text_min;
+            widgetText = widgetTextMin;
 
         } else {
             if (Float.parseFloat(amount) < Float.parseFloat(minOrder))
             {
-                widgetText = widget_text_min;
+                widgetText = widgetTextMin;
             } else if (Float.parseFloat(amount) > Float.parseFloat(maxOrder)) {
-                widgetText = widget_text_max;
+                widgetText = widgetTextMax;
             } else {
-                widgetText = widget_text;
+                widgetText = widgetVerbiage;
             }
         }
     }
 
     public void SetWidgetLayout(Context context) {
-
         SetDrawableBounds(info);
         VerticalImageSpan imageSpanInfo = new VerticalImageSpan(info,false);
         VerticalImageSpan imageSpanLogo = null;
@@ -416,75 +414,79 @@ public class QuadPayWidgetTextView extends TextView {
 
 
         if (merchantId != null) {
-            getWidgetData(imageSpanLogo,context,imageSpanInfo);
+            getWidgetData(imageSpanLogo,imageSpanInfo);
         }
         else{
-            SetAmount();
-            setAmountStyle();
-            if (displayMode != null && !subTextLayout) {
-                switch (displayMode) {
-                    case "logoFirst":
-                        WidgetLogoFirst(sb,imageSpanLogo,amountString,imageSpanInfo,widgetText,size,isMFPPMerchant,learnMoreUrl,minModal, merchantId,alignment);
-                        break;
-                    default:
-                        WidgetDefault(sb,imageSpanLogo,amountString,imageSpanInfo,widgetText,size,false,widget_subtext,isMFPPMerchant,learnMoreUrl,minModal, merchantId,alignment);
-                        break;
-                }
-            } else {
-                WidgetDefault(sb,imageSpanLogo,amountString,imageSpanInfo,widgetText,size,subTextLayout,widget_subtext,isMFPPMerchant,learnMoreUrl,minModal, merchantId,alignment);
-            }
+            testSomething(imageSpanLogo,imageSpanInfo);
         }
     }
 
-    private void getMerchantConfig(VerticalImageSpan imageSpanLogo, Context context, VerticalImageSpan imageSpanInfo) {
-        Call<MerchantConfigResult> call = MerchantConfigClient.getInstance().getMerchantConfigApi().getMerchantAssets(merchantId);
-        VerticalImageSpan finalImageSpanLogo = imageSpanLogo;
-        call.enqueue(new Callback<MerchantConfigResult>() {
-            @Override
-            public void onResponse(Call<MerchantConfigResult> call, Response<MerchantConfigResult> response) {
-                //Need to make a call to get the svg from the result below.
-
-                if(response.isSuccessful()){
-                    Drawable merchantLogo = ContextCompat.getDrawable(context,R.drawable.welcome_pay);
-                    SetDrawableBounds(merchantLogo);
-                    VerticalImageSpan imageSpanMerchantLogo = new VerticalImageSpan(merchantLogo, false);
-
-                    WidgetWithMerchant(sb, finalImageSpanLogo,amountString,imageSpanInfo,size,widget_subtext,imageSpanMerchantLogo,isMFPPMerchant,learnMoreUrl,minModal, merchantId, alignment);
-                }else{
-                    if (displayMode != null && !subTextLayout) {
-                        switch (displayMode) {
-                            case "logoFirst":
-                                WidgetLogoFirst(sb, finalImageSpanLogo,amountString,imageSpanInfo,widgetText,size,isMFPPMerchant,learnMoreUrl,minModal, merchantId,alignment);
-                                break;
-                            default:
-                                WidgetDefault(sb, finalImageSpanLogo,amountString,imageSpanInfo,widgetText,size,false,widget_subtext,isMFPPMerchant,learnMoreUrl,minModal, merchantId,alignment);
-                                break;
-                        }
-                    } else {
-                        WidgetDefault(sb, finalImageSpanLogo,amountString,imageSpanInfo,widgetText,size,subTextLayout,widget_subtext,isMFPPMerchant,learnMoreUrl,minModal, merchantId,alignment);
-                    }
-                }
+    private void testSomething(VerticalImageSpan imageSpanLogo, VerticalImageSpan imageSpanInfo) {
+        SetAmount();
+        setAmountStyle();
+        if (displayMode != null && !subTextLayout) {
+            switch (displayMode) {
+                case "logoFirst":
+                    WidgetLogoFirst(sb,imageSpanLogo,amountString,imageSpanInfo,widgetText,size,isMFPPMerchant,learnMoreUrl,minModal, merchantId,alignment);
+                    break;
+                default:
+                    WidgetDefault(sb,imageSpanLogo,amountString,imageSpanInfo,widgetText,size,false,widgetSubtext,isMFPPMerchant,learnMoreUrl,minModal, merchantId,alignment);
+                    break;
             }
-
-            @Override
-            public void onFailure(Call<MerchantConfigResult> call, Throwable t) {
-                if (displayMode != null && !subTextLayout) {
-                    switch (displayMode) {
-                        case "logoFirst":
-                            WidgetLogoFirst(sb, finalImageSpanLogo,amountString,imageSpanInfo,widgetText,size,isMFPPMerchant,learnMoreUrl,minModal, merchantId,alignment);
-                            break;
-                        default:
-                            WidgetDefault(sb, finalImageSpanLogo,amountString,imageSpanInfo,widgetText,size,false,widget_subtext,isMFPPMerchant,learnMoreUrl,minModal, merchantId,alignment);
-                            break;
-                    }
-                } else {
-                    WidgetDefault(sb, finalImageSpanLogo,amountString,imageSpanInfo,widgetText,size,subTextLayout,widget_subtext,isMFPPMerchant,learnMoreUrl,minModal, merchantId,alignment);
-                }
-            }
-        });
+        } else {
+            WidgetDefault(sb,imageSpanLogo,amountString,imageSpanInfo,widgetText,size,subTextLayout,widgetSubtext,isMFPPMerchant,learnMoreUrl,minModal, merchantId,alignment);
+        }
     }
 
-    private void getWidgetData(VerticalImageSpan imageSpanLogo, Context context, VerticalImageSpan imageSpanInfo){
+//    private void getMerchantConfig(VerticalImageSpan imageSpanLogo, Context context, VerticalImageSpan imageSpanInfo) {
+//        Call<MerchantConfigResult> call = MerchantConfigClient.getInstance().getMerchantConfigApi().getMerchantAssets(merchantId);
+//        VerticalImageSpan finalImageSpanLogo = imageSpanLogo;
+//        call.enqueue(new Callback<MerchantConfigResult>() {
+//            @Override
+//            public void onResponse(Call<MerchantConfigResult> call, Response<MerchantConfigResult> response) {
+//                //Need to make a call to get the svg from the result below.
+//
+//                if(response.isSuccessful()){
+//                    Drawable merchantLogo = ContextCompat.getDrawable(context,R.drawable.welcome_pay);
+//                    SetDrawableBounds(merchantLogo);
+//                    VerticalImageSpan imageSpanMerchantLogo = new VerticalImageSpan(merchantLogo, false);
+//
+//                    WidgetWithMerchant(sb, finalImageSpanLogo,amountString,imageSpanInfo,size,widget_subtext,imageSpanMerchantLogo,isMFPPMerchant,learnMoreUrl,minModal, merchantId, alignment);
+//                }else{
+//                    if (displayMode != null && !subTextLayout) {
+//                        switch (displayMode) {
+//                            case "logoFirst":
+//                                WidgetLogoFirst(sb, finalImageSpanLogo,amountString,imageSpanInfo,widgetText,size,isMFPPMerchant,learnMoreUrl,minModal, merchantId,alignment);
+//                                break;
+//                            default:
+//                                WidgetDefault(sb, finalImageSpanLogo,amountString,imageSpanInfo,widgetText,size,false,widget_subtext,isMFPPMerchant,learnMoreUrl,minModal, merchantId,alignment);
+//                                break;
+//                        }
+//                    } else {
+//                        WidgetDefault(sb, finalImageSpanLogo,amountString,imageSpanInfo,widgetText,size,subTextLayout,widget_subtext,isMFPPMerchant,learnMoreUrl,minModal, merchantId,alignment);
+//                    }
+//                }
+//            }
+//
+//            @Override
+//            public void onFailure(Call<MerchantConfigResult> call, Throwable t) {
+//                if (displayMode != null && !subTextLayout) {
+//                    switch (displayMode) {
+//                        case "logoFirst":
+//                            WidgetLogoFirst(sb, finalImageSpanLogo,amountString,imageSpanInfo,widgetText,size,isMFPPMerchant,learnMoreUrl,minModal, merchantId,alignment);
+//                            break;
+//                        default:
+//                            WidgetDefault(sb, finalImageSpanLogo,amountString,imageSpanInfo,widgetText,size,false,widget_subtext,isMFPPMerchant,learnMoreUrl,minModal, merchantId,alignment);
+//                            break;
+//                    }
+//                } else {
+//                    WidgetDefault(sb, finalImageSpanLogo,amountString,imageSpanInfo,widgetText,size,subTextLayout,widget_subtext,isMFPPMerchant,learnMoreUrl,minModal, merchantId,alignment);
+//                }
+//            }
+//        });
+//    }
+
+    private void getWidgetData(VerticalImageSpan imageSpanLogo, VerticalImageSpan imageSpanInfo){
         Map<String, String> parameters = new HashMap<>();
         parameters.put("merchantId", merchantId);
         parameters.put("websiteUrl","");
@@ -497,24 +499,20 @@ public class QuadPayWidgetTextView extends TextView {
             @Override
             public void onResponse(Call<WidgetData> call , Response<WidgetData> response){
                 if(!response.isSuccessful()){
-                    SetAmount();
-                    setAmountStyle();
-                    getMerchantConfig(imageSpanLogo,context,imageSpanInfo);
+                    testSomething(imageSpanLogo,imageSpanInfo);
+                    //getMerchantConfig(imageSpanLogo,context,imageSpanInfo);
                 }
 
                 WidgetData widgetData= response.body();
                 feeTiers = widgetData.getFeeTierList();
-                SetAmount();
-                setAmountStyle();
-                getMerchantConfig(imageSpanLogo,context,imageSpanInfo);
+                testSomething(imageSpanLogo,imageSpanInfo);
+                //getMerchantConfig(imageSpanLogo,context,imageSpanInfo);
             }
 
             @Override
             public void onFailure(Call<WidgetData>call, Throwable t){
-                SetAmount();
-                setAmountStyle();
-                getMerchantConfig(imageSpanLogo,context,imageSpanInfo);
-
+                testSomething(imageSpanLogo,imageSpanInfo);
+                //getMerchantConfig(imageSpanLogo,context,imageSpanInfo);
             }
         });
 
