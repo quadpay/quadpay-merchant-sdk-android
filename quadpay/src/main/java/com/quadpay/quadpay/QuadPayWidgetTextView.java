@@ -414,7 +414,7 @@ public class QuadPayWidgetTextView extends TextView {
 
 
         if (merchantId != null) {
-            getWidgetData(imageSpanLogo,imageSpanInfo);
+            getWidgetData(imageSpanLogo,imageSpanInfo, context);
         }
         else{
             testSomething(imageSpanLogo,imageSpanInfo);
@@ -486,7 +486,7 @@ public class QuadPayWidgetTextView extends TextView {
 //        });
 //    }
 
-    private void getWidgetData(VerticalImageSpan imageSpanLogo, VerticalImageSpan imageSpanInfo){
+    private void getWidgetData(VerticalImageSpan imageSpanLogo, VerticalImageSpan imageSpanInfo, Context context){
         Map<String, String> parameters = new HashMap<>();
         parameters.put("merchantId", merchantId);
         parameters.put("websiteUrl","");
@@ -494,7 +494,7 @@ public class QuadPayWidgetTextView extends TextView {
         parameters.put("userId","");
 
 
-        Call<WidgetData> call = GatewayClient.getInstance().getWidgetDataApi().getWidgetData(parameters);
+        Call<WidgetData> call = GatewayClient.getInstance(context).getWidgetDataApi().getWidgetData(parameters);
         call.enqueue(new Callback<WidgetData>(){
             @Override
             public void onResponse(Call<WidgetData> call , Response<WidgetData> response){

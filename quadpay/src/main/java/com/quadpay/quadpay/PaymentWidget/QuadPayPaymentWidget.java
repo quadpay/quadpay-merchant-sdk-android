@@ -101,7 +101,7 @@ public class QuadPayPaymentWidget extends LinearLayout {
         parameters.put("environmentName", "");
         parameters.put("userId", "");
 
-        Call<WidgetData> call = GatewayClient.getInstance().getWidgetDataApi().getWidgetData(parameters);
+        Call<WidgetData> call = GatewayClient.getInstance(context).getWidgetDataApi().getWidgetData(parameters);
 
         call.enqueue(new Callback<WidgetData>() {
             @Override
