@@ -58,10 +58,10 @@ public class QuadPayPaymentWidget extends LinearLayout {
         hideSubtitle = hideSubtitleText != null && hideSubtitleText.equalsIgnoreCase("true");
         hideTimeline = hideTimelineText != null && hideTimelineText.equalsIgnoreCase("true");
 
-        PaymentWidget(context, merchantId, learnMoreUrl, isMFPPMerchant, minModal, color, amount, hideHeader, hideSubtitle, hideTimeline);
+        PaymentWidget(context, merchantId, amount);
     }
 
-    private void PaymentWidget(Context context, String merchantId, String learnMoreUrl, String isMFPPMerchant, String minModal, String color, String amount, Boolean hideHeader, Boolean hideSubtitle, Boolean hideTimeline) {
+    private void PaymentWidget(Context context, String merchantId, String amount) {
         if (merchantId != null) {
             if (amount != null) {
                 getWidgetData(merchantId, context);
@@ -74,25 +74,6 @@ public class QuadPayPaymentWidget extends LinearLayout {
         }
     }
 
-//    private void getMerchantConfig(Context context) {
-//        Call<MerchantConfigResult> call = MerchantConfigClient.getInstance().getMerchantConfigApi().getMerchantAssets(merchantId);
-//        call.enqueue(new Callback<MerchantConfigResult>() {
-//            @Override
-//            public void onResponse(Call<MerchantConfigResult> call, Response<MerchantConfigResult> response) {
-//                if (response.isSuccessful()) {
-//                    setLayout(context, true, merchantId);
-//
-//                } else {
-//                    setLayout(context, false, null);
-//                }
-//            }
-//
-//            @Override
-//            public void onFailure(Call<MerchantConfigResult> call, Throwable t) {
-//                setLayout(context, false, null);
-//            }
-//        });
-//    }
 
     private void getWidgetData(String merchantId, Context context) {
         Map<String, String> parameters = new HashMap<>();
@@ -107,7 +88,7 @@ public class QuadPayPaymentWidget extends LinearLayout {
             @Override
             public void onResponse(Call<WidgetData> call, Response<WidgetData> response) {
                 if (!response.isSuccessful()) {
-                    //getMerchantConfig(context);
+
                     setLayout(context, false, merchantId);
                 }
 
@@ -132,14 +113,12 @@ public class QuadPayPaymentWidget extends LinearLayout {
                     amount = String.valueOf((Float.parseFloat(amount) + maxFee));
                 }
                 setLayout(context, false, merchantId);
-                //getMerchantConfig(context);
 
             }
 
             @Override
             public void onFailure(Call<WidgetData> call, Throwable t) {
                 setLayout(context, false, merchantId);
-                //getMerchantConfig(context);
             }
         });
     }
