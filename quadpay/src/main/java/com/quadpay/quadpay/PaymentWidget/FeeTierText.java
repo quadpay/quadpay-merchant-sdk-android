@@ -9,9 +9,9 @@ import android.widget.TextView;
 
 import java.text.DecimalFormat;
 
-@SuppressLint("AppCompatCustomView")
+@SuppressLint({"AppCompatCustomView", "ViewConstructor"})
 public class FeeTierText extends TextView {
-    private SpannableStringBuilder sb = new SpannableStringBuilder();
+    private final SpannableStringBuilder sb = new SpannableStringBuilder();
     DecimalFormat decimalFormat = new DecimalFormat("#.##");
 
     public FeeTierText(Context context, Float maxFee){
@@ -25,9 +25,13 @@ public class FeeTierText extends TextView {
         sb.append("\n");
         if(maxFee % 2 == 0){
             int x = Math.round(maxFee);
-            sb.append("There may be a $" + x +" finance charge to use Zip. This charge is included above.");
+            sb.append("There may be a $")
+                    .append(String.valueOf(x))
+                    .append(" finance charge to use Zip. This charge is included above.");
         }else{
-            sb.append("There may be a $" + decimalFormat.format(maxFee) +" finance charge to use Zip. This charge is included above.");
+            sb.append("There may be a $")
+                    .append(decimalFormat.format(maxFee))
+                    .append(" finance charge to use Zip. This charge is included above.");
         }
 
         setText(sb);

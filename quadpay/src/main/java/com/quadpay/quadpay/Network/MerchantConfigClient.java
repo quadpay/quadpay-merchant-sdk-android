@@ -6,7 +6,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MerchantConfigClient {
     private static MerchantConfigClient instance = null;
-    private MerchantConfigApi merchantConfigApi;
+    private final MerchantConfigApi merchantConfigApi;
 
     private MerchantConfigClient() {
         Retrofit retrofit = new Retrofit.Builder().baseUrl(BuildConfig.CdnUrl)

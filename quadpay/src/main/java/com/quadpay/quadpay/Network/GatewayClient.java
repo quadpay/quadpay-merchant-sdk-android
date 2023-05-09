@@ -1,26 +1,16 @@
 package com.quadpay.quadpay.Network;
 
 import android.content.Context;
-
-import androidx.annotation.NonNull;
-
 import com.quadpay.quadpay.BuildConfig;
-
 import java.io.File;
-import java.io.IOException;
-import java.util.concurrent.TimeUnit;
-
 import okhttp3.Cache;
-import okhttp3.CacheControl;
-import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
-import okhttp3.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class GatewayClient {
     private static GatewayClient instance = null;
-    private GatewayApi gatewayApi;
+    private final GatewayApi gatewayApi;
 
 
     private GatewayClient(Context context){
