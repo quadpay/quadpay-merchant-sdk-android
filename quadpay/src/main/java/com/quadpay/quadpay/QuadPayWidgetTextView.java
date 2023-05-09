@@ -421,7 +421,7 @@ public class QuadPayWidgetTextView extends TextView {
             public void onResponse(Call<WidgetData> call , Response<WidgetData> response){
                 if(!response.isSuccessful()){
                     setLayout(imageSpanLogo,imageSpanInfo);
-
+                    return;
                 }
 
                 WidgetData widgetData= response.body();
@@ -433,7 +433,6 @@ public class QuadPayWidgetTextView extends TextView {
             @Override
             public void onFailure(Call<WidgetData>call, Throwable t){
                 setLayout(imageSpanLogo,imageSpanInfo);
-
             }
         });
 

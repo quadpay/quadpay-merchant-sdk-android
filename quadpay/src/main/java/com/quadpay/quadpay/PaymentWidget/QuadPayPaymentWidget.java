@@ -28,9 +28,9 @@ public class QuadPayPaymentWidget extends LinearLayout {
     private final String isMFPPMerchant;
     private final String minModal;
     private final String color;
-    private final Boolean hideHeader;
-    private final Boolean hideSubtitle;
-    private final Boolean hideTimeline;
+    private final int hideHeader;
+    private final int hideSubtitle;
+    private final int hideTimeline;
     private float amountValue;
     private Boolean applyFee = false;
     private Float maxFee = 0f;
@@ -49,9 +49,9 @@ public class QuadPayPaymentWidget extends LinearLayout {
         amountValue = amount != null ? Float.parseFloat(amount) : 0;
         String hideHeaderText = attributes.getString(R.styleable.QuadPayPaymentWidget_hideHeader);
         String hideSubtitleText = attributes.getString(R.styleable.QuadPayPaymentWidget_hideSubtitle);
-        hideHeader = hideHeaderText != null && hideHeaderText.equalsIgnoreCase("true");
-        hideSubtitle = hideSubtitleText != null && hideSubtitleText.equalsIgnoreCase("true");
-        hideTimeline = hideTimelineText != null && hideTimelineText.equalsIgnoreCase("true");
+        hideHeader = hideHeaderText != null && hideHeaderText.equalsIgnoreCase("true") ? View.GONE : View.VISIBLE;
+        hideSubtitle = hideSubtitleText != null && hideSubtitleText.equalsIgnoreCase("true") ? View.GONE : View.VISIBLE;
+        hideTimeline = hideTimelineText != null && hideTimelineText.equalsIgnoreCase("true") ? View.GONE : View.VISIBLE;
         attributes.recycle();
         PaymentWidget(context, merchantId);
     }
@@ -85,12 +85,16 @@ public class QuadPayPaymentWidget extends LinearLayout {
             public void onResponse(@NonNull Call<WidgetData> call, @NonNull Response<WidgetData> response) {
                 if (!response.isSuccessful()) {
                     setLayout(context, merchantId);
+                    return;
                 }
 
                 WidgetData widgetData = response.body();
-                assert widgetData != null;
-                feeTiers = widgetData.getFeeTierList();
+                if(widgetData == null){
+                    setLayout(context,merchantId);
+                    return;
+                }
 
+                feeTiers = widgetData.getFeeTierList();
                 float maxTier = 0f;
 
                 if (feeTiers == null) {
@@ -133,22 +137,8 @@ public class QuadPayPaymentWidget extends LinearLayout {
             addView(feeTier);
         }
 
-        if(hideHeader) {
-            paymentWidgetHeader.setVisibility(View.GONE);
-        } else {
-            paymentWidgetHeader.setVisibility(View.VISIBLE);
-        }
-
-        if(hideSubtitle) {
-            paymentWidgetSubtitle.setVisibility(View.GONE);
-        } else {
-            paymentWidgetSubtitle.setVisibility(View.VISIBLE);
-        }
-
-        if(hideTimeline) {
-            timelapse.setVisibility(View.GONE);
-        } else {
-            timelapse.setVisibility(View.VISIBLE);
-        }
+        paymentWidgetHeader.setVisibility(hideHeader);
+        paymentWidgetSubtitle.setVisibility(hideSubtitle);
+        timelapse.setVisibility(hideTimeline);
     }
 }
