@@ -22,7 +22,6 @@
         <attr name="amount"/>
         <attr name="isMFPPMerchant"/>
         <attr name="minModal"/>
-
         <attr name="hideHeader" format="string"/>
         <attr name="hideSubtitle" format="string"/>
         <attr name="hideTimeline" format="string"/>
