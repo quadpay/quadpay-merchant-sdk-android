@@ -1,15 +1,11 @@
 package com.quadpay.quadpay.PaymentWidget;
 
 import android.content.Context;
-import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Typeface;
-import android.util.DisplayMetrics;
 import android.view.View;
-
-import com.quadpay.quadpay.R;
 
 import java.text.DecimalFormat;
 

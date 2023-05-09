@@ -10,9 +10,7 @@ import android.widget.LinearLayout;
 import androidx.annotation.NonNull;
 
 import com.quadpay.quadpay.Network.GatewayClient;
-import com.quadpay.quadpay.Network.MerchantConfigResult;
 import com.quadpay.quadpay.R;
-import com.quadpay.quadpay.Network.MerchantConfigClient;
 import com.quadpay.quadpay.Network.WidgetData;
 
 import java.util.ArrayList;
@@ -26,38 +24,34 @@ import retrofit2.Response;
 public class QuadPayPaymentWidget extends LinearLayout {
     private ArrayList<WidgetData.FeeTier> feeTiers = null;
 
-    private String merchantId = null;
-    private String learnMoreUrl = null;
-    private String isMFPPMerchant = null;
-    private String minModal = null;
-    private String hideTimelineText = null;
-    private String color = null;
-    private String amount = null;
-    private String hideHeaderText = null;
-    private String hideSubtitleText = null;
-    private Boolean hideHeader = false;
-    private Boolean hideSubtitle = false;
-    private Boolean hideTimeline = false;
+    private final String learnMoreUrl;
+    private final String isMFPPMerchant;
+    private final String minModal;
+    private final String color;
+    private String amount;
+    private final Boolean hideHeader;
+    private final Boolean hideSubtitle;
+    private final Boolean hideTimeline;
     private Boolean applyFee = false;
     private Float maxFee = 0f;
 
     public QuadPayPaymentWidget(@NonNull Context context, AttributeSet attrs) {
         super(context, attrs);
         setOrientation(LinearLayout.VERTICAL);
-        TypedArray attributes = context.obtainStyledAttributes(attrs, R.styleable.QuadPayWidget);
-        merchantId = attributes.getString(R.styleable.QuadPayWidget_merchantId);
-        learnMoreUrl = attributes.getString(R.styleable.QuadPayWidget_learnMoreUrl);
-        isMFPPMerchant = attributes.getString(R.styleable.QuadPayWidget_isMFPPMerchant);
-        minModal = attributes.getString(R.styleable.QuadPayWidget_minModal);
-        hideTimelineText = attributes.getString(R.styleable.QuadPayWidget_hideTimeline);
-        color = attributes.getString(R.styleable.QuadPayWidget_timelineColor);
-        amount = attributes.getString(R.styleable.QuadPayWidget_amount);
-        hideHeaderText = attributes.getString(R.styleable.QuadPayWidget_hideHeader);
-        hideSubtitleText = attributes.getString(R.styleable.QuadPayWidget_hideSubtitle);
+        TypedArray attributes = context.obtainStyledAttributes(attrs, R.styleable.QuadPayPaymentWidget);
+        String merchantId = attributes.getString(R.styleable.QuadPayPaymentWidget_merchantId);
+        learnMoreUrl = attributes.getString(R.styleable.QuadPayPaymentWidget_learnMoreUrl);
+        isMFPPMerchant = attributes.getString(R.styleable.QuadPayPaymentWidget_isMFPPMerchant);
+        minModal = attributes.getString(R.styleable.QuadPayPaymentWidget_minModal);
+        String hideTimelineText = attributes.getString(R.styleable.QuadPayPaymentWidget_hideTimeline);
+        color = attributes.getString(R.styleable.QuadPayPaymentWidget_timelineColor);
+        amount = attributes.getString(R.styleable.QuadPayPaymentWidget_amount);
+        String hideHeaderText = attributes.getString(R.styleable.QuadPayPaymentWidget_hideHeader);
+        String hideSubtitleText = attributes.getString(R.styleable.QuadPayPaymentWidget_hideSubtitle);
         hideHeader = hideHeaderText != null && hideHeaderText.equalsIgnoreCase("true");
         hideSubtitle = hideSubtitleText != null && hideSubtitleText.equalsIgnoreCase("true");
         hideTimeline = hideTimelineText != null && hideTimelineText.equalsIgnoreCase("true");
-
+        attributes.recycle();
         PaymentWidget(context, merchantId, amount);
     }
 
@@ -66,11 +60,11 @@ public class QuadPayPaymentWidget extends LinearLayout {
             if (amount != null) {
                 getWidgetData(merchantId, context);
             } else {
-                setLayout(context, false, merchantId);
+                setLayout(context, merchantId);
             }
 
         } else {
-            setLayout(context, false, null);
+            setLayout(context, null);
         }
     }
 
@@ -86,16 +80,17 @@ public class QuadPayPaymentWidget extends LinearLayout {
 
         call.enqueue(new Callback<WidgetData>() {
             @Override
-            public void onResponse(Call<WidgetData> call, Response<WidgetData> response) {
+            public void onResponse(@NonNull Call<WidgetData> call, @NonNull Response<WidgetData> response) {
                 if (!response.isSuccessful()) {
 
-                    setLayout(context, false, merchantId);
+                    setLayout(context, merchantId);
                 }
 
                 WidgetData widgetData = response.body();
+                assert widgetData != null;
                 feeTiers = widgetData.getFeeTierList();
 
-                Float maxTier = 0f;
+                float maxTier = 0f;
 
                 System.out.println(amount);
                 if (feeTiers != null) {
@@ -112,21 +107,21 @@ public class QuadPayPaymentWidget extends LinearLayout {
 
                     amount = String.valueOf((Float.parseFloat(amount) + maxFee));
                 }
-                setLayout(context, false, merchantId);
+                setLayout(context, merchantId);
 
             }
 
             @Override
-            public void onFailure(Call<WidgetData> call, Throwable t) {
-                setLayout(context, false, merchantId);
+            public void onFailure(@NonNull Call<WidgetData> call, @NonNull Throwable t) {
+                setLayout(context, merchantId);
             }
         });
     }
 
-    private void setLayout(Context context, Boolean applyGrayLabel, String merchantId) {
-        PaymentWidgetHeader paymentWidgetHeader = new PaymentWidgetHeader(context, merchantId, learnMoreUrl, isMFPPMerchant, minModal, applyGrayLabel);
+    private void setLayout(Context context, String merchantId) {
+        PaymentWidgetHeader paymentWidgetHeader = new PaymentWidgetHeader(context, merchantId, learnMoreUrl, isMFPPMerchant, minModal, false);
         PaymentWidgetSubtitle paymentWidgetSubtitle = new PaymentWidgetSubtitle(context);
-        Timelapse timelapse = new Timelapse(context, color, applyGrayLabel, amount, paymentWidgetHeader.getTextSize());
+        Timelapse timelapse = new Timelapse(context, color, false, amount, paymentWidgetHeader.getTextSize());
 
 
         addView(paymentWidgetHeader);
