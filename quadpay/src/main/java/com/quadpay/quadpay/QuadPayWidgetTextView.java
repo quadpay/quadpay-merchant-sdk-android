@@ -49,6 +49,7 @@ public class QuadPayWidgetTextView extends TextView {
     private String widgetTextMin = null;
     private String widgetTextMax = null;
     private String subtextLayout = null;
+    private String hasFees;
     private Boolean subTextLayout = false;
     private String logoOption = null;
     private String displayMode = null;
@@ -226,7 +227,8 @@ public class QuadPayWidgetTextView extends TextView {
                 merchantId,
                 learnMoreUrl,
                 isMFPPMerchant,
-                minModal) {
+                minModal,
+                hasFees) {
 
         },sb.length()-3,sb.length(),Spannable.SPAN_INCLUSIVE_INCLUSIVE);
 
@@ -249,7 +251,8 @@ public class QuadPayWidgetTextView extends TextView {
                     merchantId,
                     learnMoreUrl,
                     isMFPPMerchant,
-                    minModal) {
+                    minModal,
+                    hasFees) {
 
             }, sb.length() - 3, sb.length(), Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
             sb.append("\n" + widgetText.replace("4 payments ", ""));
@@ -266,7 +269,8 @@ public class QuadPayWidgetTextView extends TextView {
                     merchantId,
                     learnMoreUrl,
                     isMFPPMerchant,
-                    minModal) {
+                    minModal,
+                    hasFees) {
 
             }, sb.length() - 3, sb.length(), Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
         }
@@ -298,6 +302,8 @@ public class QuadPayWidgetTextView extends TextView {
                 }
             }
         }
+
+        hasFees = maxFee != 0f? "true" : "false";
 
         if (min != null) {
             minOrder = min;

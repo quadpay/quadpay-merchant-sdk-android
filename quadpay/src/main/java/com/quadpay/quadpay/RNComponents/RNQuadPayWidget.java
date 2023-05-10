@@ -112,7 +112,8 @@ public class RNQuadPayWidget extends FrameLayout {
                     merchantId,
                     learnMoreUrl,
                     isMFPPMerchant,
-                    minModal
+                    minModal,
+                    "false"
             ) {
             }, sb.length() - 3, sb.length(), Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
         }else{
@@ -134,7 +135,8 @@ public class RNQuadPayWidget extends FrameLayout {
                     merchantId,
                     learnMoreUrl,
                     isMFPPMerchant,
-                    minModal) {
+                    minModal,
+                    "false") {
 
             }, sb.length() - 3, sb.length(), Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
 

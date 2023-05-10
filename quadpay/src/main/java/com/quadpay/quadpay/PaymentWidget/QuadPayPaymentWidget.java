@@ -32,6 +32,7 @@ public class QuadPayPaymentWidget extends LinearLayout {
     private final int hideSubtitle;
     private final int hideTimeline;
     private float amountValue;
+    private String hasFees;
     private Boolean applyFee = false;
     private Float maxFee = 0f;
 
@@ -124,7 +125,8 @@ public class QuadPayPaymentWidget extends LinearLayout {
     }
 
     private void setLayout(Context context, String merchantId) {
-        PaymentWidgetHeader paymentWidgetHeader = new PaymentWidgetHeader(context, merchantId, learnMoreUrl, isMFPPMerchant, minModal, false);
+        hasFees = maxFee != 0f ? "true" : "false";
+        PaymentWidgetHeader paymentWidgetHeader = new PaymentWidgetHeader(context, merchantId, learnMoreUrl, isMFPPMerchant, minModal, hasFees);
         PaymentWidgetSubtitle paymentWidgetSubtitle = new PaymentWidgetSubtitle(context);
         Timelapse timelapse = new Timelapse(context, color, false, amountValue, paymentWidgetHeader.getTextSize());
 

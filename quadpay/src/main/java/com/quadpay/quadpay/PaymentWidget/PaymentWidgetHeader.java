@@ -27,48 +27,23 @@ import com.quadpay.quadpay.VerticalImageSpan;
 public class PaymentWidgetHeader extends TextView{
 
     private SpannableStringBuilder sb = new SpannableStringBuilder();
-    public PaymentWidgetHeader(Context context, String merchantId, String learnMoreUrl, String isMFPPMerchant, String minModal, Boolean applyGrayLabel) {
+    public PaymentWidgetHeader(Context context, String merchantId, String learnMoreUrl, String isMFPPMerchant, String minModal, String hasFees) {
         super(context);
 
         setTextSize(TypedValue.COMPLEX_UNIT_DIP, 17);
-        CreatePaymentWidgetHeader(context, merchantId, learnMoreUrl, isMFPPMerchant,minModal,applyGrayLabel);
+        CreatePaymentWidgetHeader(context, merchantId, learnMoreUrl, isMFPPMerchant,minModal, hasFees);
     }
 
-    private void CreatePaymentWidgetHeader(Context context, String merchantId, String learnMoreUrl, String isMFPPMerchant, String minModal, Boolean applyGrayLabel){
+    private void CreatePaymentWidgetHeader(Context context, String merchantId, String learnMoreUrl, String isMFPPMerchant, String minModal, String hasFees){
 
         Drawable info = ContextCompat.getDrawable(context,R.drawable.info);
         SetDrawableBounds(info);
         VerticalImageSpan imageSpanInfo = new VerticalImageSpan(info,false);
-        if(applyGrayLabel){
-            PaymentWithMerchant(imageSpanInfo,merchantId,learnMoreUrl,isMFPPMerchant, minModal);
-        }else {
-            PaymentWidgetWithOutMerchant(imageSpanInfo,null,learnMoreUrl,isMFPPMerchant, minModal);
-        }
+        PaymentWidgetWithOutMerchant(imageSpanInfo,merchantId,learnMoreUrl,isMFPPMerchant, minModal, hasFees);
+
     }
 
-    private void PaymentWithMerchant(VerticalImageSpan imageSpanInfo, String merchantId, String learnMoreUrl, String isMFPPMerchant, String minModal) {
-
-        sb.append("Split your order in 4 easy payments with Welcome Pay (powered by Zip).");
-        StyleSpan boldStyle = new StyleSpan(Typeface.BOLD);
-        ForegroundColorSpan colorSpan = new ForegroundColorSpan(Color.BLACK);
-        sb.setSpan(colorSpan, 0, sb.length(), Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
-        sb.setSpan(boldStyle, 0, sb.length(), Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
-        sb.append("Info", imageSpanInfo, Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
-        sb.setSpan(new QuadPayInfoSpan("file:///android_asset/index.html",
-                merchantId,
-                learnMoreUrl,
-                isMFPPMerchant,
-                minModal) {
-
-        }, sb.length() - 3, sb.length(), Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
-
-
-        setText(sb);
-        setClickable(true);
-        setMovementMethod(LinkMovementMethod.getInstance());
-    }
-
-    private void PaymentWidgetWithOutMerchant(VerticalImageSpan imageSpanInfo, String merchantId, String learnMoreUrl, String isMFPPMerchant, String minModal) {
+    private void PaymentWidgetWithOutMerchant(VerticalImageSpan imageSpanInfo, String merchantId, String learnMoreUrl, String isMFPPMerchant, String minModal, String hasFees) {
 
         sb.append("Split your order in 4 easy payments with Zip.");
         StyleSpan boldStyle = new StyleSpan(Typeface.BOLD);
@@ -80,7 +55,8 @@ public class PaymentWidgetHeader extends TextView{
                 merchantId,
                 learnMoreUrl,
                 isMFPPMerchant,
-                minModal) {
+                minModal,
+                hasFees) {
 
         }, sb.length() - 3, sb.length(), Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
 

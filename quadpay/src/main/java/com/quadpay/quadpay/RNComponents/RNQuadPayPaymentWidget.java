@@ -74,7 +74,8 @@ public class RNQuadPayPaymentWidget extends LinearLayout {
                         merchantId,
                         learnMoreUrl,
                         isMFPPMerchant,
-                        minModal
+                        minModal,
+                        "false"
                 ) {
                 }, sb.length() - 3, sb.length(), Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
                 sb.setSpan(colorSpan, 0, sb.length(), Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
@@ -93,7 +94,8 @@ public class RNQuadPayPaymentWidget extends LinearLayout {
                         merchantId,
                         learnMoreUrl,
                         isMFPPMerchant,
-                        minModal) {
+                        minModal,
+                        "false") {
 
                 }, sb.length() - 3, sb.length(), Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
                 sb.append("\n");
