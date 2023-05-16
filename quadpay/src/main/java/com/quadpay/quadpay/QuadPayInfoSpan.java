@@ -11,10 +11,10 @@ public class QuadPayInfoSpan extends URLSpan {
     private String merchantId;
     private String isMFPPMerchant;
     private String minModal;
-    private String hasFees;
+    private Boolean hasFees;
 
 
-    public QuadPayInfoSpan(String url, String merchantId, String learnMoreUrl, String isMFPPMerchant, String minModal, String hasFees) {
+    public QuadPayInfoSpan(String url, String merchantId, String learnMoreUrl, String isMFPPMerchant, String minModal, Boolean hasFees) {
         super(url);
         this.merchantId= merchantId;
         this.learnMoreUrl = learnMoreUrl;

@@ -46,7 +46,7 @@ public class QuadPayWidgetTextView extends TextView {
     private String widgetTextMin = null;
     private String widgetTextMax = null;
     private String subtextLayout = null;
-    private String hasFees;
+    private Boolean hasFees;
     private Boolean subTextLayout = false;
     private String logoOption = null;
     private String displayMode = null;
@@ -432,7 +432,7 @@ public class QuadPayWidgetTextView extends TextView {
                     }
                 }
 
-                hasFees = maxFee != 0f? "true" : "false";
+                hasFees = maxFee != 0f? true : false;
 
                 setLayout(imageSpanLogo,imageSpanInfo);
 

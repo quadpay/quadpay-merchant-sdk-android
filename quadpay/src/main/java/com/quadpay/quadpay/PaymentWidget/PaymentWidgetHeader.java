@@ -25,14 +25,15 @@ import com.quadpay.quadpay.VerticalImageSpan;
 public class PaymentWidgetHeader extends TextView{
 
     private SpannableStringBuilder sb = new SpannableStringBuilder();
-    public PaymentWidgetHeader(Context context, String merchantId, String learnMoreUrl, String isMFPPMerchant, String minModal, String hasFees) {
+    public PaymentWidgetHeader(Context context, String merchantId, String learnMoreUrl, String isMFPPMerchant, String minModal, Boolean hasFees) {
         super(context);
 
         setTextSize(TypedValue.COMPLEX_UNIT_DIP, 17);
         PaymentWidgetTitle(context, merchantId, learnMoreUrl, isMFPPMerchant,minModal, hasFees);
     }
 
-    private void PaymentWidgetTitle(Context context, String merchantId, String learnMoreUrl, String isMFPPMerchant, String minModal, String hasFees){
+    private void PaymentWidgetTitle(Context context, String merchantId, String learnMoreUrl, String isMFPPMerchant, String minModal,
+                                    Boolean hasFees){
 
         Drawable info = ContextCompat.getDrawable(context,R.drawable.info);
         if(info == null){
@@ -44,7 +45,7 @@ public class PaymentWidgetHeader extends TextView{
 
     }
 
-    private void PaymentWidgetWithOutMerchant(VerticalImageSpan imageSpanInfo, String merchantId, String learnMoreUrl, String isMFPPMerchant, String minModal, String hasFees) {
+    private void PaymentWidgetWithOutMerchant(VerticalImageSpan imageSpanInfo, String merchantId, String learnMoreUrl, String isMFPPMerchant, String minModal, Boolean hasFees) {
 
         sb.append("Split your order in 4 easy payments with Zip.");
         StyleSpan boldStyle = new StyleSpan(Typeface.BOLD);

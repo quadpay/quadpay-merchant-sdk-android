@@ -53,7 +53,7 @@ public class ZipWidgetActivity extends AppCompatActivity {
         String learnMoreUrl = intent.getStringExtra("learnMoreUrl");
         String minModal = intent.getStringExtra("minModal");
         String isMFPPMerchant = intent.getStringExtra("isMFPPMerchant");
-        String hasFees = intent.getStringExtra("hasFees");
+        Boolean hasFees = intent.getBooleanExtra("hasFees", false);
         try {
             InputStream inputStream = getApplication().getAssets().open("index.html");
             int sizeOfFile = inputStream.available();
@@ -65,8 +65,9 @@ public class ZipWidgetActivity extends AppCompatActivity {
             html = html.replace("%learnMoreUrl%", learnMoreUrl !=null? learnMoreUrl: "");
             html = html.replace("%isMFPPMerchant%", isMFPPMerchant !=null? isMFPPMerchant: "");
             html = html.replace("%minModal%", minModal !=null? minModal: "");
-            html = html.replace("%hasFees%", hasFees !=null? hasFees: "");
+            html = html.replace("%hasFees%", hasFees.toString());
             html = html.replace("%QuadPayJSUrl%", BuildConfig.QuadPayJSUrl);
+            System.out.println(html);
         } catch (IOException e) {
             e.printStackTrace();
         }
