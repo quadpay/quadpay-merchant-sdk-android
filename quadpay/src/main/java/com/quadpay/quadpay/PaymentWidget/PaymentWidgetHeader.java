@@ -2,7 +2,6 @@ package com.quadpay.quadpay.PaymentWidget;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Typeface;
@@ -13,7 +12,6 @@ import android.text.TextPaint;
 import android.text.method.LinkMovementMethod;
 import android.text.style.ForegroundColorSpan;
 import android.text.style.StyleSpan;
-import android.util.DisplayMetrics;
 import android.util.TypedValue;
 import android.widget.TextView;
 
@@ -31,12 +29,15 @@ public class PaymentWidgetHeader extends TextView{
         super(context);
 
         setTextSize(TypedValue.COMPLEX_UNIT_DIP, 17);
-        CreatePaymentWidgetHeader(context, merchantId, learnMoreUrl, isMFPPMerchant,minModal, hasFees);
+        PaymentWidgetTitle(context, merchantId, learnMoreUrl, isMFPPMerchant,minModal, hasFees);
     }
 
-    private void CreatePaymentWidgetHeader(Context context, String merchantId, String learnMoreUrl, String isMFPPMerchant, String minModal, String hasFees){
+    private void PaymentWidgetTitle(Context context, String merchantId, String learnMoreUrl, String isMFPPMerchant, String minModal, String hasFees){
 
         Drawable info = ContextCompat.getDrawable(context,R.drawable.info);
+        if(info == null){
+            return;
+        }
         SetDrawableBounds(info);
         VerticalImageSpan imageSpanInfo = new VerticalImageSpan(info,false);
         PaymentWidgetWithOutMerchant(imageSpanInfo,merchantId,learnMoreUrl,isMFPPMerchant, minModal, hasFees);

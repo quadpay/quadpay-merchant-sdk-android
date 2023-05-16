@@ -13,6 +13,8 @@ import java.text.DecimalFormat;
 public class FeeTierText extends TextView {
     private final SpannableStringBuilder sb = new SpannableStringBuilder();
     DecimalFormat decimalFormat = new DecimalFormat("#.##");
+    private static final String PRE_FEE_TEXT = "There may be a $";
+    private static final String POST_FEE_TEXT = " finance charge to use Zip. This charge is included above.";
 
     public FeeTierText(Context context, Float maxFee){
         super(context);
@@ -25,13 +27,13 @@ public class FeeTierText extends TextView {
         sb.append("\n");
         if(maxFee % 2 == 0){
             int x = Math.round(maxFee);
-            sb.append("There may be a $")
+            sb.append(PRE_FEE_TEXT)
                     .append(String.valueOf(x))
-                    .append(" finance charge to use Zip. This charge is included above.");
+                    .append(POST_FEE_TEXT);
         }else{
-            sb.append("There may be a $")
+            sb.append(PRE_FEE_TEXT)
                     .append(decimalFormat.format(maxFee))
-                    .append(" finance charge to use Zip. This charge is included above.");
+                    .append(POST_FEE_TEXT);
         }
 
         setText(sb);

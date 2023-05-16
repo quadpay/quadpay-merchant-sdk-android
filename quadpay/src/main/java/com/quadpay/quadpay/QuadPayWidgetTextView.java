@@ -13,17 +13,14 @@ import android.text.SpannableStringBuilder;
 import android.text.TextPaint;
 import android.text.method.LinkMovementMethod;
 import android.text.style.ForegroundColorSpan;
-import android.text.style.RelativeSizeSpan;
 import android.text.style.StyleSpan;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.widget.TextView;
-import androidx.core.content.ContextCompat;
 
-import com.quadpay.quadpay.Network.MerchantConfigResult;
-import com.quadpay.quadpay.Network.MerchantConfigClient;
+import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import com.quadpay.quadpay.Network.WidgetData;
-import com.quadpay.quadpay.Network.GatewayApi;
 import com.quadpay.quadpay.Network.GatewayClient;
 
 import java.text.DecimalFormat;
@@ -59,6 +56,7 @@ public class QuadPayWidgetTextView extends TextView {
     private String size =null;
     private String alignment = null;
     private String priceColor = null;
+    private Float maxFee = 0f;
 
     private String merchantId = null;
     private String isMFPPMerchant = null;
@@ -288,23 +286,6 @@ public class QuadPayWidgetTextView extends TextView {
         String minOrder = "35";
         String maxOrder = "1500";
 
-        Float maxTier = 0f;
-        Float maxFee = 0f;
-
-        if(feeTiers!=null && amount != null) {
-            for(WidgetData.FeeTier feeTier : feeTiers){
-                float tierAmount = feeTier.getFeeStartsAt();
-                if(tierAmount <= Float.parseFloat(amount)){
-                    if(maxTier < tierAmount){
-                        maxTier = tierAmount;
-                        maxFee = feeTier.getTotalFeePerOrder();
-                    }
-                }
-            }
-        }
-
-        hasFees = maxFee != 0f? "true" : "false";
-
         if (min != null) {
             minOrder = min;
         }
@@ -424,14 +405,35 @@ public class QuadPayWidgetTextView extends TextView {
         Call<WidgetData> call = GatewayClient.getInstance(context).getWidgetDataApi().getWidgetData(parameters);
         call.enqueue(new Callback<WidgetData>(){
             @Override
-            public void onResponse(Call<WidgetData> call , Response<WidgetData> response){
+            public void onResponse(@NonNull Call<WidgetData> call , @NonNull Response<WidgetData> response){
                 if(!response.isSuccessful()){
                     setLayout(imageSpanLogo,imageSpanInfo);
                     return;
                 }
 
                 WidgetData widgetData= response.body();
+                if(widgetData == null){
+                    setLayout(imageSpanLogo,imageSpanInfo);
+                    return;
+                }
                 feeTiers = widgetData.getFeeTierList();
+                Float maxTier = 0f;
+
+
+                if(feeTiers!=null && amount != null) {
+                    for(WidgetData.FeeTier feeTier : feeTiers){
+                        float tierAmount = feeTier.getFeeStartsAt();
+                        if(tierAmount <= Float.parseFloat(amount)){
+                            if(maxTier < tierAmount){
+                                maxTier = tierAmount;
+                                maxFee = feeTier.getTotalFeePerOrder();
+                            }
+                        }
+                    }
+                }
+
+                hasFees = maxFee != 0f? "true" : "false";
+
                 setLayout(imageSpanLogo,imageSpanInfo);
 
             }
