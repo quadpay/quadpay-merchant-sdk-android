@@ -21,10 +21,10 @@ import com.quadpay.quadpay.QuadPayInfoSpan;
 import com.quadpay.quadpay.R;
 import com.quadpay.quadpay.VerticalImageSpan;
 
-@SuppressLint("AppCompatCustomView")
+@SuppressLint({"AppCompatCustomView", "ViewConstructor"})
 public class PaymentWidgetHeader extends TextView{
 
-    private SpannableStringBuilder sb = new SpannableStringBuilder();
+    private final SpannableStringBuilder sb = new SpannableStringBuilder();
     public PaymentWidgetHeader(Context context, String merchantId, String learnMoreUrl, String isMFPPMerchant, String minModal, Boolean hasFees) {
         super(context);
 

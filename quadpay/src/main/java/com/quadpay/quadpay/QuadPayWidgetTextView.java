@@ -417,7 +417,7 @@ public class QuadPayWidgetTextView extends TextView {
                     return;
                 }
                 feeTiers = widgetData.getFeeTierList();
-                Float maxTier = 0f;
+                float maxTier = 0f;
 
 
                 if(feeTiers!=null && amount != null) {
@@ -432,7 +432,7 @@ public class QuadPayWidgetTextView extends TextView {
                     }
                 }
 
-                hasFees = maxFee != 0f? true : false;
+                hasFees = maxFee != 0f;
 
                 setLayout(imageSpanLogo,imageSpanInfo);
 
