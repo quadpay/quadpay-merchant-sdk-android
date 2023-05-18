@@ -29,10 +29,10 @@ public class PaymentWidgetHeader extends TextView{
         super(context);
 
         setTextSize(TypedValue.COMPLEX_UNIT_DIP, 17);
-        PaymentWidgetTitle(context, merchantId, learnMoreUrl, isMFPPMerchant,minModal, hasFees);
+        CreatePaymentWidgetHeader(context, merchantId, learnMoreUrl, isMFPPMerchant,minModal, hasFees);
     }
 
-    private void PaymentWidgetTitle(Context context, String merchantId, String learnMoreUrl, String isMFPPMerchant, String minModal,
+    private void CreatePaymentWidgetHeader(Context context, String merchantId, String learnMoreUrl, String isMFPPMerchant, String minModal,
                                     Boolean hasFees){
 
         Drawable info = ContextCompat.getDrawable(context,R.drawable.info);
@@ -41,11 +41,11 @@ public class PaymentWidgetHeader extends TextView{
         }
         SetDrawableBounds(info);
         VerticalImageSpan imageSpanInfo = new VerticalImageSpan(info,false);
-        PaymentWidgetWithOutMerchant(imageSpanInfo,merchantId,learnMoreUrl,isMFPPMerchant, minModal, hasFees);
+        PaymentWidgetTitle(imageSpanInfo,merchantId,learnMoreUrl,isMFPPMerchant, minModal, hasFees);
 
     }
 
-    private void PaymentWidgetWithOutMerchant(VerticalImageSpan imageSpanInfo, String merchantId, String learnMoreUrl, String isMFPPMerchant, String minModal, Boolean hasFees) {
+    private void PaymentWidgetTitle(VerticalImageSpan imageSpanInfo, String merchantId, String learnMoreUrl, String isMFPPMerchant, String minModal, Boolean hasFees) {
 
         sb.append("Split your order in 4 easy payments with Zip.");
         StyleSpan boldStyle = new StyleSpan(Typeface.BOLD);
