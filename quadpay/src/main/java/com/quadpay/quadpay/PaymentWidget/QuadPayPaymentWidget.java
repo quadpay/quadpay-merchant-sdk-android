@@ -32,6 +32,7 @@ public class QuadPayPaymentWidget extends LinearLayout {
     private final int hideSubtitle;
     private final int hideTimeline;
     private float amountValue;
+    private String bankPartner;
     private Float maxFee = 0f;
 
     public QuadPayPaymentWidget(@NonNull Context context, AttributeSet attrs) {
@@ -100,8 +101,10 @@ public class QuadPayPaymentWidget extends LinearLayout {
                     setLayout(context, merchantId);
                     return;
                 }
-                for (WidgetData.FeeTier feeTier : feeTiers) {
 
+                bankPartner = widgetData.getBankPartner();
+
+                for (WidgetData.FeeTier feeTier : feeTiers) {
                     float tierAmount = feeTier.getFeeStartsAt();
                     if (tierAmount <= amountValue) {
                         if (maxTier < tierAmount) {
@@ -124,7 +127,7 @@ public class QuadPayPaymentWidget extends LinearLayout {
 
     private void setLayout(Context context, String merchantId) {
         Boolean hasFees = maxFee != 0f;
-        PaymentWidgetHeader paymentWidgetHeader = new PaymentWidgetHeader(context, merchantId, learnMoreUrl, isMFPPMerchant, minModal, hasFees);
+        PaymentWidgetHeader paymentWidgetHeader = new PaymentWidgetHeader(context, merchantId, learnMoreUrl, isMFPPMerchant, minModal, hasFees, bankPartner);
         PaymentWidgetSubtitle paymentWidgetSubtitle = new PaymentWidgetSubtitle(context);
         Timelapse timelapse = new Timelapse(context, color, false, amountValue, paymentWidgetHeader.getTextSize());
 

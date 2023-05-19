@@ -25,15 +25,15 @@ import com.quadpay.quadpay.VerticalImageSpan;
 public class PaymentWidgetHeader extends TextView{
 
     private final SpannableStringBuilder sb = new SpannableStringBuilder();
-    public PaymentWidgetHeader(Context context, String merchantId, String learnMoreUrl, String isMFPPMerchant, String minModal, Boolean hasFees) {
+    public PaymentWidgetHeader(Context context, String merchantId, String learnMoreUrl, String isMFPPMerchant, String minModal, Boolean hasFees, String bankPartner) {
         super(context);
 
         setTextSize(TypedValue.COMPLEX_UNIT_DIP, 17);
-        CreatePaymentWidgetHeader(context, merchantId, learnMoreUrl, isMFPPMerchant,minModal, hasFees);
+        CreatePaymentWidgetHeader(context, merchantId, learnMoreUrl, isMFPPMerchant,minModal, hasFees, bankPartner);
     }
 
     private void CreatePaymentWidgetHeader(Context context, String merchantId, String learnMoreUrl, String isMFPPMerchant, String minModal,
-                                    Boolean hasFees){
+                                    Boolean hasFees, String bankPartner){
 
         Drawable info = ContextCompat.getDrawable(context,R.drawable.info);
         if(info == null){
@@ -41,11 +41,11 @@ public class PaymentWidgetHeader extends TextView{
         }
         SetDrawableBounds(info);
         VerticalImageSpan imageSpanInfo = new VerticalImageSpan(info,false);
-        PaymentWidgetTitle(imageSpanInfo,merchantId,learnMoreUrl,isMFPPMerchant, minModal, hasFees);
+        PaymentWidgetTitle(imageSpanInfo,merchantId,learnMoreUrl,isMFPPMerchant, minModal, hasFees, bankPartner);
 
     }
 
-    private void PaymentWidgetTitle(VerticalImageSpan imageSpanInfo, String merchantId, String learnMoreUrl, String isMFPPMerchant, String minModal, Boolean hasFees) {
+    private void PaymentWidgetTitle(VerticalImageSpan imageSpanInfo, String merchantId, String learnMoreUrl, String isMFPPMerchant, String minModal, Boolean hasFees, String bankPartner) {
 
         sb.append("Split your order in 4 easy payments with Zip.");
         StyleSpan boldStyle = new StyleSpan(Typeface.BOLD);
@@ -58,7 +58,8 @@ public class PaymentWidgetHeader extends TextView{
                 learnMoreUrl,
                 isMFPPMerchant,
                 minModal,
-                hasFees) {
+                hasFees,
+                bankPartner) {
 
         }, sb.length() - 3, sb.length(), Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
 

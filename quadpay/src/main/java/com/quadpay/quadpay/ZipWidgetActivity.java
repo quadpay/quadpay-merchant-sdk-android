@@ -30,9 +30,9 @@ public class ZipWidgetActivity extends AppCompatActivity {
 
         this.updateContent();
         this.loadUrl();
-    };
+    }
 
-    private final void loadUrl() {
+    private void loadUrl() {
         Intent intent = this.getIntent();
         String url = intent.getStringExtra("URL");
         if (url == null) {
@@ -42,7 +42,7 @@ public class ZipWidgetActivity extends AppCompatActivity {
         }
     }
 
-    private final void dismiss() {
+    private void dismiss() {
         this.setResult(-1);
         this.finish();
     }
@@ -54,6 +54,7 @@ public class ZipWidgetActivity extends AppCompatActivity {
         String minModal = intent.getStringExtra("minModal");
         String isMFPPMerchant = intent.getStringExtra("isMFPPMerchant");
         boolean hasFees = intent.getBooleanExtra("hasFees", false);
+        String bankPartner = intent.getStringExtra("bankPartner");
         try {
             InputStream inputStream = getApplication().getAssets().open("index.html");
             int sizeOfFile = inputStream.available();
@@ -66,8 +67,8 @@ public class ZipWidgetActivity extends AppCompatActivity {
             html = html.replace("%isMFPPMerchant%", isMFPPMerchant !=null? isMFPPMerchant: "");
             html = html.replace("%minModal%", minModal !=null? minModal: "");
             html = html.replace("%hasFees%", String.valueOf(hasFees));
+            html = html.replace("%bankPartner%", bankPartner !=null? bankPartner: "");
             html = html.replace("%QuadPayJSUrl%", BuildConfig.QuadPayJSUrl);
-            System.out.println(html);
         } catch (IOException e) {
             e.printStackTrace();
         }

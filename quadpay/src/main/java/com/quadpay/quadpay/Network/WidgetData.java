@@ -6,6 +6,8 @@ public class WidgetData {
 
     private ArrayList<FeeTier> feeTiers;
 
+    private String bankPartner;
+
     public class FeeTier{
         private float feeStartsAt;
 
@@ -22,6 +24,10 @@ public class WidgetData {
 
     public ArrayList<FeeTier> getFeeTierList(){
         return feeTiers;
+    }
+
+    public String getBankPartner(){
+        return bankPartner;
     }
 
 }

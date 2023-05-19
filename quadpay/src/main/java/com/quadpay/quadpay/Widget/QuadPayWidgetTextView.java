@@ -1,4 +1,4 @@
-package com.quadpay.quadpay;
+package com.quadpay.quadpay.Widget;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -22,6 +22,9 @@ import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import com.quadpay.quadpay.Network.WidgetData;
 import com.quadpay.quadpay.Network.GatewayClient;
+import com.quadpay.quadpay.QuadPayInfoSpan;
+import com.quadpay.quadpay.R;
+import com.quadpay.quadpay.VerticalImageSpan;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -57,6 +60,7 @@ public class QuadPayWidgetTextView extends TextView {
     private String alignment = null;
     private String priceColor = null;
     private Float maxFee = 0f;
+    private String bankPartner;
 
     private String merchantId = null;
     private String isMFPPMerchant = null;
@@ -226,7 +230,8 @@ public class QuadPayWidgetTextView extends TextView {
                 learnMoreUrl,
                 isMFPPMerchant,
                 minModal,
-                hasFees) {
+                hasFees,
+                bankPartner) {
 
         },sb.length()-3,sb.length(),Spannable.SPAN_INCLUSIVE_INCLUSIVE);
 
@@ -250,7 +255,8 @@ public class QuadPayWidgetTextView extends TextView {
                     learnMoreUrl,
                     isMFPPMerchant,
                     minModal,
-                    hasFees) {
+                    hasFees,
+                    bankPartner) {
 
             }, sb.length() - 3, sb.length(), Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
             sb.append("\n" + widgetText.replace("4 payments ", ""));
@@ -268,7 +274,8 @@ public class QuadPayWidgetTextView extends TextView {
                     learnMoreUrl,
                     isMFPPMerchant,
                     minModal,
-                    hasFees) {
+                    hasFees,
+                    bankPartner) {
 
             }, sb.length() - 3, sb.length(), Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
         }
@@ -419,6 +426,7 @@ public class QuadPayWidgetTextView extends TextView {
                 feeTiers = widgetData.getFeeTierList();
                 float maxTier = 0f;
 
+                bankPartner = widgetData.getBankPartner();
 
                 if(feeTiers!=null && amount != null) {
                     for(WidgetData.FeeTier feeTier : feeTiers){
