@@ -136,7 +136,7 @@ public class QuadPayPaymentWidget extends LinearLayout {
         addView(paymentWidgetSubtitle);
         addView(timelapse);
         if (maxFee != 0f ) {
-            FeeTierText feeTier = new FeeTierText(context, maxFee);
+            FeeTierText feeTier = new FeeTierText(context, maxFee,hideTimeline);
             addView(feeTier);
         }
 
