@@ -20,10 +20,10 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 
-import com.quadpay.quadpay.MerchantConfigResult;
+import com.quadpay.quadpay.Network.MerchantConfigResult;
 import com.quadpay.quadpay.QuadPayInfoSpan;
 import com.quadpay.quadpay.R;
-import com.quadpay.quadpay.RetrofitClient;
+import com.quadpay.quadpay.Network.MerchantConfigClient;
 import com.quadpay.quadpay.VerticalImageSpan;
 
 import java.text.DecimalFormat;
@@ -112,7 +112,9 @@ public class RNQuadPayWidget extends FrameLayout {
                     merchantId,
                     learnMoreUrl,
                     isMFPPMerchant,
-                    minModal
+                    minModal,
+                    false,
+                    ""
             ) {
             }, sb.length() - 3, sb.length(), Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
         }else{
@@ -134,7 +136,9 @@ public class RNQuadPayWidget extends FrameLayout {
                     merchantId,
                     learnMoreUrl,
                     isMFPPMerchant,
-                    minModal) {
+                    minModal,
+                    false,
+                    "") {
 
             }, sb.length() - 3, sb.length(), Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
 
@@ -147,7 +151,7 @@ public class RNQuadPayWidget extends FrameLayout {
     public void setMerchantId(String merchantId){
         if(merchantId != null){
             this.merchantId = merchantId;
-            Call<MerchantConfigResult> call = RetrofitClient.getInstance().getMerchantConfigApi().getMerchantAssets(this.merchantId);
+            Call<MerchantConfigResult> call = MerchantConfigClient.getInstance().getMerchantConfigApi().getMerchantAssets(this.merchantId);
             call.enqueue(new Callback<MerchantConfigResult>(){
                 public void onResponse(Call<MerchantConfigResult> call, Response<MerchantConfigResult> response){
                     if(response.isSuccessful()){

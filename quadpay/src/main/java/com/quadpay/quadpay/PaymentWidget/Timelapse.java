@@ -1,15 +1,11 @@
 package com.quadpay.quadpay.PaymentWidget;
 
 import android.content.Context;
-import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Typeface;
-import android.util.DisplayMetrics;
 import android.view.View;
-
-import com.quadpay.quadpay.R;
 
 import java.text.DecimalFormat;
 
@@ -26,13 +22,13 @@ public class Timelapse extends View {
     int sideWidth = 30;
 
 
-    public Timelapse(Context context, String color, Boolean applyGrayLabel, String amount, Float textSize){
+    public Timelapse(Context context, String color, Boolean applyGrayLabel, float amount, Float textSize){
         super(context);
         setMinimumHeight(240);
         init(color, applyGrayLabel, amount, textSize);
     }
 
-    public void init(String color, Boolean applyGrayLabel, String amount, Float textSize ){
+    public void init(String color, Boolean applyGrayLabel, float amount, Float textSize ){
         paint = new Paint();
         amountPaint = new Paint();
         timelineText = new Paint();
@@ -41,11 +37,11 @@ public class Timelapse extends View {
         amountPaint.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.BOLD));
         timelineText.setColor(Color.GRAY);
         timelineText.setTextSize(textSize);
-        if(amount == null){
+        if(amount == 0){
             orderAmount = "0";
         }else{
             decimalFormat.setMinimumFractionDigits(2);
-            orderAmount = decimalFormat.format((Float.parseFloat(amount) / 4));
+            orderAmount = decimalFormat.format(amount / 4);
         }
         if(!applyGrayLabel){
             skew = true;

@@ -16,11 +16,11 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 
-import com.quadpay.quadpay.MerchantConfigResult;
+import com.quadpay.quadpay.Network.MerchantConfigResult;
 import com.quadpay.quadpay.PaymentWidget.Timelapse;
 import com.quadpay.quadpay.QuadPayInfoSpan;
 import com.quadpay.quadpay.R;
-import com.quadpay.quadpay.RetrofitClient;
+import com.quadpay.quadpay.Network.MerchantConfigClient;
 import com.quadpay.quadpay.VerticalImageSpan;
 
 import retrofit2.Call;
@@ -45,14 +45,15 @@ public class RNQuadPayPaymentWidget extends LinearLayout {
     private Boolean hideHeader = false;
     private Boolean hideSubtitle = false;
     private Boolean hideTimeline = false;
+    private float amountValue;
 
 
     public RNQuadPayPaymentWidget(@NonNull Context context) {
         super(context);
         setOrientation(LinearLayout.VERTICAL);
-
+        amountValue =amount != null ? Float.parseFloat(amount): 0;
         this.textView = new TextView(context);
-        this.timelapse = new Timelapse(context, this.timelineColor, false,this.amount, this.textView.getTextSize());
+        this.timelapse = new Timelapse(context, this.timelineColor, false,amountValue, this.textView.getTextSize());
         setWidgetText();
         addView(this.textView);
         addView(this.timelapse);
@@ -73,7 +74,9 @@ public class RNQuadPayPaymentWidget extends LinearLayout {
                         merchantId,
                         learnMoreUrl,
                         isMFPPMerchant,
-                        minModal
+                        minModal,
+                        false,
+                        ""
                 ) {
                 }, sb.length() - 3, sb.length(), Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
                 sb.setSpan(colorSpan, 0, sb.length(), Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
@@ -92,7 +95,9 @@ public class RNQuadPayPaymentWidget extends LinearLayout {
                         merchantId,
                         learnMoreUrl,
                         isMFPPMerchant,
-                        minModal) {
+                        minModal,
+                        false,
+                        "") {
 
                 }, sb.length() - 3, sb.length(), Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
                 sb.append("\n");
@@ -104,7 +109,7 @@ public class RNQuadPayPaymentWidget extends LinearLayout {
 
         if(!hideTimeline) {
             this.timelapse.invalidate();
-            this.timelapse.init(timelineColor,applyGrayLabel,amount, this.textView.getTextSize());
+            this.timelapse.init(timelineColor,applyGrayLabel,amountValue, this.textView.getTextSize());
             if(allowedToAddView){
                 addView(this.timelapse);
                 allowedToAddView = false;
@@ -133,7 +138,7 @@ public class RNQuadPayPaymentWidget extends LinearLayout {
     public void setMerchantId(String merchantId){
         if(merchantId != null){
             this.merchantId = merchantId;
-            Call<MerchantConfigResult> call = RetrofitClient.getInstance().getMerchantConfigApi().getMerchantAssets(this.merchantId);
+            Call<MerchantConfigResult> call = MerchantConfigClient.getInstance().getMerchantConfigApi().getMerchantAssets(this.merchantId);
             call.enqueue(new Callback<MerchantConfigResult>(){
                 public void onResponse(Call<MerchantConfigResult> call, Response<MerchantConfigResult> response){
                     if(response.isSuccessful()){

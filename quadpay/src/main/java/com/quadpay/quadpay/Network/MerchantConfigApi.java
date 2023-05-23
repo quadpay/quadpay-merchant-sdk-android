@@ -1,4 +1,4 @@
-package com.quadpay.quadpay;
+package com.quadpay.quadpay.Network;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
