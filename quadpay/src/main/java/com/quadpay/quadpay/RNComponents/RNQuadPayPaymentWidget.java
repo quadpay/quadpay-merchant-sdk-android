@@ -223,9 +223,9 @@ public class RNQuadPayPaymentWidget extends LinearLayout {
 
     public void setAmount(String amount){
         if(amount != null && !amount.equals("")){
-            this.amount = amount;
+            this.amountValue = Float.parseFloat(amount);
         }else{
-            this.amount = "0";
+            this.amountValue = 0;
         }
         setWidgetText();
     }
