@@ -5,9 +5,8 @@ import android.content.res.TypedArray;
 import android.util.AttributeSet;
 import android.widget.FrameLayout;
 import androidx.annotation.NonNull;
-
 import com.quadpay.quadpay.R;
-import com.quadpay.quadpay.Widget.QuadPayWidgetTextView;
+
 
 
 public class QuadPayWidget extends FrameLayout {
