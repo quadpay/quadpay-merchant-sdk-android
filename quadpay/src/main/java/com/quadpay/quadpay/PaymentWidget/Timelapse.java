@@ -5,8 +5,6 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.view.View;
-import android.view.ViewGroup;
-
 import java.text.DecimalFormat;
 
 public class Timelapse extends View {

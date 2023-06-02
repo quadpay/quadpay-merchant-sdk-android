@@ -86,24 +86,24 @@ public class RNQuadPayPaymentWidget extends LinearLayout {
 
     private void generateFeeText(){
         //Added for fee message
-        SpannableStringBuilder sb2 = new SpannableStringBuilder();
-        sb2.append("\n");
+        SpannableStringBuilder sb = new SpannableStringBuilder();
+        sb.append("\n");
         if(maxFee % 2 == 0){
             int x = Math.round(maxFee);
-            sb2.append(PRE_FEE_TEXT)
+            sb.append(PRE_FEE_TEXT)
                     .append(String.valueOf(x))
                     .append(POST_FEE_TEXT);
         }else{
-            sb2.append(PRE_FEE_TEXT)
+            sb.append(PRE_FEE_TEXT)
                     .append(decimalFormat.format(maxFee))
                     .append(POST_FEE_TEXT);
         }
         if(hideTimeline == View.VISIBLE){
-            sb2.append(CHARGE_INCLUDED_TEXT);
+            sb.append(CHARGE_INCLUDED_TEXT);
         }
 
         this.feeTierText.setClickable(true);
-        this.feeTierText.setText(sb2);
+        this.feeTierText.setText(sb);
         this.feeTierText.setMovementMethod(LinkMovementMethod.getInstance());
     }
 
