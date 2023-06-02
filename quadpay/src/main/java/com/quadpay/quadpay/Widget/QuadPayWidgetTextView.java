@@ -21,7 +21,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import com.quadpay.quadpay.Network.WidgetData;
-import com.quadpay.quadpay.Network.GatewayClient;
+import com.quadpay.quadpay.GatewayClient;
 import com.quadpay.quadpay.QuadPayInfoSpan;
 import com.quadpay.quadpay.R;
 import com.quadpay.quadpay.VerticalImageSpan;

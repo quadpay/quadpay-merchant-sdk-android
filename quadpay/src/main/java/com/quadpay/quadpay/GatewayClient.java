@@ -1,7 +1,10 @@
-package com.quadpay.quadpay.Network;
+package com.quadpay.quadpay;
 
 import android.content.Context;
-import com.quadpay.quadpay.BuildConfig;
+
+import com.quadpay.quadpay.Network.CacheInterceptor;
+import com.quadpay.quadpay.Network.GatewayApi;
+
 import java.io.File;
 import okhttp3.Cache;
 import okhttp3.OkHttpClient;

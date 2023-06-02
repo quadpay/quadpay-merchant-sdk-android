@@ -11,7 +11,6 @@ import android.text.SpannableStringBuilder;
 import android.text.TextPaint;
 import android.text.method.LinkMovementMethod;
 import android.text.style.ForegroundColorSpan;
-import android.text.style.RelativeSizeSpan;
 import android.text.style.StyleSpan;
 import android.util.TypedValue;
 import android.view.Gravity;
@@ -21,11 +20,9 @@ import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 
 import com.quadpay.quadpay.GatewayClient;
-import com.quadpay.quadpay.Network.MerchantConfigResult;
 import com.quadpay.quadpay.Network.WidgetData;
 import com.quadpay.quadpay.QuadPayInfoSpan;
 import com.quadpay.quadpay.R;
-import com.quadpay.quadpay.MerchantConfigClient;
 import com.quadpay.quadpay.VerticalImageSpan;
 
 import java.text.DecimalFormat;
@@ -40,11 +37,10 @@ import retrofit2.Response;
 
 public class RNQuadPayWidget extends FrameLayout {
 
-    private TextView textView;
+    private final TextView widgetMessage;
     private String min = "35";
     private String max  = "1500";
-    private String currencySymbol = "$";
-    private StyleSpan boldStyle = new StyleSpan(Typeface.BOLD);
+    private final StyleSpan boldStyle = new StyleSpan(Typeface.BOLD);
     private String color = "#000000";
     private String logoOption = "zip";
     private String displayMode = "normal";
@@ -55,36 +51,33 @@ public class RNQuadPayWidget extends FrameLayout {
     private String minModal = "";
     private Boolean baseline = false;
 
-    private SpannableStringBuilder sb = new SpannableStringBuilder();
     private SpannableString amountString = null;
-    private SpannableString widgetText = null;
-    private DecimalFormat decimalFormat = new DecimalFormat("#.##");
-    private VerticalImageSpan imageSpanLogo = null;
-    private VerticalImageSpan imageSpanInfo = null;
-    private Drawable info = ContextCompat.getDrawable(getContext(), R.drawable.info);
+    private final DecimalFormat decimalFormat = new DecimalFormat("#.##");
+    private final Drawable info = ContextCompat.getDrawable(getContext(), R.drawable.info);
     private String bankPartner;
-    private Boolean hasFees;
+    private Boolean hasFees = false;
     private float maxFee = 0f;
     private float amount;
 
     public RNQuadPayWidget(@NonNull Context context) {
         super(context);
-        this.textView = new TextView(context);
-        this.textView.setTextColor(Color.BLACK);
-        this.textView.setLineSpacing(1f,1.2f);
-        this.textView.setPadding(0,30,0,30);
-        this.addView(this.textView);
+        this.widgetMessage = new TextView(context);
+        this.widgetMessage.setTextColor(Color.BLACK);
+        this.widgetMessage.setLineSpacing(1f,1.2f);
+        this.widgetMessage.setPadding(0,30,0,30);
+        this.addView(this.widgetMessage);
     }
 
     private void setWidgetText(){
         customiseAmount();
         Drawable drawableLogo = getLogo();
         SetDrawableBoundsLogo(drawableLogo);
-        imageSpanLogo = new VerticalImageSpan(drawableLogo,this.baseline);
+        VerticalImageSpan imageSpanLogo = new VerticalImageSpan(drawableLogo, this.baseline);
 
         SetDrawableBounds(info);
-        imageSpanInfo = new VerticalImageSpan(info,false);
-        this.sb = new SpannableStringBuilder();
+        VerticalImageSpan imageSpanInfo = new VerticalImageSpan(info, false);
+        SpannableStringBuilder sb = new SpannableStringBuilder();
+        SpannableString widgetText;
         if (amount == 0){
             widgetText = new SpannableString("4 payments on orders over");
         }else if(amount< Float.parseFloat(min)){
@@ -96,20 +89,21 @@ public class RNQuadPayWidget extends FrameLayout {
         }
 
         if (displayMode.equals("logoFirst")) {
-            sb.append("Zip pay", imageSpanLogo, Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
-            sb.append(" ");
-            sb.append(widgetText);
-            sb.append(" ");
-            sb.append(amountString);
+            sb.append("Zip pay", imageSpanLogo, Spannable.SPAN_INCLUSIVE_EXCLUSIVE)
+                    .append(" ")
+                    .append(widgetText)
+                    .append(" ")
+                    .append(amountString);
         } else {
-            sb.append("or " + widgetText);
-            sb.append(" ");
-            sb.append(amountString);
-            sb.append(" with ");
-            sb.append("Zip pay", imageSpanLogo, Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
+            sb.append("or ")
+                    .append(String.valueOf(widgetText))
+                    .append(" ")
+                    .append(amountString)
+                    .append(" with ")
+                    .append("Zip pay", imageSpanLogo, Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
         }
-        sb.append(" ");
-        sb.append("Zip pay", imageSpanInfo, Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
+        sb.append(" ")
+                .append("Zip pay", imageSpanInfo, Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
         sb.setSpan(new QuadPayInfoSpan("file///android_asset/index.html",
                 merchantId,
                 learnMoreUrl,
@@ -120,9 +114,9 @@ public class RNQuadPayWidget extends FrameLayout {
         ) {
         }, sb.length() - 3, sb.length(), Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
 
-        this.textView.setClickable(true);
-        this.textView.setText(sb);
-        this.textView.setMovementMethod(LinkMovementMethod.getInstance());
+        this.widgetMessage.setClickable(true);
+        this.widgetMessage.setText(sb);
+        this.widgetMessage.setMovementMethod(LinkMovementMethod.getInstance());
     }
 
     private void setWidgetData(){
@@ -133,7 +127,6 @@ public class RNQuadPayWidget extends FrameLayout {
             parameters.put("environmentName","");
             parameters.put("userId","");
 
-            this.merchantId = merchantId;
             Call<WidgetData> call = GatewayClient.getInstance(getContext()).getWidgetDataApi().getWidgetData(parameters);
             call.enqueue(new Callback<WidgetData>(){
                 @Override
@@ -170,7 +163,7 @@ public class RNQuadPayWidget extends FrameLayout {
                 }
 
                 @Override
-                public void onFailure(Call<WidgetData>call, Throwable t){
+                public void onFailure(@NonNull Call<WidgetData>call, @NonNull Throwable t){
                     setWidgetText();
                 }
             });
@@ -219,7 +212,7 @@ public class RNQuadPayWidget extends FrameLayout {
     }
 
     public void setSize(String size){
-        Float sizePercentage;
+        float sizePercentage;
         if(size == null || size.equals("")){
             sizePercentage = 100f / 100;
         }else {
@@ -233,20 +226,23 @@ public class RNQuadPayWidget extends FrameLayout {
                 sizePercentage = sizePercentage / 100;
             }
         }
-        this.textView.setTextSize(TypedValue.COMPLEX_UNIT_PX, 59.0f * (size.equals("") ? 100 / 100 : sizePercentage));
+
+        if (size != null) {
+            this.widgetMessage.setTextSize(TypedValue.COMPLEX_UNIT_PX, 59.0f * (size.equals("") ? 1 : sizePercentage));
+        }
 
     }
 
     public void setAlignment(String alignment){
         switch(alignment.toLowerCase()){
             case "right":
-                this.textView.setGravity(Gravity.RIGHT | Gravity.CENTER_VERTICAL);
+                this.widgetMessage.setGravity(Gravity.RIGHT | Gravity.CENTER_VERTICAL);
                 break;
             case "center":
-                this.textView.setGravity(Gravity.CENTER | Gravity.CENTER_VERTICAL);
+                this.widgetMessage.setGravity(Gravity.CENTER | Gravity.CENTER_VERTICAL);
                 break;
             default:
-                this.textView.setGravity(Gravity.LEFT | Gravity.CENTER_VERTICAL);
+                this.widgetMessage.setGravity(Gravity.LEFT | Gravity.CENTER_VERTICAL);
         }
     }
 
@@ -261,7 +257,7 @@ public class RNQuadPayWidget extends FrameLayout {
 
     public void SetDrawableBounds(Drawable drawable){
         float aspectRatio = (float) drawable.getIntrinsicWidth() / (float) drawable.getIntrinsicHeight();
-        TextPaint paint = this.textView.getPaint();
+        TextPaint paint = this.widgetMessage.getPaint();
         Paint.FontMetrics paintFontMetrics = paint.getFontMetrics();
 
         float drawableHeight = (paintFontMetrics.descent - paintFontMetrics.ascent);
@@ -271,7 +267,7 @@ public class RNQuadPayWidget extends FrameLayout {
 
     public void SetDrawableBoundsLogo(Drawable drawable){
         float aspectRatio = (float) drawable.getIntrinsicWidth() / (float) drawable.getIntrinsicHeight();
-        TextPaint paint = this.textView.getPaint();
+        TextPaint paint = this.widgetMessage.getPaint();
         Paint.FontMetrics paintFontMetrics = paint.getFontMetrics();
 
         float drawableHeight = (paintFontMetrics.descent - paintFontMetrics.ascent)*  logoSize;
@@ -280,7 +276,7 @@ public class RNQuadPayWidget extends FrameLayout {
     }
 
     public Drawable getLogo(){
-        Drawable logo = null;
+        Drawable logo;
         switch(logoOption) {
             case "secondary":
                 logo = ContextCompat.getDrawable(getContext(), R.drawable.secondary_logo);
@@ -306,6 +302,7 @@ public class RNQuadPayWidget extends FrameLayout {
         decimalFormat.setMinimumFractionDigits(2);
         float amountValue = amount;
         amountValue += maxFee;
+        String currencySymbol = "$";
         if(amountValue == 0 ){
             amountString = new SpannableString(currencySymbol + decimalFormat.format(Float.parseFloat(this.min)));
         }else if (amountValue< Float.parseFloat(this.min)){
@@ -355,13 +352,10 @@ public class RNQuadPayWidget extends FrameLayout {
 
     public void setDisplayMode(String displayMode){
         if(displayMode!=null) {
-            switch (displayMode) {
-                case "logoFirst":
-                    this.displayMode = displayMode;
-                    break;
-                default:
-                    this.displayMode = "normal";
-                    break;
+            if ("logoFirst".equals(displayMode)) {
+                this.displayMode = displayMode;
+            } else {
+                this.displayMode = "normal";
             }
         }else{
             this.displayMode = "normal";
@@ -376,7 +370,7 @@ public class RNQuadPayWidget extends FrameLayout {
 
         }else{
             try {
-                Float sizePercentage = Float.parseFloat(logoSize.replace("%", ""));
+                float sizePercentage = Float.parseFloat(logoSize.replace("%", ""));
 
                 if (sizePercentage <= 90.0) {
                     this.logoSize = 90f / 100;
@@ -392,4 +386,3 @@ public class RNQuadPayWidget extends FrameLayout {
         setWidgetText();
     }
 }
-

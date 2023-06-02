@@ -9,7 +9,7 @@ import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
 
-import com.quadpay.quadpay.Network.GatewayClient;
+import com.quadpay.quadpay.GatewayClient;
 import com.quadpay.quadpay.R;
 import com.quadpay.quadpay.Network.WidgetData;
 
