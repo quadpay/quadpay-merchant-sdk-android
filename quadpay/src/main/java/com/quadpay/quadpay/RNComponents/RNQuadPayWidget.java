@@ -11,7 +11,6 @@ import android.text.SpannableStringBuilder;
 import android.text.TextPaint;
 import android.text.method.LinkMovementMethod;
 import android.text.style.ForegroundColorSpan;
-import android.text.style.RelativeSizeSpan;
 import android.text.style.StyleSpan;
 import android.util.TypedValue;
 import android.view.Gravity;
@@ -20,13 +19,16 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 
-import com.quadpay.quadpay.Network.MerchantConfigResult;
+import com.quadpay.quadpay.GatewayClient;
+import com.quadpay.quadpay.Network.WidgetData;
 import com.quadpay.quadpay.QuadPayInfoSpan;
 import com.quadpay.quadpay.R;
-import com.quadpay.quadpay.Network.MerchantConfigClient;
 import com.quadpay.quadpay.VerticalImageSpan;
 
 import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -35,12 +37,10 @@ import retrofit2.Response;
 
 public class RNQuadPayWidget extends FrameLayout {
 
-    private TextView textView;
+    private final TextView widgetMessage;
     private String min = "35";
     private String max  = "1500";
-    private String currencySymbol = "$";
-    private String amount = "";
-    private StyleSpan boldStyle = new StyleSpan(Typeface.BOLD);
+    private final StyleSpan boldStyle = new StyleSpan(Typeface.BOLD);
     private String color = "#000000";
     private String logoOption = "zip";
     private String displayMode = "normal";
@@ -49,130 +49,145 @@ public class RNQuadPayWidget extends FrameLayout {
     private String isMFPPMerchant = "";
     private String learnMoreUrl = "";
     private String minModal = "";
-    private Boolean applyGrayLabel = false;
     private Boolean baseline = false;
 
-    private SpannableStringBuilder sb = new SpannableStringBuilder();
     private SpannableString amountString = null;
-    private SpannableString widgetText = null;
-    private SpannableString poweredBy = null;
-    private DecimalFormat decimalFormat = new DecimalFormat("#.##");
-    private VerticalImageSpan imageSpanLogo = null;
-    private VerticalImageSpan imageSpanInfo = null;
-    private VerticalImageSpan imageSpanMerchant = null;
-    private Drawable info = ContextCompat.getDrawable(getContext(), R.drawable.info);
-    private Drawable grayLabel = ContextCompat.getDrawable(getContext(),R.drawable.welcome_pay);
+    private final DecimalFormat decimalFormat = new DecimalFormat("#.##");
+    private final Drawable info = ContextCompat.getDrawable(getContext(), R.drawable.info);
+    private String bankPartner;
+    private Boolean hasFees = false;
+    private float maxFee = 0f;
+    private float amount;
 
     public RNQuadPayWidget(@NonNull Context context) {
         super(context);
-        this.textView = new TextView(context);
-        this.textView.setTextColor(Color.BLACK);
-        this.textView.setLineSpacing(1f,1.2f);
-        this.textView.setPadding(0,30,0,30);
-        this.addView(this.textView);
+        this.widgetMessage = new TextView(context);
+        this.widgetMessage.setTextColor(Color.BLACK);
+        this.widgetMessage.setLineSpacing(1f,1.2f);
+        this.widgetMessage.setPadding(0,30,0,30);
+        this.addView(this.widgetMessage);
     }
 
     private void setWidgetText(){
+        customiseAmount();
         Drawable drawableLogo = getLogo();
         SetDrawableBoundsLogo(drawableLogo);
-        imageSpanLogo = new VerticalImageSpan(drawableLogo,this.baseline);
-
-        SetDrawableBoundsLogo(grayLabel);
-        imageSpanMerchant = new VerticalImageSpan(grayLabel,false);
+        VerticalImageSpan imageSpanLogo = new VerticalImageSpan(drawableLogo, this.baseline);
 
         SetDrawableBounds(info);
-        imageSpanInfo = new VerticalImageSpan(info,false);
-        this.sb = new SpannableStringBuilder();
-        if (amount== null || amount.equals("")){
+        VerticalImageSpan imageSpanInfo = new VerticalImageSpan(info, false);
+        SpannableStringBuilder sb = new SpannableStringBuilder();
+        SpannableString widgetText;
+        if (amount == 0){
             widgetText = new SpannableString("4 payments on orders over");
-        }else if(Float.parseFloat(amount)< Float.parseFloat(min)){
+        }else if(amount< Float.parseFloat(min)){
             widgetText = new SpannableString("4 payments on orders over");
-        }else if(Float.parseFloat(amount)> Float.parseFloat(max)){
+        }else if(amount> Float.parseFloat(max)){
             widgetText = new SpannableString("4 payments on orders up to");
         }else{
             widgetText = new SpannableString("4 payments of");
         }
-        if(!applyGrayLabel) {
-            if (displayMode.equals("logoFirst")) {
-                sb.append("Zip pay", imageSpanLogo, Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
-                sb.append(" ");
-                sb.append(widgetText);
-                sb.append(" ");
-                sb.append(amountString);
-            } else {
-                sb.append("or " + widgetText);
-                sb.append(" ");
-                sb.append(amountString);
-                sb.append(" with ");
-                sb.append("Zip pay", imageSpanLogo, Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
-            }
-            sb.append(" ");
-            sb.append("Zip pay", imageSpanInfo, Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
-            sb.setSpan(new QuadPayInfoSpan("file///android_asset/index.html",
-                    merchantId,
-                    learnMoreUrl,
-                    isMFPPMerchant,
-                    minModal,
-                    false,
-                    ""
-            ) {
-            }, sb.length() - 3, sb.length(), Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
-        }else{
-            sb.append("or " + widgetText);
-            sb.append(" ");
-            sb.append(amountString);
-            sb.append("\n");
-            sb.append("with ");
-            sb.append("Info", imageSpanMerchant, Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
-            poweredBy = new SpannableString(" powered by ");
-            RelativeSizeSpan sizeSpan = new RelativeSizeSpan(0.8F);
-            poweredBy.setSpan(sizeSpan, 0, poweredBy.length(), SpannableString.SPAN_INCLUSIVE_INCLUSIVE);
 
-            sb.append(poweredBy);
-            sb.append("Zip pay", imageSpanLogo, Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
-            sb.append(" ");
-            sb.append("Info", imageSpanInfo, Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
-            sb.setSpan(new QuadPayInfoSpan("file:///android_asset/index.html",
-                    merchantId,
-                    learnMoreUrl,
-                    isMFPPMerchant,
-                    minModal,
-                    false,
-                    "") {
-
-            }, sb.length() - 3, sb.length(), Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
-
+        if (displayMode.equals("logoFirst")) {
+            sb.append("Zip pay", imageSpanLogo, Spannable.SPAN_INCLUSIVE_EXCLUSIVE)
+                    .append(" ")
+                    .append(widgetText)
+                    .append(" ")
+                    .append(amountString);
+        } else {
+            sb.append("or ")
+                    .append(String.valueOf(widgetText))
+                    .append(" ")
+                    .append(amountString)
+                    .append(" with ")
+                    .append("Zip pay", imageSpanLogo, Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
         }
-        this.textView.setClickable(true);
-        this.textView.setText(sb);
-        this.textView.setMovementMethod(LinkMovementMethod.getInstance());
+        sb.append(" ")
+                .append("Zip pay", imageSpanInfo, Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
+        sb.setSpan(new QuadPayInfoSpan("file///android_asset/index.html",
+                merchantId,
+                learnMoreUrl,
+                isMFPPMerchant,
+                minModal,
+                hasFees,
+                bankPartner
+        ) {
+        }, sb.length() - 3, sb.length(), Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
+
+        this.widgetMessage.setClickable(true);
+        this.widgetMessage.setText(sb);
+        this.widgetMessage.setMovementMethod(LinkMovementMethod.getInstance());
+    }
+
+    private void setWidgetData(){
+        if(amount != 0){
+            Map<String, String> parameters = new HashMap<>();
+            parameters.put("merchantId", merchantId);
+            parameters.put("websiteUrl","");
+            parameters.put("environmentName","");
+            parameters.put("userId","");
+
+            Call<WidgetData> call = GatewayClient.getInstance(getContext()).getWidgetDataApi().getWidgetData(parameters);
+            call.enqueue(new Callback<WidgetData>(){
+                @Override
+                public void onResponse(@NonNull Call<WidgetData> call , @NonNull Response<WidgetData> response){
+                    if(!response.isSuccessful()){
+                        setWidgetText();
+                        return;
+                    }
+
+                    WidgetData widgetData= response.body();
+                    if(widgetData == null){
+                        setWidgetText();
+                        return;
+                    }
+
+                    ArrayList<WidgetData.FeeTier> feeTiers = widgetData.getFeeTierList();
+                    float maxTier = 0f;
+                    maxFee = 0;
+                    bankPartner = widgetData.getBankPartner();
+
+                    if(feeTiers!=null) {
+                        for(WidgetData.FeeTier feeTier : feeTiers){
+                            float tierAmount = feeTier.getFeeStartsAt();
+                            if(tierAmount <= amount){
+                                if(maxTier < tierAmount){
+                                    maxTier = tierAmount;
+                                    maxFee = feeTier.getTotalFeePerOrder();
+                                }
+                            }
+                        }
+                    }
+                    hasFees = maxFee != 0;
+                    setWidgetText();
+                }
+
+                @Override
+                public void onFailure(@NonNull Call<WidgetData>call, @NonNull Throwable t){
+                    setWidgetText();
+                }
+            });
+        }
+        setWidgetText();
     }
 
     public void setMerchantId(String merchantId){
         if(merchantId != null){
             this.merchantId = merchantId;
-            Call<MerchantConfigResult> call = MerchantConfigClient.getInstance().getMerchantConfigApi().getMerchantAssets(this.merchantId);
-            call.enqueue(new Callback<MerchantConfigResult>(){
-                public void onResponse(Call<MerchantConfigResult> call, Response<MerchantConfigResult> response){
-                    if(response.isSuccessful()){
-                        applyGrayLabel = true;
-                        setWidgetText();
-                    }else{
-                        applyGrayLabel = false;
-                        setWidgetText();
-                    }
-                }
-
-                public void onFailure(Call<MerchantConfigResult> call , Throwable t){
-                    applyGrayLabel = false;
-                    setWidgetText();
-                }
-            });
+            setWidgetData();
         }else{
             this.merchantId = "";
-            applyGrayLabel = false;
             setWidgetText();
         }
+    }
+
+    public void setAmount(String amount){
+        if(amount == null || amount.equals("")){
+            this.amount = 0;
+        }else{
+            this.amount = Float.parseFloat(amount);
+        }
+        setWidgetData();
     }
 
     public void setLearnMoreUrl(String learnMoreUrl){
@@ -197,7 +212,7 @@ public class RNQuadPayWidget extends FrameLayout {
     }
 
     public void setSize(String size){
-        Float sizePercentage;
+        float sizePercentage;
         if(size == null || size.equals("")){
             sizePercentage = 100f / 100;
         }else {
@@ -211,20 +226,23 @@ public class RNQuadPayWidget extends FrameLayout {
                 sizePercentage = sizePercentage / 100;
             }
         }
-        this.textView.setTextSize(TypedValue.COMPLEX_UNIT_PX, 59.0f * (size.equals("") ? 100 / 100 : sizePercentage));
+
+        if (size != null) {
+            this.widgetMessage.setTextSize(TypedValue.COMPLEX_UNIT_PX, 59.0f * (size.equals("") ? 1 : sizePercentage));
+        }
 
     }
 
     public void setAlignment(String alignment){
         switch(alignment.toLowerCase()){
             case "right":
-                this.textView.setGravity(Gravity.RIGHT | Gravity.CENTER_VERTICAL);
+                this.widgetMessage.setGravity(Gravity.RIGHT | Gravity.CENTER_VERTICAL);
                 break;
             case "center":
-                this.textView.setGravity(Gravity.CENTER | Gravity.CENTER_VERTICAL);
+                this.widgetMessage.setGravity(Gravity.CENTER | Gravity.CENTER_VERTICAL);
                 break;
             default:
-                this.textView.setGravity(Gravity.LEFT | Gravity.CENTER_VERTICAL);
+                this.widgetMessage.setGravity(Gravity.LEFT | Gravity.CENTER_VERTICAL);
         }
     }
 
@@ -239,7 +257,7 @@ public class RNQuadPayWidget extends FrameLayout {
 
     public void SetDrawableBounds(Drawable drawable){
         float aspectRatio = (float) drawable.getIntrinsicWidth() / (float) drawable.getIntrinsicHeight();
-        TextPaint paint = this.textView.getPaint();
+        TextPaint paint = this.widgetMessage.getPaint();
         Paint.FontMetrics paintFontMetrics = paint.getFontMetrics();
 
         float drawableHeight = (paintFontMetrics.descent - paintFontMetrics.ascent);
@@ -249,7 +267,7 @@ public class RNQuadPayWidget extends FrameLayout {
 
     public void SetDrawableBoundsLogo(Drawable drawable){
         float aspectRatio = (float) drawable.getIntrinsicWidth() / (float) drawable.getIntrinsicHeight();
-        TextPaint paint = this.textView.getPaint();
+        TextPaint paint = this.widgetMessage.getPaint();
         Paint.FontMetrics paintFontMetrics = paint.getFontMetrics();
 
         float drawableHeight = (paintFontMetrics.descent - paintFontMetrics.ascent)*  logoSize;
@@ -258,7 +276,7 @@ public class RNQuadPayWidget extends FrameLayout {
     }
 
     public Drawable getLogo(){
-        Drawable logo = null;
+        Drawable logo;
         switch(logoOption) {
             case "secondary":
                 logo = ContextCompat.getDrawable(getContext(), R.drawable.secondary_logo);
@@ -280,17 +298,19 @@ public class RNQuadPayWidget extends FrameLayout {
         return logo;
     }
 
-    public void setAmount(String amount){
-        this.amount = amount;
+    private void customiseAmount(){
         decimalFormat.setMinimumFractionDigits(2);
-        if(amount== null|| amount.equals("")){
+        float amountValue = amount;
+        amountValue += maxFee;
+        String currencySymbol = "$";
+        if(amountValue == 0 ){
             amountString = new SpannableString(currencySymbol + decimalFormat.format(Float.parseFloat(this.min)));
-        }else if (Float.parseFloat(amount)< Float.parseFloat(this.min)){
+        }else if (amountValue< Float.parseFloat(this.min)){
             amountString = new SpannableString(currencySymbol + decimalFormat.format(Float.parseFloat(this.min)));
-        }else if(Float.parseFloat(amount)> Float.parseFloat(this.max)){
+        }else if(amountValue> Float.parseFloat(this.max)){
             amountString = new SpannableString(currencySymbol + decimalFormat.format(Float.parseFloat(this.max)));
         }else{
-            amountString = new SpannableString(currencySymbol + decimalFormat.format(Float.parseFloat(amount)/4));
+            amountString = new SpannableString(currencySymbol + decimalFormat.format(amountValue/4));
         }
 
         amountString.setSpan(boldStyle,0,amountString.length(), Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
@@ -301,8 +321,6 @@ public class RNQuadPayWidget extends FrameLayout {
             ForegroundColorSpan colorSpan = new ForegroundColorSpan(Color.parseColor("#000000"));
             amountString.setSpan(colorSpan,0,amountString.length(), Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
         }
-
-        setWidgetText();
     }
 
     public void setMin(String min){
@@ -311,7 +329,7 @@ public class RNQuadPayWidget extends FrameLayout {
         }else {
             this.min = min;
         }
-        setAmount(this.amount);
+        setWidgetText();
     }
 
     public void setMax(String max){
@@ -320,7 +338,7 @@ public class RNQuadPayWidget extends FrameLayout {
         }else {
             this.max = max;
         }
-        setAmount(this.amount);
+        setWidgetText();
     }
 
     public void setColorPrice(String colorPrice){
@@ -329,18 +347,15 @@ public class RNQuadPayWidget extends FrameLayout {
         }else {
             this.color = colorPrice;
         }
-        setAmount(this.amount);
+        setWidgetText();
     }
 
     public void setDisplayMode(String displayMode){
         if(displayMode!=null) {
-            switch (displayMode) {
-                case "logoFirst":
-                    this.displayMode = displayMode;
-                    break;
-                default:
-                    this.displayMode = "normal";
-                    break;
+            if ("logoFirst".equals(displayMode)) {
+                this.displayMode = displayMode;
+            } else {
+                this.displayMode = "normal";
             }
         }else{
             this.displayMode = "normal";
@@ -355,7 +370,7 @@ public class RNQuadPayWidget extends FrameLayout {
 
         }else{
             try {
-                Float sizePercentage = Float.parseFloat(logoSize.replace("%", ""));
+                float sizePercentage = Float.parseFloat(logoSize.replace("%", ""));
 
                 if (sizePercentage <= 90.0) {
                     this.logoSize = 90f / 100;

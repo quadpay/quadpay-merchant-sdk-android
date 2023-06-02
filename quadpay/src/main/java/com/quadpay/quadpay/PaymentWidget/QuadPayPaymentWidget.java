@@ -9,7 +9,7 @@ import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
 
-import com.quadpay.quadpay.Network.GatewayClient;
+import com.quadpay.quadpay.GatewayClient;
 import com.quadpay.quadpay.R;
 import com.quadpay.quadpay.Network.WidgetData;
 
@@ -129,7 +129,7 @@ public class QuadPayPaymentWidget extends LinearLayout {
         Boolean hasFees = maxFee != 0f;
         PaymentWidgetHeader paymentWidgetHeader = new PaymentWidgetHeader(context, merchantId, learnMoreUrl, isMFPPMerchant, minModal, hasFees, bankPartner);
         PaymentWidgetSubtitle paymentWidgetSubtitle = new PaymentWidgetSubtitle(context);
-        Timelapse timelapse = new Timelapse(context, color, false, amountValue, paymentWidgetHeader.getTextSize());
+        Timelapse timelapse = new Timelapse(context, color, amountValue, paymentWidgetHeader.getTextSize());
 
 
         addView(paymentWidgetHeader);

@@ -1,6 +1,7 @@
-package com.quadpay.quadpay.Network;
+package com.quadpay.quadpay;
 
-import com.quadpay.quadpay.BuildConfig;
+import com.quadpay.quadpay.Network.MerchantConfigApi;
+
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
