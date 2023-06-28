@@ -46,7 +46,6 @@ public class RNQuadPayPaymentWidget extends LinearLayout {
     private String learnMoreUrl = "";
     private String minModal = "";
     private final Drawable info = ContextCompat.getDrawable(getContext(), R.drawable.info);
-    private int hideHeader ;
     private int hideSubtitle ;
     private int hideTimeline ;
 
@@ -137,8 +136,6 @@ public class RNQuadPayPaymentWidget extends LinearLayout {
         this.timelapse.init(timelineColor,amountValue, this.paymentWidgetHeader.getTextSize());
         this.timelapse.setVisibility(View.VISIBLE);
 
-
-        paymentWidgetHeader.setVisibility(hideHeader);
         paymentWidgetSubtitle.setVisibility(hideSubtitle);
         timelapse.setVisibility(hideTimeline);
 
@@ -255,11 +252,6 @@ public class RNQuadPayPaymentWidget extends LinearLayout {
         }else{
             this.minModal = "";
         }
-        setWidgetText();
-    }
-
-    public void setHideHeader(String hideHeader){
-        this.hideHeader = hideHeader != null && hideHeader.equalsIgnoreCase("true") ? View.GONE : View.VISIBLE;
         setWidgetText();
     }
 
