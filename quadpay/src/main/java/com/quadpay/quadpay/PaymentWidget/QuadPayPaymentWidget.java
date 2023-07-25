@@ -28,7 +28,6 @@ public class QuadPayPaymentWidget extends LinearLayout {
     private final String isMFPPMerchant;
     private final String minModal;
     private final String color;
-    private final int hideHeader;
     private final int hideSubtitle;
     private final int hideTimeline;
     private float amountValue;
@@ -47,9 +46,7 @@ public class QuadPayPaymentWidget extends LinearLayout {
         color = attributes.getString(R.styleable.QuadPayPaymentWidget_timelineColor);
         String amount = attributes.getString(R.styleable.QuadPayPaymentWidget_amount);
         amountValue = amount != null ? Float.parseFloat(amount) : 0;
-        String hideHeaderText = attributes.getString(R.styleable.QuadPayPaymentWidget_hideHeader);
         String hideSubtitleText = attributes.getString(R.styleable.QuadPayPaymentWidget_hideSubtitle);
-        hideHeader = hideHeaderText != null && hideHeaderText.equalsIgnoreCase("true") ? View.GONE : View.VISIBLE;
         hideSubtitle = hideSubtitleText != null && hideSubtitleText.equalsIgnoreCase("true") ? View.GONE : View.VISIBLE;
         hideTimeline = hideTimelineText != null && hideTimelineText.equalsIgnoreCase("true") ? View.GONE : View.VISIBLE;
         attributes.recycle();
@@ -140,7 +137,6 @@ public class QuadPayPaymentWidget extends LinearLayout {
             addView(feeTier);
         }
 
-        paymentWidgetHeader.setVisibility(hideHeader);
         paymentWidgetSubtitle.setVisibility(hideSubtitle);
         timelapse.setVisibility(hideTimeline);
     }
