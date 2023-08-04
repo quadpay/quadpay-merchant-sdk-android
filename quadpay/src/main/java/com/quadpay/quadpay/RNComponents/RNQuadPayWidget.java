@@ -266,12 +266,8 @@ public class RNQuadPayWidget extends FrameLayout {
     }
 
     public void SetDrawableBoundsLogo(Drawable drawable){
-        float aspectRatio = (float) drawable.getIntrinsicWidth() / (float) drawable.getIntrinsicHeight();
-        TextPaint paint = this.widgetMessage.getPaint();
-        Paint.FontMetrics paintFontMetrics = paint.getFontMetrics();
-
-        float drawableHeight = (paintFontMetrics.descent - paintFontMetrics.ascent)*  logoSize;
-        float drawableWidth = drawableHeight * aspectRatio*  logoSize;
+        float drawableHeight = drawable.getIntrinsicHeight() *  logoSize;
+        float drawableWidth = drawable.getIntrinsicWidth() *  logoSize;
         drawable.setBounds(0, 0, (int) drawableWidth, (int) drawableHeight);
     }
 

@@ -72,7 +72,7 @@ public class RNQuadPayPaymentWidget extends LinearLayout {
         this.paymentWidgetHeader.setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
         this.paymentWidgetHeader.setLineSpacing(0.5f,0.9f);
         this.timelapse = new Timelapse(context, this.timelineColor, amountValue, this.paymentWidgetHeader.getTextSize());
-        this.timelapse.setLayoutParams(new Constraints.LayoutParams(Resources.getSystem().getDisplayMetrics().widthPixels,240));
+        this.timelapse.setLayoutParams(new Constraints.LayoutParams(Resources.getSystem().getDisplayMetrics().widthPixels,260));
         this.feeTierText = new TextView(context);
         this.paymentWidgetSubtitle = new PaymentWidgetSubtitle(context);
         setWidgetText();
@@ -86,7 +86,6 @@ public class RNQuadPayPaymentWidget extends LinearLayout {
     private void generateFeeText(){
         //Added for fee message
         SpannableStringBuilder sb = new SpannableStringBuilder();
-        sb.append("\n");
         if(maxFee % 2 == 0){
             int x = Math.round(maxFee);
             sb.append(PRE_FEE_TEXT)
