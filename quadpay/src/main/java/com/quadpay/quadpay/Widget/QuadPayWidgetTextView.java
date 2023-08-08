@@ -93,6 +93,11 @@ public class QuadPayWidgetTextView extends TextView {
         merchantId = attributes.getString(R.styleable.QuadPayWidget_merchantId);
         isMFPPMerchant =attributes.getString(R.styleable.QuadPayWidget_isMFPPMerchant);
         learnMoreUrl =attributes.getString(R.styleable.QuadPayWidget_learnMoreUrl);
+        if(learnMoreUrl != null){
+            if(!learnMoreUrl.contains("https://")) {
+                learnMoreUrl = "https://" + learnMoreUrl;
+            }
+        }
         minModal = attributes.getString(R.styleable.QuadPayWidget_minModal);
 
 

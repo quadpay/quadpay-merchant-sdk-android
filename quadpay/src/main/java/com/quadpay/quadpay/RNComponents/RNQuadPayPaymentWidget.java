@@ -229,7 +229,9 @@ public class RNQuadPayPaymentWidget extends LinearLayout {
 
     public void setLearnMoreUrl(String learnMoreUrl){
         if(learnMoreUrl != null) {
-            this.learnMoreUrl = learnMoreUrl;
+            if(!learnMoreUrl.contains("https://")) {
+                this.learnMoreUrl = "https://" + learnMoreUrl;
+            }
         }else{
             this.learnMoreUrl = "";
         }

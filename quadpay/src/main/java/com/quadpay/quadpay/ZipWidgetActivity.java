@@ -69,7 +69,6 @@ public class ZipWidgetActivity extends AppCompatActivity {
             html = html.replace("%hasFees%", String.valueOf(hasFees));
             html = html.replace("%bankPartner%", bankPartner !=null? bankPartner: Constants.NO_BANK_PARTNER);
             html = html.replace("%QuadPayJSUrl%", BuildConfig.QuadPayJSUrl);
-            System.out.println(html);
         } catch (IOException e) {
             e.printStackTrace();
         }

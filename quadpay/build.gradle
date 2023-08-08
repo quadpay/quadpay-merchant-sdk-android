@@ -1,6 +1,6 @@
 apply plugin: 'com.android.library'
 
-version = "0.7.8"
+version = "0.7.9"
 
 android {
     compileSdkVersion 31
@@ -21,14 +21,12 @@ android {
 
             buildConfigField "String", "CdnUrl", "\"${project.CdnUrl_Prod}\""
             buildConfigField "String", "GatewayUrl", "\"${project.Gateway_Prod}\""
-//            buildConfigField "String","SegmentKey", "\"${project.SegmentKey_Prod}\""
             buildConfigField "String", "QuadPayJSUrl", "\"${project.QuadPayJSUrl_Prod}\""
         }
 
         debug{
             buildConfigField "String", "CdnUrl", "\"${project.CdnUrl_Dev}\""
             buildConfigField "String", "GatewayUrl", "\"${project.Gateway_Dev}\""
-//            buildConfigField "String", "SegmentKey", "\"${project.SegmentKey_Dev}\""
             buildConfigField "String", "QuadPayJSUrl", "\"${project.QuadPayJSUrl_Dev}\""
         }
     }

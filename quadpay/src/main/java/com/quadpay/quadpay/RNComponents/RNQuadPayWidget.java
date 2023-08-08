@@ -192,7 +192,9 @@ public class RNQuadPayWidget extends FrameLayout {
 
     public void setLearnMoreUrl(String learnMoreUrl){
         if(learnMoreUrl != null) {
-            this.learnMoreUrl = learnMoreUrl;
+            if(!learnMoreUrl.contains("https://")) {
+                this.learnMoreUrl = "https://" + learnMoreUrl;
+            }
         }
         setWidgetText();
     }

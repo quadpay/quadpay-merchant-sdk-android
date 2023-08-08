@@ -24,7 +24,7 @@ import retrofit2.Response;
 public class QuadPayPaymentWidget extends LinearLayout {
     private ArrayList<WidgetData.FeeTier> feeTiers = null;
 
-    private final String learnMoreUrl;
+    private String learnMoreUrl;
     private final String isMFPPMerchant;
     private final String minModal;
     private final String color;
@@ -40,6 +40,11 @@ public class QuadPayPaymentWidget extends LinearLayout {
         TypedArray attributes = context.obtainStyledAttributes(attrs, R.styleable.QuadPayPaymentWidget);
         String merchantId = attributes.getString(R.styleable.QuadPayPaymentWidget_merchantId);
         learnMoreUrl = attributes.getString(R.styleable.QuadPayPaymentWidget_learnMoreUrl);
+        if(learnMoreUrl != null){
+            if(!learnMoreUrl.contains("https://")) {
+                learnMoreUrl = "https://" + learnMoreUrl;
+            }
+        }
         isMFPPMerchant = attributes.getString(R.styleable.QuadPayPaymentWidget_isMFPPMerchant);
         minModal = attributes.getString(R.styleable.QuadPayPaymentWidget_minModal);
         String hideTimelineText = attributes.getString(R.styleable.QuadPayPaymentWidget_hideTimeline);
