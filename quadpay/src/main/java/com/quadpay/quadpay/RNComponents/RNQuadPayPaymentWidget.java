@@ -20,6 +20,7 @@ import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.Constraints;
 import androidx.core.content.ContextCompat;
 import com.quadpay.quadpay.GatewayClient;
+import com.quadpay.quadpay.Network.UrlChecker;
 import com.quadpay.quadpay.Network.WidgetData;
 import com.quadpay.quadpay.PaymentWidget.Timelapse;
 import com.quadpay.quadpay.PaymentWidget.PaymentWidgetSubtitle;
@@ -43,11 +44,13 @@ public class RNQuadPayPaymentWidget extends LinearLayout {
     private String merchantId = "";
     private String timelineColor = null;
     private String isMFPPMerchant = "";
-    private String learnMoreUrl = "";
+    private String learnMoreUrl;
+    private UrlChecker url;
     private String minModal = "";
     private final Drawable info = ContextCompat.getDrawable(getContext(), R.drawable.info);
     private int hideSubtitle ;
     private int hideTimeline ;
+
 
     DecimalFormat decimalFormat = new DecimalFormat("#.##");
     private static final String PRE_FEE_TEXT = "There may be a $";
@@ -228,10 +231,9 @@ public class RNQuadPayPaymentWidget extends LinearLayout {
     }
 
     public void setLearnMoreUrl(String learnMoreUrl){
-        if(learnMoreUrl != null) {
-            if(!learnMoreUrl.contains("https://")) {
-                this.learnMoreUrl = "https://" + learnMoreUrl;
-            }
+        if(!learnMoreUrl.equals("")) {
+            url = new UrlChecker(learnMoreUrl);
+            this.learnMoreUrl = url.addHttpsIfNotPresent();
         }else{
             this.learnMoreUrl = "";
         }

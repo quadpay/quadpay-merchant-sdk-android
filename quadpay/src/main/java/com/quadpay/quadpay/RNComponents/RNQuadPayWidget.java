@@ -20,6 +20,7 @@ import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 
 import com.quadpay.quadpay.GatewayClient;
+import com.quadpay.quadpay.Network.UrlChecker;
 import com.quadpay.quadpay.Network.WidgetData;
 import com.quadpay.quadpay.QuadPayInfoSpan;
 import com.quadpay.quadpay.R;
@@ -47,7 +48,8 @@ public class RNQuadPayWidget extends FrameLayout {
     private Float logoSize = 100/100f;
     private String merchantId = "";
     private String isMFPPMerchant = "";
-    private String learnMoreUrl = "";
+    private String learnMoreUrl;
+    private UrlChecker url;
     private String minModal = "";
     private Boolean baseline = false;
 
@@ -191,10 +193,11 @@ public class RNQuadPayWidget extends FrameLayout {
     }
 
     public void setLearnMoreUrl(String learnMoreUrl){
-        if(learnMoreUrl != null) {
-            if(!learnMoreUrl.contains("https://")) {
-                this.learnMoreUrl = "https://" + learnMoreUrl;
-            }
+        if(!learnMoreUrl.equals("")) {
+            url = new UrlChecker(learnMoreUrl);
+            this.learnMoreUrl = url.addHttpsIfNotPresent();
+        }else{
+            this.learnMoreUrl = "";
         }
         setWidgetText();
     }
