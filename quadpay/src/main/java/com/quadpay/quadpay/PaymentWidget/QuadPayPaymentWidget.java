@@ -10,7 +10,7 @@ import android.widget.LinearLayout;
 import androidx.annotation.NonNull;
 
 import com.quadpay.quadpay.GatewayClient;
-import com.quadpay.quadpay.Network.UrlChecker;
+import com.quadpay.quadpay.Network.UriUtility;
 import com.quadpay.quadpay.R;
 import com.quadpay.quadpay.Network.WidgetData;
 
@@ -21,13 +21,11 @@ import java.util.Map;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.http.Url;
 
 public class QuadPayPaymentWidget extends LinearLayout {
     private ArrayList<WidgetData.FeeTier> feeTiers = null;
 
-    private UrlChecker learnMoreUrl;
-    private UrlChecker learnMoreUrl2;
+    private String learnMoreUrl;
     private final String isMFPPMerchant;
     private final String minModal;
     private final String color;
@@ -42,7 +40,7 @@ public class QuadPayPaymentWidget extends LinearLayout {
         setOrientation(LinearLayout.VERTICAL);
         TypedArray attributes = context.obtainStyledAttributes(attrs, R.styleable.QuadPayPaymentWidget);
         String merchantId = attributes.getString(R.styleable.QuadPayPaymentWidget_merchantId);
-        learnMoreUrl = new UrlChecker(attributes.getString(R.styleable.QuadPayPaymentWidget_learnMoreUrl));
+        learnMoreUrl = UriUtility.Scheme.addIfMissing(attributes.getString(R.styleable.QuadPayPaymentWidget_learnMoreUrl));
         isMFPPMerchant = attributes.getString(R.styleable.QuadPayPaymentWidget_isMFPPMerchant);
         minModal = attributes.getString(R.styleable.QuadPayPaymentWidget_minModal);
         String hideTimelineText = attributes.getString(R.styleable.QuadPayPaymentWidget_hideTimeline);
@@ -127,7 +125,7 @@ public class QuadPayPaymentWidget extends LinearLayout {
 
     private void setLayout(Context context, String merchantId) {
         Boolean hasFees = maxFee != 0f;
-        PaymentWidgetHeader paymentWidgetHeader = new PaymentWidgetHeader(context, merchantId, learnMoreUrl.addHttpsIfNotPresent(), isMFPPMerchant, minModal, hasFees, bankPartner);
+        PaymentWidgetHeader paymentWidgetHeader = new PaymentWidgetHeader(context, merchantId, learnMoreUrl, isMFPPMerchant, minModal, hasFees, bankPartner);
         PaymentWidgetSubtitle paymentWidgetSubtitle = new PaymentWidgetSubtitle(context);
         Timelapse timelapse = new Timelapse(context, color, amountValue, paymentWidgetHeader.getTextSize());
 

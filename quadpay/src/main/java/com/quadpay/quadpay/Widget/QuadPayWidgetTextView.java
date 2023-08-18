@@ -21,7 +21,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 
-import com.quadpay.quadpay.Network.UrlChecker;
+import com.quadpay.quadpay.Network.UriUtility;
 import com.quadpay.quadpay.Network.WidgetData;
 import com.quadpay.quadpay.GatewayClient;
 import com.quadpay.quadpay.QuadPayInfoSpan;
@@ -65,7 +65,7 @@ public class QuadPayWidgetTextView extends TextView {
 
     private final String merchantId;
     private final String isMFPPMerchant;
-    private final UrlChecker learnMoreUrl;
+    private final String learnMoreUrl;
     private final String minModal;
 
 
@@ -93,7 +93,7 @@ public class QuadPayWidgetTextView extends TextView {
 
         merchantId = attributes.getString(R.styleable.QuadPayWidget_merchantId);
         isMFPPMerchant =attributes.getString(R.styleable.QuadPayWidget_isMFPPMerchant);
-        learnMoreUrl =new UrlChecker(attributes.getString(R.styleable.QuadPayWidget_learnMoreUrl));
+        learnMoreUrl =UriUtility.Scheme.addIfMissing(attributes.getString(R.styleable.QuadPayWidget_learnMoreUrl));
         minModal = attributes.getString(R.styleable.QuadPayWidget_minModal);
 
 
@@ -386,12 +386,12 @@ public class QuadPayWidgetTextView extends TextView {
         setAmountStyle();
         if (displayMode != null && !subTextLayout) {
             if ("logoFirst".equals(displayMode)) {
-                WidgetLogoFirst(sb, imageSpanLogo, amountString, imageSpanInfo, widgetText, size, isMFPPMerchant, learnMoreUrl.addHttpsIfNotPresent(), minModal, merchantId, alignment);
+                WidgetLogoFirst(sb, imageSpanLogo, amountString, imageSpanInfo, widgetText, size, isMFPPMerchant, learnMoreUrl, minModal, merchantId, alignment);
             } else {
-                WidgetDefault(sb, imageSpanLogo, amountString, imageSpanInfo, widgetText, size, false, widgetSubtext, isMFPPMerchant, learnMoreUrl.addHttpsIfNotPresent(), minModal, merchantId, alignment);
+                WidgetDefault(sb, imageSpanLogo, amountString, imageSpanInfo, widgetText, size, false, widgetSubtext, isMFPPMerchant, learnMoreUrl, minModal, merchantId, alignment);
             }
         } else {
-            WidgetDefault(sb,imageSpanLogo,amountString,imageSpanInfo,widgetText,size,subTextLayout,widgetSubtext,isMFPPMerchant,learnMoreUrl.addHttpsIfNotPresent(),minModal, merchantId,alignment);
+            WidgetDefault(sb,imageSpanLogo,amountString,imageSpanInfo,widgetText,size,subTextLayout,widgetSubtext,isMFPPMerchant,learnMoreUrl,minModal, merchantId,alignment);
         }
     }
 
