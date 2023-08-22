@@ -25,7 +25,7 @@ import retrofit2.Response;
 public class QuadPayPaymentWidget extends LinearLayout {
     private ArrayList<WidgetData.FeeTier> feeTiers = null;
 
-    private String learnMoreUrl;
+    private final String learnMoreUrl;
     private final String isMFPPMerchant;
     private final String minModal;
     private final String color;
