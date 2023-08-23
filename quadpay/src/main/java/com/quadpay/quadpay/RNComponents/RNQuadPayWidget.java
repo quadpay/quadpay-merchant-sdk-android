@@ -20,6 +20,7 @@ import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 
 import com.quadpay.quadpay.GatewayClient;
+import com.quadpay.quadpay.Network.UriUtility;
 import com.quadpay.quadpay.Network.WidgetData;
 import com.quadpay.quadpay.QuadPayInfoSpan;
 import com.quadpay.quadpay.R;
@@ -47,7 +48,7 @@ public class RNQuadPayWidget extends FrameLayout {
     private Float logoSize = 100/100f;
     private String merchantId = "";
     private String isMFPPMerchant = "";
-    private String learnMoreUrl = "";
+    private String learnMoreUrl;
     private String minModal = "";
     private Boolean baseline = false;
 
@@ -191,8 +192,10 @@ public class RNQuadPayWidget extends FrameLayout {
     }
 
     public void setLearnMoreUrl(String learnMoreUrl){
-        if(learnMoreUrl != null) {
-            this.learnMoreUrl = learnMoreUrl;
+        if(!learnMoreUrl.equals("")) {
+            this.learnMoreUrl = UriUtility.Scheme.addIfMissing(learnMoreUrl);
+        }else{
+            this.learnMoreUrl = "";
         }
         setWidgetText();
     }
@@ -266,12 +269,8 @@ public class RNQuadPayWidget extends FrameLayout {
     }
 
     public void SetDrawableBoundsLogo(Drawable drawable){
-        float aspectRatio = (float) drawable.getIntrinsicWidth() / (float) drawable.getIntrinsicHeight();
-        TextPaint paint = this.widgetMessage.getPaint();
-        Paint.FontMetrics paintFontMetrics = paint.getFontMetrics();
-
-        float drawableHeight = (paintFontMetrics.descent - paintFontMetrics.ascent)*  logoSize;
-        float drawableWidth = drawableHeight * aspectRatio*  logoSize;
+        float drawableHeight = drawable.getIntrinsicHeight() *  logoSize;
+        float drawableWidth = drawable.getIntrinsicWidth() *  logoSize;
         drawable.setBounds(0, 0, (int) drawableWidth, (int) drawableHeight);
     }
 

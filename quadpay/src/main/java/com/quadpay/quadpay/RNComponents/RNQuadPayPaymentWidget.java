@@ -20,6 +20,7 @@ import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.Constraints;
 import androidx.core.content.ContextCompat;
 import com.quadpay.quadpay.GatewayClient;
+import com.quadpay.quadpay.Network.UriUtility;
 import com.quadpay.quadpay.Network.WidgetData;
 import com.quadpay.quadpay.PaymentWidget.Timelapse;
 import com.quadpay.quadpay.PaymentWidget.PaymentWidgetSubtitle;
@@ -43,11 +44,12 @@ public class RNQuadPayPaymentWidget extends LinearLayout {
     private String merchantId = "";
     private String timelineColor = null;
     private String isMFPPMerchant = "";
-    private String learnMoreUrl = "";
+    private String learnMoreUrl;
     private String minModal = "";
     private final Drawable info = ContextCompat.getDrawable(getContext(), R.drawable.info);
     private int hideSubtitle ;
     private int hideTimeline ;
+
 
     DecimalFormat decimalFormat = new DecimalFormat("#.##");
     private static final String PRE_FEE_TEXT = "There may be a $";
@@ -72,7 +74,7 @@ public class RNQuadPayPaymentWidget extends LinearLayout {
         this.paymentWidgetHeader.setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
         this.paymentWidgetHeader.setLineSpacing(0.5f,0.9f);
         this.timelapse = new Timelapse(context, this.timelineColor, amountValue, this.paymentWidgetHeader.getTextSize());
-        this.timelapse.setLayoutParams(new Constraints.LayoutParams(Resources.getSystem().getDisplayMetrics().widthPixels,240));
+        this.timelapse.setLayoutParams(new Constraints.LayoutParams(Resources.getSystem().getDisplayMetrics().widthPixels,260));
         this.feeTierText = new TextView(context);
         this.paymentWidgetSubtitle = new PaymentWidgetSubtitle(context);
         setWidgetText();
@@ -86,7 +88,6 @@ public class RNQuadPayPaymentWidget extends LinearLayout {
     private void generateFeeText(){
         //Added for fee message
         SpannableStringBuilder sb = new SpannableStringBuilder();
-        sb.append("\n");
         if(maxFee % 2 == 0){
             int x = Math.round(maxFee);
             sb.append(PRE_FEE_TEXT)
@@ -229,8 +230,8 @@ public class RNQuadPayPaymentWidget extends LinearLayout {
     }
 
     public void setLearnMoreUrl(String learnMoreUrl){
-        if(learnMoreUrl != null) {
-            this.learnMoreUrl = learnMoreUrl;
+        if(!learnMoreUrl.equals("")) {
+            this.learnMoreUrl = UriUtility.Scheme.addIfMissing(learnMoreUrl);
         }else{
             this.learnMoreUrl = "";
         }

@@ -20,6 +20,8 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
+
+import com.quadpay.quadpay.Network.UriUtility;
 import com.quadpay.quadpay.Network.WidgetData;
 import com.quadpay.quadpay.GatewayClient;
 import com.quadpay.quadpay.QuadPayInfoSpan;
@@ -37,35 +39,34 @@ import retrofit2.Response;
 
 
 
-@SuppressLint("AppCompatCustomView")
+@SuppressLint({"AppCompatCustomView", "ViewConstructor"})
 public class QuadPayWidgetTextView extends TextView {
 
-    private SpannableStringBuilder sb = new SpannableStringBuilder();
+    private final SpannableStringBuilder sb = new SpannableStringBuilder();
     private SpannableString amountString = null;
-    private String amount = null;
-    private String min = null;
-    private String max = null;
-    private String widgetVerbiage = null;
-    private String widgetTextMin = null;
-    private String widgetTextMax = null;
-    private String subtextLayout = null;
+    private final String amount;
+    private final String min;
+    private final String max;
+    private final String widgetVerbiage;
+    private final String widgetTextMin;
+    private final String widgetTextMax;
     private Boolean hasFees;
-    private Boolean subTextLayout = false;
-    private String logoOption = null;
-    private String displayMode = null;
-    private String widgetSubtext = null;
-    private String logoSize = null;
-    private Drawable info = null;
-    private String size =null;
-    private String alignment = null;
-    private String priceColor = null;
+    private final Boolean subTextLayout;
+    private final String logoOption;
+    private final String displayMode;
+    private final String widgetSubtext;
+    private final String logoSize;
+    private final Drawable info;
+    private final String size;
+    private final String alignment;
+    private final String priceColor;
     private Float maxFee = 0f;
     private String bankPartner;
 
-    private String merchantId = null;
-    private String isMFPPMerchant = null;
-    private String learnMoreUrl = null;
-    private String minModal = null;
+    private final String merchantId;
+    private final String isMFPPMerchant;
+    private final String learnMoreUrl;
+    private final String minModal;
 
 
     private String widgetText = null;
@@ -79,8 +80,8 @@ public class QuadPayWidgetTextView extends TextView {
         widgetVerbiage = context.getString(R.string.widget_text);
         widgetTextMin = context.getString(R.string.widget_text_min);
         widgetTextMax = context.getString(R.string.widget_text_max);
-        subtextLayout = attributes.getString(R.styleable.QuadPayWidget_subTextLayout);
-        subTextLayout = subtextLayout!=null && subtextLayout.equals("true")?true :false;
+        String subtextLayout = attributes.getString(R.styleable.QuadPayWidget_subTextLayout);
+        subTextLayout = subtextLayout != null && subtextLayout.equals("true");
         logoOption = attributes.getString(R.styleable.QuadPayWidget_logoOption);
         displayMode = attributes.getString(R.styleable.QuadPayWidget_displayMode);
         widgetSubtext = context.getString(R.string.widget_subtext);
@@ -92,7 +93,7 @@ public class QuadPayWidgetTextView extends TextView {
 
         merchantId = attributes.getString(R.styleable.QuadPayWidget_merchantId);
         isMFPPMerchant =attributes.getString(R.styleable.QuadPayWidget_isMFPPMerchant);
-        learnMoreUrl =attributes.getString(R.styleable.QuadPayWidget_learnMoreUrl);
+        learnMoreUrl =UriUtility.Scheme.addIfMissing(attributes.getString(R.styleable.QuadPayWidget_learnMoreUrl));
         minModal = attributes.getString(R.styleable.QuadPayWidget_minModal);
 
 
@@ -103,7 +104,7 @@ public class QuadPayWidgetTextView extends TextView {
     }
 
     public static float getLogoSize(String size){
-        Float sizePercentage = Float.parseFloat((size.replace("%","")));
+        float sizePercentage = Float.parseFloat((size.replace("%","")));
         if(sizePercentage<=90f){
             sizePercentage = 90/100f;
         }
@@ -116,7 +117,7 @@ public class QuadPayWidgetTextView extends TextView {
     }
 
     public Float getTextSizeFromAttributes(String size){
-        Float sizePercentage = Float.parseFloat(size.replace("%",""));
+        float sizePercentage = Float.parseFloat(size.replace("%",""));
 
         if(sizePercentage<90.0) {
             sizePercentage = 90f/100;
@@ -137,7 +138,7 @@ public class QuadPayWidgetTextView extends TextView {
     }
 
     public static Drawable getLogo(String logoOption, Context context){
-        Drawable logo=null;
+        Drawable logo;
 
         switch (logoOption) {
             case "secondary":
@@ -167,10 +168,6 @@ public class QuadPayWidgetTextView extends TextView {
     }
 
     public void SetDrawableBoundsZip(Drawable drawable, String logoSize){
-        float aspectRatio = (float) drawable.getIntrinsicWidth() / (float) drawable.getIntrinsicHeight();
-        TextPaint paint = getPaint();
-        Paint.FontMetrics paintFontMetrics = paint.getFontMetrics();
-
         float drawableHeight = drawable.getIntrinsicHeight() * (logoSize.equals("")? 1:getLogoSize(logoSize));
         float drawableWidth = drawable.getIntrinsicWidth() * (logoSize.equals("") ? 1:getLogoSize(logoSize));
         drawable.setBounds(0, 0, (int) drawableWidth, (int) drawableHeight);
@@ -201,7 +198,7 @@ public class QuadPayWidgetTextView extends TextView {
             try{
                 ForegroundColorSpan colorSpan = new ForegroundColorSpan(Color.parseColor(priceColor));
                 amountString.setSpan(colorSpan, 0, amountString.length(), Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
-            }catch(Exception e){
+            }catch(Exception ignored){
 
             }
         }
@@ -259,7 +256,7 @@ public class QuadPayWidgetTextView extends TextView {
                     bankPartner) {
 
             }, sb.length() - 3, sb.length(), Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
-            sb.append("\n" + widgetText.replace("4 payments ", ""));
+            sb.append("\n").append(widgetText.replace("4 payments ", ""));
             sb.append(amountString);
         } else {
             SpannableString ss = new SpannableString("or "+ widgetText);
@@ -350,7 +347,7 @@ public class QuadPayWidgetTextView extends TextView {
     public void SetWidgetLayout(Context context) {
         SetDrawableBounds(info);
         VerticalImageSpan imageSpanInfo = new VerticalImageSpan(info,false);
-        VerticalImageSpan imageSpanLogo = null;
+        VerticalImageSpan imageSpanLogo;
         Drawable logo = Logo(logoOption,context);
         if(logoSize!=null){
             SetDrawableBoundsZip(logo, logoSize);
@@ -388,13 +385,10 @@ public class QuadPayWidgetTextView extends TextView {
         SetAmount();
         setAmountStyle();
         if (displayMode != null && !subTextLayout) {
-            switch (displayMode) {
-                case "logoFirst":
-                    WidgetLogoFirst(sb,imageSpanLogo,amountString,imageSpanInfo,widgetText,size,isMFPPMerchant,learnMoreUrl,minModal, merchantId,alignment);
-                    break;
-                default:
-                    WidgetDefault(sb,imageSpanLogo,amountString,imageSpanInfo,widgetText,size,false,widgetSubtext,isMFPPMerchant,learnMoreUrl,minModal, merchantId,alignment);
-                    break;
+            if ("logoFirst".equals(displayMode)) {
+                WidgetLogoFirst(sb, imageSpanLogo, amountString, imageSpanInfo, widgetText, size, isMFPPMerchant, learnMoreUrl, minModal, merchantId, alignment);
+            } else {
+                WidgetDefault(sb, imageSpanLogo, amountString, imageSpanInfo, widgetText, size, false, widgetSubtext, isMFPPMerchant, learnMoreUrl, minModal, merchantId, alignment);
             }
         } else {
             WidgetDefault(sb,imageSpanLogo,amountString,imageSpanInfo,widgetText,size,subTextLayout,widgetSubtext,isMFPPMerchant,learnMoreUrl,minModal, merchantId,alignment);
@@ -447,7 +441,7 @@ public class QuadPayWidgetTextView extends TextView {
             }
 
             @Override
-            public void onFailure(Call<WidgetData>call, Throwable t){
+            public void onFailure(@NonNull Call<WidgetData>call, @NonNull Throwable t){
                 setLayout(imageSpanLogo,imageSpanInfo);
             }
         });

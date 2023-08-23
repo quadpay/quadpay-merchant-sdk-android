@@ -10,6 +10,7 @@ import android.widget.LinearLayout;
 import androidx.annotation.NonNull;
 
 import com.quadpay.quadpay.GatewayClient;
+import com.quadpay.quadpay.Network.UriUtility;
 import com.quadpay.quadpay.R;
 import com.quadpay.quadpay.Network.WidgetData;
 
@@ -39,7 +40,7 @@ public class QuadPayPaymentWidget extends LinearLayout {
         setOrientation(LinearLayout.VERTICAL);
         TypedArray attributes = context.obtainStyledAttributes(attrs, R.styleable.QuadPayPaymentWidget);
         String merchantId = attributes.getString(R.styleable.QuadPayPaymentWidget_merchantId);
-        learnMoreUrl = attributes.getString(R.styleable.QuadPayPaymentWidget_learnMoreUrl);
+        learnMoreUrl = UriUtility.Scheme.addIfMissing(attributes.getString(R.styleable.QuadPayPaymentWidget_learnMoreUrl));
         isMFPPMerchant = attributes.getString(R.styleable.QuadPayPaymentWidget_isMFPPMerchant);
         minModal = attributes.getString(R.styleable.QuadPayPaymentWidget_minModal);
         String hideTimelineText = attributes.getString(R.styleable.QuadPayPaymentWidget_hideTimeline);
