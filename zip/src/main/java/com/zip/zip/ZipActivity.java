@@ -10,7 +10,7 @@ import android.webkit.WebView;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-abstract class QuadPayActivity extends AppCompatActivity {
+abstract class ZipActivity extends AppCompatActivity {
 
     ViewGroup container;
     WebView webView;
@@ -26,7 +26,7 @@ abstract class QuadPayActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
-        Log.d("SDKExample", "QuadPayActivity.onCreate");
+        Log.d("SDKExample", "Zip.onCreate");
 
         // Hide the action bar before we create
         this.getWindow().requestFeature(Window.FEATURE_ACTION_BAR);

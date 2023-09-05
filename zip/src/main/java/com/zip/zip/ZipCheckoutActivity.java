@@ -10,7 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 
-public class ZipCheckoutActivity extends QuadPayActivity
+public class ZipCheckoutActivity extends ZipActivity
         implements ZipJSMessageListener, ZipWebViewClient.WebViewClientCallbacks {
     static void start(@NonNull Activity activity,
                       @NonNull ZipCheckoutDetails details,
