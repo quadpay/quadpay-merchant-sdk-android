@@ -2,11 +2,11 @@ package com.zip.zip;
 
 import android.webkit.JavascriptInterface;
 
-public class QuadPayJSInterface {
+public class ZipJSInterface {
 
   private ZipJSMessageListener listener;
 
-  public QuadPayJSInterface(ZipJSMessageListener listener) {
+  public ZipJSInterface(ZipJSMessageListener listener) {
     this.listener = listener;
   }
 

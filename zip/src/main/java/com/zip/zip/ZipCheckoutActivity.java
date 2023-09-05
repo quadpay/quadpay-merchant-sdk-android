@@ -50,7 +50,7 @@ public class ZipCheckoutActivity extends QuadPayActivity
 
     @Override
     void initViews() {
-        webView.addJavascriptInterface(new QuadPayJSInterface(this), "zip");
+        webView.addJavascriptInterface(new ZipJSInterface(this), "zip");
         webView.setWebViewClient(new ZipWebViewClient(this) {
         });
     }
