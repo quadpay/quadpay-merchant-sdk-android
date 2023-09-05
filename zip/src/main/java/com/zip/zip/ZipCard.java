@@ -3,14 +3,14 @@ package com.zip.zip;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class QuadPayCard {
+public class ZipCard {
     public String cvc;
     public String number;
     public String expirationMonth;
     public String expirationYear;
     public String brand;
 
-    QuadPayCard(JSONObject jsonMessage) throws JSONException {
+    ZipCard(JSONObject jsonMessage) throws JSONException {
         cvc = jsonMessage.getString("cvc");
         number = jsonMessage.getString("number");
         expirationMonth = jsonMessage.getString("expirationMonth");
