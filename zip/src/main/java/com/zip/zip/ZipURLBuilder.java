@@ -42,7 +42,7 @@ public class ZipURLBuilder {
         return "";
     }
 
-    private static String assembleParams(QuadPayCheckoutDetails details) throws UnsupportedEncodingException {
+    private static String assembleParams(ZipCheckoutDetails details) throws UnsupportedEncodingException {
         return "MerchantId=" + QuadPay.configuration.merchantId
                 + field("order.amount", details.amount)
                 + field("merchantReference", details.merchantReference)
@@ -61,7 +61,7 @@ public class ZipURLBuilder {
                 + field("metadata.platform", "android");
     }
 
-    static String buildCheckoutURL(QuadPayCheckoutDetails details) throws InvalidParameterException {
+    static String buildCheckoutURL(ZipCheckoutDetails details) throws InvalidParameterException {
         try {
             return baseURL() + "/mobile/authorize/?" + assembleParams(details);
         } catch (UnsupportedEncodingException e) {
@@ -70,7 +70,7 @@ public class ZipURLBuilder {
 
     }
 
-    public static String buildVirtualCheckoutURL(QuadPayCheckoutDetails details) throws InvalidParameterException {
+    public static String buildVirtualCheckoutURL(ZipCheckoutDetails details) throws InvalidParameterException {
         try {
             return baseURL() + "/mobile/virtual/authorize/?" + assembleParams(details);
         } catch (UnsupportedEncodingException e) {

@@ -14,7 +14,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import android.widget.Button;
 import com.zip.zip.QuadPay;
-import com.zip.zip.QuadPayCheckoutDetails;
+import com.zip.zip.ZipCheckoutDetails;
 import com.zip.sdkexample.R;
 
 public class HomeFragment extends Fragment {
@@ -36,7 +36,7 @@ public class HomeFragment extends Fragment {
         });
 
         Button button = root.findViewById(R.id.button);
-        final QuadPayCheckoutDetails details = new QuadPayCheckoutDetails();
+        final ZipCheckoutDetails details = new ZipCheckoutDetails();
         details.amount = "100";
         details.customerFirstName = "Quincy";
         details.merchantReference = "customer-order-492101";

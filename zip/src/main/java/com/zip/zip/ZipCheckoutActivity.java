@@ -13,7 +13,7 @@ import androidx.annotation.Nullable;
 public class ZipCheckoutActivity extends QuadPayActivity
         implements ZipJSMessageListener, ZipWebViewClient.WebViewClientCallbacks {
     static void start(@NonNull Activity activity,
-                      @NonNull QuadPayCheckoutDetails details,
+                      @NonNull ZipCheckoutDetails details,
                       boolean virtual) throws InvalidParameterException {
         final Intent intent = new Intent(activity, ZipCheckoutActivity.class);
         if (virtual) {
@@ -29,7 +29,7 @@ public class ZipCheckoutActivity extends QuadPayActivity
         }
     }
 
-    static void start(@NonNull Activity activity, @NonNull QuadPayCheckoutDetails details) {
+    static void start(@NonNull Activity activity, @NonNull ZipCheckoutDetails details) {
         start(activity, details, false);
     }
 

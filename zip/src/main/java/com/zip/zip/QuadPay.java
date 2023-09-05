@@ -46,13 +46,13 @@ public final class QuadPay {
 
     public static void startCheckout(
             @NonNull Activity activity,
-            @NonNull QuadPayCheckoutDetails details) {
+            @NonNull ZipCheckoutDetails details) {
         ZipCheckoutActivity.start(activity, details);
     }
 
     public static void startVirtualCheckout(
             @NonNull Activity activity,
-            @NonNull QuadPayCheckoutDetails details) {
+            @NonNull ZipCheckoutDetails details) {
         ZipCheckoutActivity.start(activity, details, true);
     }
 

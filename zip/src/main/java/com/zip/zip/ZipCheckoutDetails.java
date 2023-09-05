@@ -1,6 +1,6 @@
 package com.zip.zip;
 
-public class QuadPayCheckoutDetails {
+public class ZipCheckoutDetails {
     public String amount;
     public String merchantReference;
     public String customerEmail;
