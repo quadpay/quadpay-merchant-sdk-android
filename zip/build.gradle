@@ -21,13 +21,13 @@ android {
 
             buildConfigField "String", "CdnUrl", "\"${project.CdnUrl_Prod}\""
             buildConfigField "String", "GatewayUrl", "\"${project.Gateway_Prod}\""
-            buildConfigField "String", "QuadPayJSUrl", "\"${project.QuadPayJSUrl_Prod}\""
+            buildConfigField "String", "ZipJSUrl", "\"${project.ZipJSUrl_Prod}\""
         }
 
         debug{
             buildConfigField "String", "CdnUrl", "\"${project.CdnUrl_Dev}\""
             buildConfigField "String", "GatewayUrl", "\"${project.Gateway_Dev}\""
-            buildConfigField "String", "QuadPayJSUrl", "\"${project.QuadPayJSUrl_Dev}\""
+            buildConfigField "String", "ZipJSUrl", "\"${project.ZipJSUrl_Dev}\""
         }
     }
 }
