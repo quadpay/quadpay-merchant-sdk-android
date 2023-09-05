@@ -1,2 +1,2 @@
-include ':example', ':quadpay'
+include ':example', ':zip'
 rootProject.name='QuadPaySDK'

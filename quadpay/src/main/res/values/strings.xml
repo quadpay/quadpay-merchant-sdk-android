@@ -1,7 +1,0 @@
-<resources>
-    <string name="app_name">quadpay</string>
-    <string name="widget_text">4 payments of</string>
-    <string name="widget_text_min">4 payments on orders over</string>
-    <string name="widget_text_max">4 payments on orders up to</string>
-    <string name="widget_subtext">4 easy payments of</string>
-</resources>

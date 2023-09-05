@@ -151,7 +151,7 @@
 
 <!--            </com.quadpay.quadpay.Widget.QuadPayWidget>-->
 
-            <com.quadpay.quadpay.Widget.QuadPayWidget
+            <com.zip.zip.Widget.QuadPayWidget
                 android:id="@+id/quadpay_widget10"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -163,7 +163,7 @@
                 app:priceColor="#A06020"
                 app:size="90%">
 
-            </com.quadpay.quadpay.Widget.QuadPayWidget>
+            </com.zip.zip.Widget.QuadPayWidget>
 
 <!--            <com.quadpay.quadpay.Widget.QuadPayWidget-->
 <!--                android:id="@+id/quadpay_widget11"-->
@@ -203,7 +203,7 @@
 <!--                app:merchantId="9d6a5735-adce-462c-9899-2c3dd7b64ac3"-->
 <!--                />-->
 
-            <com.quadpay.quadpay.PaymentWidget.QuadPayPaymentWidget
+            <com.zip.zip.PaymentWidget.QuadPayPaymentWidget
                 android:id="@+id/payment_widget2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -214,7 +214,7 @@
              
                 app:learnMoreUrl="www.google.com" />
 
-            <com.quadpay.quadpay.PaymentWidget.QuadPayPaymentWidget
+            <com.zip.zip.PaymentWidget.QuadPayPaymentWidget
                 android:id="@+id/payment_widget3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -225,9 +225,9 @@
                 app:amount="75"
                 >
 
-            </com.quadpay.quadpay.PaymentWidget.QuadPayPaymentWidget>
+            </com.zip.zip.PaymentWidget.QuadPayPaymentWidget>
 
-            <com.quadpay.quadpay.PaymentWidget.QuadPayPaymentWidget
+            <com.zip.zip.PaymentWidget.QuadPayPaymentWidget
                 android:id="@+id/payment_widget4"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
