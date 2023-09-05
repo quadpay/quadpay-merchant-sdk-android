@@ -35,7 +35,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class RNQuadPayPaymentWidget extends LinearLayout {
+public class RNZipPaymentWidget extends LinearLayout {
 
     private final Timelapse timelapse;
     private final TextView paymentWidgetHeader;
@@ -64,7 +64,7 @@ public class RNQuadPayPaymentWidget extends LinearLayout {
     private Boolean hasFees = false;
 
 
-    public RNQuadPayPaymentWidget(@NonNull Context context) {
+    public RNZipPaymentWidget(@NonNull Context context) {
         super(context);
         setOrientation(LinearLayout.VERTICAL);
         setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));

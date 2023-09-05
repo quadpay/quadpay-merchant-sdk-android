@@ -36,7 +36,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 
-public class RNQuadPayWidget extends FrameLayout {
+public class RNZipWidget extends FrameLayout {
 
     private final TextView widgetMessage;
     private String min = "35";
@@ -60,7 +60,7 @@ public class RNQuadPayWidget extends FrameLayout {
     private float maxFee = 0f;
     private float amount;
 
-    public RNQuadPayWidget(@NonNull Context context) {
+    public RNZipWidget(@NonNull Context context) {
         super(context);
         this.widgetMessage = new TextView(context);
         this.widgetMessage.setTextColor(Color.BLACK);
