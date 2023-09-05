@@ -92,7 +92,7 @@ public final class QuadPay {
         return false;
     }
 
-    public static boolean handleQuadPayActivityResults(QuadPayCheckoutDelegate delegate, int requestCode, int resultCode, Intent data) {
+    public static boolean handleQuadPayActivityResults(ZipCheckoutDelegate delegate, int requestCode, int resultCode, Intent data) {
         if (requestCode == QUADPAY_ACTIVITY_REQUEST_CODE) {
 //            Log.d("SDKExample", "QuadPayActivity finished - " + requestCode + " " + resultCode);
             switch (resultCode) {

@@ -15,7 +15,7 @@ import static android.app.Activity.RESULT_OK;
  * @see <a href="http://d.android.com/tools/testing">Testing documentation</a>
  */
 public class DelegationUnitTest {
-    QuadPayCheckoutDelegate delegate;
+    ZipCheckoutDelegate delegate;
     boolean calledSuccess;
     boolean calledCancelled;
     boolean calledError;
@@ -42,7 +42,7 @@ public class DelegationUnitTest {
 
     @Before
     public void initialize() {
-        delegate = new QuadPayCheckoutDelegate() {
+        delegate = new ZipCheckoutDelegate() {
             @Override
             public void checkoutSuccessful(String orderId, ZipCustomer customer) {
                 calledSuccess = true;
