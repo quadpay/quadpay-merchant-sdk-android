@@ -44,7 +44,7 @@ public class DelegationUnitTest {
     public void initialize() {
         delegate = new QuadPayCheckoutDelegate() {
             @Override
-            public void checkoutSuccessful(String orderId, QuadPayCustomer customer) {
+            public void checkoutSuccessful(String orderId, ZipCustomer customer) {
                 calledSuccess = true;
             }
 

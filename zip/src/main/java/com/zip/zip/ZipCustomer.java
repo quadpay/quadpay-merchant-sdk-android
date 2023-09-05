@@ -3,7 +3,7 @@ package com.zip.zip;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class QuadPayCustomer {
+public class ZipCustomer {
     public String firstName;
     public String lastName;
     public String address1;
@@ -15,7 +15,7 @@ public class QuadPayCustomer {
     public String email;
     public String phoneNumber;
 
-    QuadPayCustomer(JSONObject jsonMessage) throws JSONException {
+    ZipCustomer(JSONObject jsonMessage) throws JSONException {
         firstName = jsonMessage.getString("firstName");
         lastName = jsonMessage.getString("lastName");
         address1 = jsonMessage.getString("address1");

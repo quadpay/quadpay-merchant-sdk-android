@@ -16,7 +16,7 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import com.zip.zip.QuadPay;
-import com.zip.zip.QuadPayCustomer;
+import com.zip.zip.ZipCustomer;
 import com.zip.zip.QuadPayCard;
 import com.zip.zip.QuadPayCardholder;
 import com.zip.zip.ZipVirtualCheckoutDelegate;
@@ -52,7 +52,7 @@ public class MainActivity extends AppCompatActivity implements ZipVirtualCheckou
 
 // This is what the callback would look like for virtual checkout -- not needed for the standard integration!
     @Override
-    public void checkoutSuccessful(QuadPayCard card, QuadPayCardholder cardholder, QuadPayCustomer customer, String orderId) {
+    public void checkoutSuccessful(QuadPayCard card, QuadPayCardholder cardholder, ZipCustomer customer, String orderId) {
         Log.d("SDKExample", "QuadPay virtual checkout successful - " + card.toString() + " for "  + cardholder.toString() + " customer: " + customer.toString() + "for Order Id: " + orderId);
         alertTo("QuadPaySDK.checkoutSuccessful: " + card.number);
     }
