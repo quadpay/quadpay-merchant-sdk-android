@@ -38,7 +38,7 @@ abstract class QuadPayActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.quadpay_activity_webview);
+        setContentView(R.layout.zip_activity_webview);
         container = getWindow().getDecorView().findViewById(android.R.id.content);
         webView = findViewById(R.id.webview);
 

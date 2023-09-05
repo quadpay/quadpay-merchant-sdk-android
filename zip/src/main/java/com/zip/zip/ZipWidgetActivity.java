@@ -20,7 +20,7 @@ public class ZipWidgetActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-        this.setContentView(R.layout.quadpay_activity_webview);
+        this.setContentView(R.layout.zip_activity_webview);
         WindowManager windowManager = (WindowManager) getApplicationContext().getSystemService(Context.WINDOW_SERVICE);
         this.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT,  windowManager.getCurrentWindowMetrics().getBounds().height()*80/100);
 
