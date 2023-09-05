@@ -47,13 +47,13 @@ public final class QuadPay {
     public static void startCheckout(
             @NonNull Activity activity,
             @NonNull QuadPayCheckoutDetails details) {
-        QuadPayCheckoutActivity.start(activity, details);
+        ZipCheckoutActivity.start(activity, details);
     }
 
     public static void startVirtualCheckout(
             @NonNull Activity activity,
             @NonNull QuadPayCheckoutDetails details) {
-        QuadPayCheckoutActivity.start(activity, details, true);
+        ZipCheckoutActivity.start(activity, details, true);
     }
 
     public static boolean handleQuadPayActivityResults(ZipVirtualCheckoutDelegate delegate, int requestCode, int resultCode, Intent data) {

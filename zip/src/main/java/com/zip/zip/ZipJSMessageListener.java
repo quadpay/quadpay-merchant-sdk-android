@@ -1,5 +1,5 @@
 package com.zip.zip;
 
-public interface QuadPayJSMessageListener {
+public interface ZipJSMessageListener {
   void receiveMessage(String message);
 }

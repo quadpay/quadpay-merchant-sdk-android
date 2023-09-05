@@ -4,9 +4,9 @@ import android.webkit.JavascriptInterface;
 
 public class QuadPayJSInterface {
 
-  private QuadPayJSMessageListener listener;
+  private ZipJSMessageListener listener;
 
-  public QuadPayJSInterface(QuadPayJSMessageListener listener) {
+  public QuadPayJSInterface(ZipJSMessageListener listener) {
     this.listener = listener;
   }
 

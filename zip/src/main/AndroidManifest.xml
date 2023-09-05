@@ -9,7 +9,7 @@
     </queries>
     <application>
         <activity
-            android:name=".QuadPayCheckoutActivity"
+            android:name=".ZipCheckoutActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:launchMode="singleTop"
             android:windowSoftInputMode="adjustResize"

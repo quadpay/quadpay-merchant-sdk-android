@@ -10,12 +10,12 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 
-public class QuadPayCheckoutActivity extends QuadPayActivity
-        implements QuadPayJSMessageListener, ZipWebViewClient.WebViewClientCallbacks {
+public class ZipCheckoutActivity extends QuadPayActivity
+        implements ZipJSMessageListener, ZipWebViewClient.WebViewClientCallbacks {
     static void start(@NonNull Activity activity,
                       @NonNull QuadPayCheckoutDetails details,
                       boolean virtual) throws InvalidParameterException {
-        final Intent intent = new Intent(activity, QuadPayCheckoutActivity.class);
+        final Intent intent = new Intent(activity, ZipCheckoutActivity.class);
         if (virtual) {
             String dest = QuadPayURLBuilder.buildVirtualCheckoutURL(details);
             Log.d("SDKExample", "start activity dest: " + dest);
