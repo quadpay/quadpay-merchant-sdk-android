@@ -17,12 +17,12 @@ public class ZipCheckoutActivity extends QuadPayActivity
                       boolean virtual) throws InvalidParameterException {
         final Intent intent = new Intent(activity, ZipCheckoutActivity.class);
         if (virtual) {
-            String dest = QuadPayURLBuilder.buildVirtualCheckoutURL(details);
+            String dest = ZipURLBuilder.buildVirtualCheckoutURL(details);
             Log.d("SDKExample", "start activity dest: " + dest);
             intent.putExtra(QuadPay.QUADPAY_ACTIVITY_EXTRA, dest);
             activity.startActivityForResult(intent, QuadPay.QUADPAY_ACTIVITY_REQUEST_CODE);
         } else {
-            String dest = QuadPayURLBuilder.buildCheckoutURL(details);
+            String dest = ZipURLBuilder.buildCheckoutURL(details);
             Log.d("SDKExample", "start activity dest: " + dest);
             intent.putExtra(QuadPay.QUADPAY_ACTIVITY_EXTRA, dest);
             activity.startActivityForResult(intent, QuadPay.QUADPAY_ACTIVITY_REQUEST_CODE);

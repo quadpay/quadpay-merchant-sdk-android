@@ -5,7 +5,7 @@ import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.security.InvalidParameterException;
 
-public class QuadPayURLBuilder {
+public class ZipURLBuilder {
     static String baseURL() {
         switch (QuadPay.configuration.environment) {
             case SANDBOX:
