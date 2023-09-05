@@ -91,7 +91,7 @@ public class MainActivity extends AppCompatActivity implements ZipVirtualCheckou
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         Log.d("SDKExample", "onActivityResult - " + requestCode + " " + resultCode);
-        if (Zip.handleQuadPayActivityResults(
+        if (Zip.handleZipActivityResults(
                 this,
                 requestCode,
                 resultCode,

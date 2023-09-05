@@ -56,9 +56,9 @@ public final class Zip {
         ZipCheckoutActivity.start(activity, details, true);
     }
 
-    public static boolean handleQuadPayActivityResults(ZipVirtualCheckoutDelegate delegate, int requestCode, int resultCode, Intent data) {
+    public static boolean handleZipActivityResults(ZipVirtualCheckoutDelegate delegate, int requestCode, int resultCode, Intent data) {
         if (requestCode == ZIP_ACTIVITY_REQUEST_CODE) {
-            Log.d("SDKExample", "QuadPayActivity finished - " + requestCode + " " + resultCode);
+            Log.d("SDKExample", "ZipActivity finished - " + requestCode + " " + resultCode);
             switch (resultCode) {
                 case RESULT_OK:
                     // Unpack the intent data with message
@@ -94,7 +94,7 @@ public final class Zip {
 
     public static boolean handleZipActivityResults(ZipCheckoutDelegate delegate, int requestCode, int resultCode, Intent data) {
         if (requestCode == ZIP_ACTIVITY_REQUEST_CODE) {
-//            Log.d("SDKExample", "QuadPayActivity finished - " + requestCode + " " + resultCode);
+//            Log.d("SDKExample", "ZipActivity finished - " + requestCode + " " + resultCode);
             switch (resultCode) {
                 case RESULT_OK:
                     // Unpack the intent data with message
