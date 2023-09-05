@@ -40,7 +40,7 @@ import retrofit2.Response;
 
 
 @SuppressLint({"AppCompatCustomView", "ViewConstructor"})
-public class QuadPayWidgetTextView extends TextView {
+public class ZipWidgetTextView extends TextView {
 
     private final SpannableStringBuilder sb = new SpannableStringBuilder();
     private SpannableString amountString = null;
@@ -72,7 +72,7 @@ public class QuadPayWidgetTextView extends TextView {
     private String widgetText = null;
     private ArrayList<WidgetData.FeeTier> feeTiers = null;
 
-    public QuadPayWidgetTextView(Context context, TypedArray attributes) {
+    public ZipWidgetTextView(Context context, TypedArray attributes) {
         super(context);
         amount = attributes.getString(R.styleable.ZipWidget_amount);
         min = attributes.getString(R.styleable.ZipWidget_min);

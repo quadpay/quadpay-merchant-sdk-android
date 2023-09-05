@@ -9,10 +9,10 @@ import com.zip.zip.R;
 
 
 
-public class QuadPayWidget extends FrameLayout {
+public class ZipWidget extends FrameLayout {
 
 
-    public QuadPayWidget(@NonNull Context context, AttributeSet attrs) {
+    public ZipWidget(@NonNull Context context, AttributeSet attrs) {
         super(context,attrs);
 
         TypedArray attributes = context.obtainStyledAttributes(attrs, R.styleable.ZipWidget);
@@ -20,8 +20,8 @@ public class QuadPayWidget extends FrameLayout {
     }
 
     public void Widget(Context context, TypedArray attributes) {
-        QuadPayWidgetTextView quadPayWidgetTextView = new QuadPayWidgetTextView(context, attributes);
-        addView(quadPayWidgetTextView);
+        ZipWidgetTextView zipWidgetTextView = new ZipWidgetTextView(context, attributes);
+        addView(zipWidgetTextView);
     }
 }
 

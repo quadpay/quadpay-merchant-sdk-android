@@ -22,7 +22,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class QuadPayPaymentWidget extends LinearLayout {
+public class ZipPaymentWidget extends LinearLayout {
     private ArrayList<WidgetData.FeeTier> feeTiers = null;
 
     private final String learnMoreUrl;
@@ -35,7 +35,7 @@ public class QuadPayPaymentWidget extends LinearLayout {
     private String bankPartner;
     private Float maxFee = 0f;
 
-    public QuadPayPaymentWidget(@NonNull Context context, AttributeSet attrs) {
+    public ZipPaymentWidget(@NonNull Context context, AttributeSet attrs) {
         super(context, attrs);
         setOrientation(LinearLayout.VERTICAL);
         TypedArray attributes = context.obtainStyledAttributes(attrs, R.styleable.ZipPaymentWidget);
