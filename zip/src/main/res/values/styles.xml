@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="QuadPayDialog" parent="Theme.AppCompat.DayNight.Dialog">
+    <style name="ZipDialog" parent="Theme.AppCompat.DayNight.Dialog">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
         <item name="android:windowIsFloating">true</item>

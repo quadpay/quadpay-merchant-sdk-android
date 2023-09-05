@@ -15,7 +15,7 @@ public class QuadPayWidget extends FrameLayout {
     public QuadPayWidget(@NonNull Context context, AttributeSet attrs) {
         super(context,attrs);
 
-        TypedArray attributes = context.obtainStyledAttributes(attrs, R.styleable.QuadPayWidget);
+        TypedArray attributes = context.obtainStyledAttributes(attrs, R.styleable.ZipWidget);
         Widget(context,attributes);
     }
 

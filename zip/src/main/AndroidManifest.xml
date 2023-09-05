@@ -18,7 +18,7 @@
         <activity
             android:name=".ZipWidgetActivity"
             android:configChanges="orientation|screenSize|screenLayout|keyboardHidden"
-            android:theme="@style/QuadPayDialog"
+            android:theme="@style/ZipDialog"
             android:exported="true">
         </activity>
     </application>

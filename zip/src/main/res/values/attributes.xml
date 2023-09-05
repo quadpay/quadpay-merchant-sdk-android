@@ -1,5 +1,5 @@
 <resources>
-    <declare-styleable name="QuadPayWidget">
+    <declare-styleable name="ZipWidget">
         <attr name="merchantId" format="string"/>
         <attr name="learnMoreUrl" format="string"/>
         <attr name="amount" format="string"/>
@@ -16,7 +16,7 @@
         <attr name="alignment" format="string"/>
     </declare-styleable>
 
-    <declare-styleable name="QuadPayPaymentWidget" parent="QuadPayWidget">
+    <declare-styleable name="ZipPaymentWidget" parent="ZipWidget">
         <attr name="merchantId"/>
         <attr name="learnMoreUrl"/>
         <attr name="amount"/>

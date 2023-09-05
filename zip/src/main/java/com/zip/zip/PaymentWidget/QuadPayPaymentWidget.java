@@ -38,16 +38,16 @@ public class QuadPayPaymentWidget extends LinearLayout {
     public QuadPayPaymentWidget(@NonNull Context context, AttributeSet attrs) {
         super(context, attrs);
         setOrientation(LinearLayout.VERTICAL);
-        TypedArray attributes = context.obtainStyledAttributes(attrs, R.styleable.QuadPayPaymentWidget);
-        String merchantId = attributes.getString(R.styleable.QuadPayPaymentWidget_merchantId);
-        learnMoreUrl = UriUtility.Scheme.addIfMissing(attributes.getString(R.styleable.QuadPayPaymentWidget_learnMoreUrl));
-        isMFPPMerchant = attributes.getString(R.styleable.QuadPayPaymentWidget_isMFPPMerchant);
-        minModal = attributes.getString(R.styleable.QuadPayPaymentWidget_minModal);
-        String hideTimelineText = attributes.getString(R.styleable.QuadPayPaymentWidget_hideTimeline);
-        color = attributes.getString(R.styleable.QuadPayPaymentWidget_timelineColor);
-        String amount = attributes.getString(R.styleable.QuadPayPaymentWidget_amount);
+        TypedArray attributes = context.obtainStyledAttributes(attrs, R.styleable.ZipPaymentWidget);
+        String merchantId = attributes.getString(R.styleable.ZipPaymentWidget_merchantId);
+        learnMoreUrl = UriUtility.Scheme.addIfMissing(attributes.getString(R.styleable.ZipPaymentWidget_learnMoreUrl));
+        isMFPPMerchant = attributes.getString(R.styleable.ZipPaymentWidget_isMFPPMerchant);
+        minModal = attributes.getString(R.styleable.ZipPaymentWidget_minModal);
+        String hideTimelineText = attributes.getString(R.styleable.ZipPaymentWidget_hideTimeline);
+        color = attributes.getString(R.styleable.ZipPaymentWidget_timelineColor);
+        String amount = attributes.getString(R.styleable.ZipPaymentWidget_amount);
         amountValue = amount != null ? Float.parseFloat(amount) : 0;
-        String hideSubtitleText = attributes.getString(R.styleable.QuadPayPaymentWidget_hideSubtitle);
+        String hideSubtitleText = attributes.getString(R.styleable.ZipPaymentWidget_hideSubtitle);
         hideSubtitle = hideSubtitleText != null && hideSubtitleText.equalsIgnoreCase("true") ? View.GONE : View.VISIBLE;
         hideTimeline = hideTimelineText != null && hideTimelineText.equalsIgnoreCase("true") ? View.GONE : View.VISIBLE;
         attributes.recycle();

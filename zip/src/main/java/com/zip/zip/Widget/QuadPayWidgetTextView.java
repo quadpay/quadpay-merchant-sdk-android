@@ -74,27 +74,27 @@ public class QuadPayWidgetTextView extends TextView {
 
     public QuadPayWidgetTextView(Context context, TypedArray attributes) {
         super(context);
-        amount = attributes.getString(R.styleable.QuadPayWidget_amount);
-        min = attributes.getString(R.styleable.QuadPayWidget_min);
-        max = attributes.getString(R.styleable.QuadPayWidget_max);
+        amount = attributes.getString(R.styleable.ZipWidget_amount);
+        min = attributes.getString(R.styleable.ZipWidget_min);
+        max = attributes.getString(R.styleable.ZipWidget_max);
         widgetVerbiage = context.getString(R.string.widget_text);
         widgetTextMin = context.getString(R.string.widget_text_min);
         widgetTextMax = context.getString(R.string.widget_text_max);
-        String subtextLayout = attributes.getString(R.styleable.QuadPayWidget_subTextLayout);
+        String subtextLayout = attributes.getString(R.styleable.ZipWidget_subTextLayout);
         subTextLayout = subtextLayout != null && subtextLayout.equals("true");
-        logoOption = attributes.getString(R.styleable.QuadPayWidget_logoOption);
-        displayMode = attributes.getString(R.styleable.QuadPayWidget_displayMode);
+        logoOption = attributes.getString(R.styleable.ZipWidget_logoOption);
+        displayMode = attributes.getString(R.styleable.ZipWidget_displayMode);
         widgetSubtext = context.getString(R.string.widget_subtext);
-        logoSize = attributes.getString(R.styleable.QuadPayWidget_logoSize);
+        logoSize = attributes.getString(R.styleable.ZipWidget_logoSize);
         info = ContextCompat.getDrawable(context,R.drawable.info);
-        size = attributes.getString(R.styleable.QuadPayWidget_size);
-        alignment = attributes.getString(R.styleable.QuadPayWidget_alignment);
-        priceColor = attributes.getString(R.styleable.QuadPayWidget_priceColor);
+        size = attributes.getString(R.styleable.ZipWidget_size);
+        alignment = attributes.getString(R.styleable.ZipWidget_alignment);
+        priceColor = attributes.getString(R.styleable.ZipWidget_priceColor);
 
-        merchantId = attributes.getString(R.styleable.QuadPayWidget_merchantId);
-        isMFPPMerchant =attributes.getString(R.styleable.QuadPayWidget_isMFPPMerchant);
-        learnMoreUrl =UriUtility.Scheme.addIfMissing(attributes.getString(R.styleable.QuadPayWidget_learnMoreUrl));
-        minModal = attributes.getString(R.styleable.QuadPayWidget_minModal);
+        merchantId = attributes.getString(R.styleable.ZipWidget_merchantId);
+        isMFPPMerchant =attributes.getString(R.styleable.ZipWidget_isMFPPMerchant);
+        learnMoreUrl =UriUtility.Scheme.addIfMissing(attributes.getString(R.styleable.ZipWidget_learnMoreUrl));
+        minModal = attributes.getString(R.styleable.ZipWidget_minModal);
 
 
         setTextColor(Color.BLACK);
