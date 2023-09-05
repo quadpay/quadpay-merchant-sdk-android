@@ -2,7 +2,7 @@ apply plugin: 'signing'
 apply plugin: 'maven-publish'
 
 ext.isReleaseVersion = !version.endsWith("SNAPSHOT")
-group = "com.quadpay"
+group = "com.zip"
 
 task androidJavadocs(type: Javadoc) {
     source = android.sourceSets.main.java.srcDirs
@@ -31,14 +31,14 @@ afterEvaluate {
             maven(MavenPublication) {
                 artifact androidJavadocsJar
                 artifact androidSourcesJar
-                artifact("$buildDir/outputs/aar/quadpay-release.aar")
-                artifact("$buildDir/libs/quadpay-${this.version}.jar")
+                artifact("$buildDir/outputs/aar/zip-release.aar")
+                artifact("$buildDir/libs/zip-${this.version}.jar")
                 pom {
-                    name = "com.quadpay.quadpay"
+                    name = "com.zip.zip"
                     groupId = this.group
-                    artifactId = 'quadpay'
+                    artifactId = 'zip'
                     version = this.version
-                    description = 'Quadpay\'s open-source Android SDK'
+                    description = 'Zip\'s open-source Android SDK'
                     url = 'https://github.com/quadpay/quadpay-merchant-sdk-android'
                     scm {
                         connection = 'scm:git:https://github.com/quadpay/quadpay-merchant-sdk-android.git'

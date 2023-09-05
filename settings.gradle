@@ -1,2 +1,2 @@
 include ':example', ':zip'
-rootProject.name='QuadPaySDK'
+rootProject.name='ZipSDK'
