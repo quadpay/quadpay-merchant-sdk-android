@@ -24,7 +24,7 @@ import com.zip.zip.Network.UriUtility;
 import com.zip.zip.Network.WidgetData;
 import com.zip.zip.PaymentWidget.Timelapse;
 import com.zip.zip.PaymentWidget.PaymentWidgetSubtitle;
-import com.zip.zip.QuadPayInfoSpan;
+import com.zip.zip.ZipInfoSpan;
 import com.zip.zip.R;
 import com.zip.zip.VerticalImageSpan;
 import java.text.DecimalFormat;
@@ -118,7 +118,7 @@ public class RNQuadPayPaymentWidget extends LinearLayout {
         ForegroundColorSpan colorSpan = new ForegroundColorSpan(Color.BLACK);
         sb.setSpan(boldStyle, 0, sb.length(), Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
         sb.append("Zip pay", imageSpanInfo, Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
-        sb.setSpan(new QuadPayInfoSpan("file///android_asset/index.html",
+        sb.setSpan(new ZipInfoSpan("file///android_asset/index.html",
                 merchantId,
                 learnMoreUrl,
                 isMFPPMerchant,

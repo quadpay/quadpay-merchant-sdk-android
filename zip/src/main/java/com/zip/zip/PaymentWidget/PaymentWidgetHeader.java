@@ -17,7 +17,7 @@ import android.widget.TextView;
 
 import androidx.core.content.ContextCompat;
 
-import com.zip.zip.QuadPayInfoSpan;
+import com.zip.zip.ZipInfoSpan;
 import com.zip.zip.R;
 import com.zip.zip.VerticalImageSpan;
 
@@ -53,7 +53,7 @@ public class PaymentWidgetHeader extends TextView{
         sb.setSpan(colorSpan, 0, sb.length(), Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
         sb.setSpan(boldStyle, 0, sb.length(), Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
         sb.append("Info", imageSpanInfo, Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
-        sb.setSpan(new QuadPayInfoSpan("file:///android_asset/index.html",
+        sb.setSpan(new ZipInfoSpan("file:///android_asset/index.html",
                 merchantId,
                 learnMoreUrl,
                 isMFPPMerchant,

@@ -5,7 +5,7 @@ import android.content.Intent;
 import android.text.style.URLSpan;
 import android.view.View;
 
-public class QuadPayInfoSpan extends URLSpan {
+public class ZipInfoSpan extends URLSpan {
 
     private String learnMoreUrl;
     private String merchantId;
@@ -15,7 +15,7 @@ public class QuadPayInfoSpan extends URLSpan {
     private String bankPartner;
 
 
-    public QuadPayInfoSpan(String url, String merchantId, String learnMoreUrl, String isMFPPMerchant, String minModal, Boolean hasFees, String bankPartner) {
+    public ZipInfoSpan(String url, String merchantId, String learnMoreUrl, String isMFPPMerchant, String minModal, Boolean hasFees, String bankPartner) {
         super(url);
         this.merchantId= merchantId;
         this.learnMoreUrl = learnMoreUrl;

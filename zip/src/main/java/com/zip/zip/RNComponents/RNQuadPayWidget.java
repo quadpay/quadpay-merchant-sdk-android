@@ -22,7 +22,7 @@ import androidx.core.content.ContextCompat;
 import com.zip.zip.GatewayClient;
 import com.zip.zip.Network.UriUtility;
 import com.zip.zip.Network.WidgetData;
-import com.zip.zip.QuadPayInfoSpan;
+import com.zip.zip.ZipInfoSpan;
 import com.zip.zip.R;
 import com.zip.zip.VerticalImageSpan;
 
@@ -105,7 +105,7 @@ public class RNQuadPayWidget extends FrameLayout {
         }
         sb.append(" ")
                 .append("Zip pay", imageSpanInfo, Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
-        sb.setSpan(new QuadPayInfoSpan("file///android_asset/index.html",
+        sb.setSpan(new ZipInfoSpan("file///android_asset/index.html",
                 merchantId,
                 learnMoreUrl,
                 isMFPPMerchant,
