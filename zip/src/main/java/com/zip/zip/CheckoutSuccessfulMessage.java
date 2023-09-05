@@ -3,7 +3,7 @@ package com.zip.zip;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-class CheckoutSuccessfulMessage extends QuadPayJSInterfaceMessage {
+class CheckoutSuccessfulMessage extends ZipJSInterfaceMessage {
     static final String messageType = "CheckoutSuccessfulMessage";
     String orderId;
     QuadPayCustomer customer;

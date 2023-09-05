@@ -19,9 +19,9 @@ import com.zip.zip.QuadPay;
 import com.zip.zip.QuadPayCustomer;
 import com.zip.zip.QuadPayCard;
 import com.zip.zip.QuadPayCardholder;
-import com.zip.zip.QuadPayVirtualCheckoutDelegate;
+import com.zip.zip.ZipVirtualCheckoutDelegate;
 
-public class MainActivity extends AppCompatActivity implements QuadPayVirtualCheckoutDelegate {
+public class MainActivity extends AppCompatActivity implements ZipVirtualCheckoutDelegate {
 
     void alertTo(String message) {
         new AlertDialog.Builder(this)

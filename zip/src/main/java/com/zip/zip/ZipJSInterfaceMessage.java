@@ -2,10 +2,10 @@ package com.zip.zip;
 
 import org.json.JSONObject;
 
-class QuadPayJSInterfaceMessage {
+class ZipJSInterfaceMessage {
     private static final String messageTypeKey = "messageType";
 
-    static QuadPayJSInterfaceMessage createFromData(String data) {
+    static ZipJSInterfaceMessage createFromData(String data) {
         if (data == null ) {
             throw new IllegalArgumentException();
         }

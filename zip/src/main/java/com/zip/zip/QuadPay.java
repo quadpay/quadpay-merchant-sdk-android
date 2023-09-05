@@ -56,7 +56,7 @@ public final class QuadPay {
         QuadPayCheckoutActivity.start(activity, details, true);
     }
 
-    public static boolean handleQuadPayActivityResults(QuadPayVirtualCheckoutDelegate delegate, int requestCode, int resultCode, Intent data) {
+    public static boolean handleQuadPayActivityResults(ZipVirtualCheckoutDelegate delegate, int requestCode, int resultCode, Intent data) {
         if (requestCode == QUADPAY_ACTIVITY_REQUEST_CODE) {
             Log.d("SDKExample", "QuadPayActivity finished - " + requestCode + " " + resultCode);
             switch (resultCode) {
@@ -64,7 +64,7 @@ public final class QuadPay {
                     // Unpack the intent data with message
                     String intentData = data.getStringExtra(QUADPAY_ACTIVITY_EXTRA);
                     try {
-                        QuadPayJSInterfaceMessage message = QuadPayJSInterfaceMessage.createFromData(intentData);
+                        ZipJSInterfaceMessage message = ZipJSInterfaceMessage.createFromData(intentData);
                         // dispatch callback
                         if (message instanceof VirtualCheckoutSuccessfulMessage) {
                             VirtualCheckoutSuccessfulMessage m = (VirtualCheckoutSuccessfulMessage)message;
@@ -100,7 +100,7 @@ public final class QuadPay {
                     // Unpack the intent data with message
                     String intentData = data.getStringExtra(QUADPAY_ACTIVITY_EXTRA);
                     try {
-                        QuadPayJSInterfaceMessage message = QuadPayJSInterfaceMessage.createFromData(intentData);
+                        ZipJSInterfaceMessage message = ZipJSInterfaceMessage.createFromData(intentData);
                         // dispatch callback
                         if (message instanceof CheckoutSuccessfulMessage) {
                             CheckoutSuccessfulMessage m = (CheckoutSuccessfulMessage)message;
