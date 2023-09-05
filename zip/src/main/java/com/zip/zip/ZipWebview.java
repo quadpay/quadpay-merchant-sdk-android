@@ -9,16 +9,16 @@ import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 
-class QuadPayWebView extends WebView {
-    private static final String USER_AGENT_PREFIX = "QuadPay-SDK-"
+class ZipWebView extends WebView {
+    private static final String USER_AGENT_PREFIX = "Zip-SDK-"
             + BuildConfig.VERSION_NAME;
 
-    public QuadPayWebView(Context context) {
+    public ZipWebView(Context context) {
         this(context, null);
     }
 
     @SuppressLint("SetJavaScriptEnabled")
-    public QuadPayWebView(Context context, AttributeSet attrs) {
+    public ZipWebView(Context context, AttributeSet attrs) {
         super(context, attrs);
         Log.d("SDKExample", "QuadPayWebviewLoaded");
         final String userAgent = USER_AGENT_PREFIX + " " + getSettings().getUserAgentString();
