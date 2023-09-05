@@ -20,7 +20,7 @@ class ZipWebView extends WebView {
     @SuppressLint("SetJavaScriptEnabled")
     public ZipWebView(Context context, AttributeSet attrs) {
         super(context, attrs);
-        Log.d("SDKExample", "QuadPayWebviewLoaded");
+        Log.d("SDKExample", "ZipWebviewLoaded");
         final String userAgent = USER_AGENT_PREFIX + " " + getSettings().getUserAgentString();
         getSettings().setUserAgentString(userAgent);
         clearCache(true);

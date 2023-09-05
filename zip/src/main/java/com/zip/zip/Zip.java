@@ -92,7 +92,7 @@ public final class Zip {
         return false;
     }
 
-    public static boolean handleQuadPayActivityResults(ZipCheckoutDelegate delegate, int requestCode, int resultCode, Intent data) {
+    public static boolean handleZipActivityResults(ZipCheckoutDelegate delegate, int requestCode, int resultCode, Intent data) {
         if (requestCode == ZIP_ACTIVITY_REQUEST_CODE) {
 //            Log.d("SDKExample", "QuadPayActivity finished - " + requestCode + " " + resultCode);
             switch (resultCode) {

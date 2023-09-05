@@ -72,7 +72,7 @@ public class DelegationUnitTest {
         MockIntent data = new MockIntent();
         data.putExtra(Zip.ZIP_ACTIVITY_EXTRA, "{\"messageType\":\"CheckoutSuccessfulMessage\",\"message\":{\"orderId\":\"1234-1234\",\"customer\":{\"firstName\":\"Quincy\",\"lastName\":\"Payman\",\"address1\":\"240 Meeker Avenue\",\"address2\":\"Apt 35\",\"city\":\"Brooklyn\",\"state\":\"NY\",\"postalCode\":\"11211\",\"country\":\"US\",\"email\":\"paul.sauer+ckkeee@quadpay.com\",\"phoneNumber\":\"+14076901147\"}}}");
 
-        Zip.handleQuadPayActivityResults(delegate, Zip.ZIP_ACTIVITY_REQUEST_CODE, RESULT_OK, data);
+        Zip.handleZipActivityResults(delegate, Zip.ZIP_ACTIVITY_REQUEST_CODE, RESULT_OK, data);
         assertTrue(calledSuccess);
         assertFalse(calledCancelled);
         assertFalse(calledError);
@@ -83,7 +83,7 @@ public class DelegationUnitTest {
         clearCallbacks();
         MockIntent data = new MockIntent();
         data.putExtra(Zip.ZIP_ACTIVITY_EXTRA, "{\"messageType\":\"CheckoutCancelledMessage\",\"message\":{\"reason\":\"idk\"}}");
-        Zip.handleQuadPayActivityResults(delegate, Zip.ZIP_ACTIVITY_REQUEST_CODE, RESULT_OK, data);
+        Zip.handleZipActivityResults(delegate, Zip.ZIP_ACTIVITY_REQUEST_CODE, RESULT_OK, data);
         assertFalse(calledSuccess);
         assertTrue(calledCancelled);
         assertFalse(calledError);
