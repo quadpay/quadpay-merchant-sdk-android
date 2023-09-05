@@ -54,9 +54,9 @@ afterEvaluate {
 
                     developers {
                         developer {
-                            id = 'samuelanoff'
-                            name = 'Samuel Anoff'
-                            email = 'samuel.anoff@quadpay.com'
+                            id = 'zipengineeringteam'
+                            name = 'Zip Engineering Team'
+                            email = 'global-checkout@zip.co'
                         }
                     }
                 }
