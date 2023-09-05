@@ -11,7 +11,7 @@ import androidx.annotation.Nullable;
 
 
 public class QuadPayCheckoutActivity extends QuadPayActivity
-        implements QuadPayJSMessageListener, QuadPayWebViewClient.WebViewClientCallbacks {
+        implements QuadPayJSMessageListener, ZipWebViewClient.WebViewClientCallbacks {
     static void start(@NonNull Activity activity,
                       @NonNull QuadPayCheckoutDetails details,
                       boolean virtual) throws InvalidParameterException {
@@ -50,8 +50,8 @@ public class QuadPayCheckoutActivity extends QuadPayActivity
 
     @Override
     void initViews() {
-        webView.addJavascriptInterface(new QuadPayJSInterface(this), "quadpay");
-        webView.setWebViewClient(new QuadPayWebViewClient(this) {
+        webView.addJavascriptInterface(new QuadPayJSInterface(this), "zip");
+        webView.setWebViewClient(new ZipWebViewClient(this) {
         });
     }
 

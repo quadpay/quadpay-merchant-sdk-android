@@ -12,17 +12,17 @@ import android.webkit.WebViewClient;
 
 import androidx.annotation.NonNull;
 
-class QuadPayWebViewClient extends WebViewClient {
+class ZipWebViewClient extends WebViewClient {
 
     private final WebViewClientCallbacks callbacks;
 
-    QuadPayWebViewClient(@NonNull WebViewClientCallbacks callbacks) {
+    ZipWebViewClient(@NonNull WebViewClientCallbacks callbacks) {
         this.callbacks = callbacks;
     }
 
     @Override
     public boolean shouldOverrideUrlLoading(WebView view, String url) {
-        Log.d("SDKExample", "QuadPayWebViewClient.shouldOverrideUrlLoading: " + url);
+        Log.d("SDKExample", "ZipWebViewClient.shouldOverrideUrlLoading: " + url);
         return !url.startsWith("http");
     }
 
@@ -30,7 +30,7 @@ class QuadPayWebViewClient extends WebViewClient {
     @Override
     public void onReceivedError(WebView view, int errorCode, String description,
                                 String failingUrl) {
-        Log.d("SDKExample", "QuadPayWebViewClient.onReceivedError: " + description);
+        Log.d("SDKExample", "ZipWebViewClient.onReceivedError: " + description);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             return;
         }
@@ -40,7 +40,7 @@ class QuadPayWebViewClient extends WebViewClient {
     @TargetApi(android.os.Build.VERSION_CODES.M)
     @Override
     public void onReceivedError(WebView view, WebResourceRequest request, WebResourceError error) {
-        Log.d("SDKExample", "QuadPayWebViewClient.onReceivedError: " + error.getDescription().toString());
+        Log.d("SDKExample", "ZipWebViewClient.onReceivedError: " + error.getDescription().toString());
         if (request.isForMainFrame()) {
             callbacks.onWebViewError(
                     error.getErrorCode() + ", " + error.getDescription().toString());
@@ -52,17 +52,17 @@ class QuadPayWebViewClient extends WebViewClient {
                                            HttpAuthHandler handler,
                                            String host,
                                            String realm) {
-        Log.d("SDKExample", "QuadPayWebViewClient.onReceivedHttpAuthRequest");
+        Log.d("SDKExample", "ZipWebViewClient.onReceivedHttpAuthRequest");
     }
 
     @Override
     public void onPageStarted(WebView webview, String url, Bitmap favicon) {
-        Log.d("SDKExample", "QuadPayWebViewClient.onPageStarted: " + url);
+        Log.d("SDKExample", "ZipWebViewClient.onPageStarted: " + url);
     }
 
     @Override
     public void onPageFinished(WebView view, String url) {
-        Log.d("SDKExample", "QuadPayWebViewClient.onPageFinished: " + url);
+        Log.d("SDKExample", "ZipWebViewClient.onPageFinished: " + url);
     }
 
     public interface WebViewClientCallbacks {
