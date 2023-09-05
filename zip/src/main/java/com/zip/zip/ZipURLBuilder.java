@@ -7,25 +7,25 @@ import java.security.InvalidParameterException;
 
 public class ZipURLBuilder {
     static String baseURL() {
-        switch (QuadPay.configuration.environment) {
+        switch (Zip.configuration.environment) {
             case SANDBOX:
-                if (QuadPay.configuration.locale == QuadPay.Locale.MX) {
+                if (Zip.configuration.locale == Zip.Locale.MX) {
                     return "https://gateway.sand.mx.zip.co";
-                } else if (QuadPay.configuration.locale == QuadPay.Locale.US) {
+                } else if (Zip.configuration.locale == Zip.Locale.US) {
                     return "https://sandbox.gateway.quadpay.com";
                 }
                 return "https://sandbox.gateway.quadpay.com";
             case PRODUCTION:
-                if (QuadPay.configuration.locale == QuadPay.Locale.MX) {
+                if (Zip.configuration.locale == Zip.Locale.MX) {
                     return "https://gateway.mx.zip.co";
-                } else if (QuadPay.configuration.locale == QuadPay.Locale.US) {
+                } else if (Zip.configuration.locale == Zip.Locale.US) {
                     return "https://gateway.quadpay.com";   
                 }
                 return "https://gateway.quadpay.com";
             case CI:
-                if (QuadPay.configuration.locale == QuadPay.Locale.MX) {
+                if (Zip.configuration.locale == Zip.Locale.MX) {
                     return "https://gateway.dev.mx.zip.co";
-                } else if (QuadPay.configuration.locale == QuadPay.Locale.US) {
+                } else if (Zip.configuration.locale == Zip.Locale.US) {
                     return "https://master.gateway.quadpay.xyz";
                 }
                 return "https://master.gateway.quadpay.xyz";
@@ -43,7 +43,7 @@ public class ZipURLBuilder {
     }
 
     private static String assembleParams(ZipCheckoutDetails details) throws UnsupportedEncodingException {
-        return "MerchantId=" + QuadPay.configuration.merchantId
+        return "MerchantId=" + Zip.configuration.merchantId
                 + field("order.amount", details.amount)
                 + field("merchantReference", details.merchantReference)
                 + field("order.email", details.customerEmail)

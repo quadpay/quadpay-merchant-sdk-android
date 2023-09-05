@@ -19,13 +19,13 @@ public class ZipCheckoutActivity extends ZipActivity
         if (virtual) {
             String dest = ZipURLBuilder.buildVirtualCheckoutURL(details);
             Log.d("SDKExample", "start activity dest: " + dest);
-            intent.putExtra(QuadPay.QUADPAY_ACTIVITY_EXTRA, dest);
-            activity.startActivityForResult(intent, QuadPay.QUADPAY_ACTIVITY_REQUEST_CODE);
+            intent.putExtra(Zip.ZIP_ACTIVITY_EXTRA, dest);
+            activity.startActivityForResult(intent, Zip.ZIP_ACTIVITY_REQUEST_CODE);
         } else {
             String dest = ZipURLBuilder.buildCheckoutURL(details);
             Log.d("SDKExample", "start activity dest: " + dest);
-            intent.putExtra(QuadPay.QUADPAY_ACTIVITY_EXTRA, dest);
-            activity.startActivityForResult(intent, QuadPay.QUADPAY_ACTIVITY_REQUEST_CODE);
+            intent.putExtra(Zip.ZIP_ACTIVITY_EXTRA, dest);
+            activity.startActivityForResult(intent, Zip.ZIP_ACTIVITY_REQUEST_CODE);
         }
     }
 
@@ -43,7 +43,7 @@ public class ZipCheckoutActivity extends ZipActivity
     public void receiveMessage(String message) {
         Log.d("SDKExample", "Message received by Activity - " + message);
         Intent data = new Intent();
-        data.putExtra(QuadPay.QUADPAY_ACTIVITY_EXTRA, message);
+        data.putExtra(Zip.ZIP_ACTIVITY_EXTRA, message);
         this.setResult(RESULT_OK, data);
         this.finish();
     }

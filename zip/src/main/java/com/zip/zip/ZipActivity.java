@@ -44,7 +44,7 @@ abstract class ZipActivity extends AppCompatActivity {
 
         initViews();
 
-        checkoutURL = getIntent().getStringExtra(QuadPay.QUADPAY_ACTIVITY_EXTRA);
+        checkoutURL = getIntent().getStringExtra(Zip.ZIP_ACTIVITY_EXTRA);
 
         Log.d("SDKExample", "Loading URL" + checkoutURL);
         webView.loadUrl(checkoutURL);

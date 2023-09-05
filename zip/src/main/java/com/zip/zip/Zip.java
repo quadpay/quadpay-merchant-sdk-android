@@ -9,17 +9,17 @@ import static android.app.Activity.RESULT_OK;
 
 import androidx.annotation.NonNull;
 
-public final class QuadPay {
+public final class Zip {
 
-    static QuadPay sharedInstance;
-    static String QUADPAY_ACTIVITY_EXTRA = "QUADPAY_ACTIVITY_EXTRA";
-    static int QUADPAY_ACTIVITY_REQUEST_CODE = 44444;
+    static Zip sharedInstance;
+    static String ZIP_ACTIVITY_EXTRA = "ZIP_ACTIVITY_EXTRA";
+    static int ZIP_ACTIVITY_REQUEST_CODE = 44444;
 
     static Configuration configuration;
 
-    private QuadPay() {}
+    private Zip() {}
 
-    private QuadPay(@NonNull Configuration configuration) {
+    private Zip(@NonNull Configuration configuration) {
         this.configuration = configuration;
     }
 
@@ -35,13 +35,13 @@ public final class QuadPay {
     }
 
     public static class Constants {
-        static String ERROR_READING_MESSAGE = "QuadPaySDK: Error reading message";
+        static String ERROR_READING_MESSAGE = "ZipSDK: Error reading message";
         static String ACTIVITY_CANCELLED_MESSAGE = "Activity cancelled";
         static String ACTIVITY_ENDED_MESSAGE = "Activity ended unexpectedly";
     }
 
     public static void initialize(@NonNull Configuration configuration) {
-        sharedInstance = new QuadPay(configuration);
+        sharedInstance = new Zip(configuration);
     }
 
     public static void startCheckout(
@@ -57,12 +57,12 @@ public final class QuadPay {
     }
 
     public static boolean handleQuadPayActivityResults(ZipVirtualCheckoutDelegate delegate, int requestCode, int resultCode, Intent data) {
-        if (requestCode == QUADPAY_ACTIVITY_REQUEST_CODE) {
+        if (requestCode == ZIP_ACTIVITY_REQUEST_CODE) {
             Log.d("SDKExample", "QuadPayActivity finished - " + requestCode + " " + resultCode);
             switch (resultCode) {
                 case RESULT_OK:
                     // Unpack the intent data with message
-                    String intentData = data.getStringExtra(QUADPAY_ACTIVITY_EXTRA);
+                    String intentData = data.getStringExtra(ZIP_ACTIVITY_EXTRA);
                     try {
                         ZipJSInterfaceMessage message = ZipJSInterfaceMessage.createFromData(intentData);
                         // dispatch callback
@@ -93,12 +93,12 @@ public final class QuadPay {
     }
 
     public static boolean handleQuadPayActivityResults(ZipCheckoutDelegate delegate, int requestCode, int resultCode, Intent data) {
-        if (requestCode == QUADPAY_ACTIVITY_REQUEST_CODE) {
+        if (requestCode == ZIP_ACTIVITY_REQUEST_CODE) {
 //            Log.d("SDKExample", "QuadPayActivity finished - " + requestCode + " " + resultCode);
             switch (resultCode) {
                 case RESULT_OK:
                     // Unpack the intent data with message
-                    String intentData = data.getStringExtra(QUADPAY_ACTIVITY_EXTRA);
+                    String intentData = data.getStringExtra(ZIP_ACTIVITY_EXTRA);
                     try {
                         ZipJSInterfaceMessage message = ZipJSInterfaceMessage.createFromData(intentData);
                         // dispatch callback

@@ -15,7 +15,7 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
-import com.zip.zip.QuadPay;
+import com.zip.zip.Zip;
 import com.zip.zip.ZipCustomer;
 import com.zip.zip.ZipCard;
 import com.zip.zip.ZipCardholder;
@@ -69,9 +69,9 @@ public class MainActivity extends AppCompatActivity implements ZipVirtualCheckou
         //dev merchant a3ef4ac2-4b26-46be-b516-2b86f1f0959e
         //sandbox merchant 5898b9a9-46bb-4647-92ed-52643d019d8c
         
-        QuadPay.initialize(new QuadPay.Configuration.Builder("a3ef4ac2-4b26-46be-b516-2b86f1f0959e")
-                .setEnvironment(QuadPay.Environment.CI)
-                .setLocale(QuadPay.Locale.US)
+        Zip.initialize(new Zip.Configuration.Builder("a3ef4ac2-4b26-46be-b516-2b86f1f0959e")
+                .setEnvironment(Zip.Environment.CI)
+                .setLocale(Zip.Locale.US)
                 .build()
         );
 
@@ -91,7 +91,7 @@ public class MainActivity extends AppCompatActivity implements ZipVirtualCheckou
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         Log.d("SDKExample", "onActivityResult - " + requestCode + " " + resultCode);
-        if (QuadPay.handleQuadPayActivityResults(
+        if (Zip.handleQuadPayActivityResults(
                 this,
                 requestCode,
                 resultCode,

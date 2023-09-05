@@ -70,9 +70,9 @@ public class DelegationUnitTest {
     public void when_receive_success_message_callback_fires() {
         clearCallbacks();
         MockIntent data = new MockIntent();
-        data.putExtra(QuadPay.QUADPAY_ACTIVITY_EXTRA, "{\"messageType\":\"CheckoutSuccessfulMessage\",\"message\":{\"orderId\":\"1234-1234\",\"customer\":{\"firstName\":\"Quincy\",\"lastName\":\"Payman\",\"address1\":\"240 Meeker Avenue\",\"address2\":\"Apt 35\",\"city\":\"Brooklyn\",\"state\":\"NY\",\"postalCode\":\"11211\",\"country\":\"US\",\"email\":\"paul.sauer+ckkeee@quadpay.com\",\"phoneNumber\":\"+14076901147\"}}}");
+        data.putExtra(Zip.ZIP_ACTIVITY_EXTRA, "{\"messageType\":\"CheckoutSuccessfulMessage\",\"message\":{\"orderId\":\"1234-1234\",\"customer\":{\"firstName\":\"Quincy\",\"lastName\":\"Payman\",\"address1\":\"240 Meeker Avenue\",\"address2\":\"Apt 35\",\"city\":\"Brooklyn\",\"state\":\"NY\",\"postalCode\":\"11211\",\"country\":\"US\",\"email\":\"paul.sauer+ckkeee@quadpay.com\",\"phoneNumber\":\"+14076901147\"}}}");
 
-        QuadPay.handleQuadPayActivityResults(delegate, QuadPay.QUADPAY_ACTIVITY_REQUEST_CODE, RESULT_OK, data);
+        Zip.handleQuadPayActivityResults(delegate, Zip.ZIP_ACTIVITY_REQUEST_CODE, RESULT_OK, data);
         assertTrue(calledSuccess);
         assertFalse(calledCancelled);
         assertFalse(calledError);
@@ -82,8 +82,8 @@ public class DelegationUnitTest {
     public void when_receive_cancel_message_callback_fires() {
         clearCallbacks();
         MockIntent data = new MockIntent();
-        data.putExtra(QuadPay.QUADPAY_ACTIVITY_EXTRA, "{\"messageType\":\"CheckoutCancelledMessage\",\"message\":{\"reason\":\"idk\"}}");
-        QuadPay.handleQuadPayActivityResults(delegate, QuadPay.QUADPAY_ACTIVITY_REQUEST_CODE, RESULT_OK, data);
+        data.putExtra(Zip.ZIP_ACTIVITY_EXTRA, "{\"messageType\":\"CheckoutCancelledMessage\",\"message\":{\"reason\":\"idk\"}}");
+        Zip.handleQuadPayActivityResults(delegate, Zip.ZIP_ACTIVITY_REQUEST_CODE, RESULT_OK, data);
         assertFalse(calledSuccess);
         assertTrue(calledCancelled);
         assertFalse(calledError);

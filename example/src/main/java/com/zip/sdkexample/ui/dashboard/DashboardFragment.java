@@ -14,7 +14,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
-import com.zip.zip.QuadPay;
+import com.zip.zip.Zip;
 import com.zip.zip.ZipCheckoutDetails;
 import com.zip.sdkexample.R;
 
@@ -54,7 +54,7 @@ public class DashboardFragment extends Fragment {
             public void onClick(View v) {
                 Log.d("SDKExample", "Starting activity");
                 // Do something in response to button click
-                QuadPay.startCheckout(getActivity(), details);
+                Zip.startCheckout(getActivity(), details);
             }
         });
         return root;
