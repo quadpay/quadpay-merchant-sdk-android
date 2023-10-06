@@ -2,7 +2,7 @@ apply plugin: 'signing'
 apply plugin: 'maven-publish'
 
 ext.isReleaseVersion = !version.endsWith("SNAPSHOT")
-group = "com.zip"
+group = "com.quadpay"
 
 task androidJavadocs(type: Javadoc) {
     source = android.sourceSets.main.java.srcDirs
