@@ -1,0 +1,99 @@
+apply plugin: 'signing'
+apply plugin: 'maven-publish'
+
+ext.isReleaseVersion = !version.endsWith("SNAPSHOT")
+group = "com.quadpay"
+
+task androidJavadocs(type: Javadoc) {
+    source = android.sourceSets.main.java.srcDirs
+    classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
+    android.libraryVariants.all { variant ->
+        if (variant.name == 'release') {
+            owner.classpath += variant.javaCompileProvider.get().classpath
+        }
+    }
+    exclude '**/R.html', '**/R.*.html', '**/index.html'
+}
+
+task androidJavadocsJar(type: Jar, dependsOn: androidJavadocs) {
+    archiveClassifier.set('javadoc')
+    from androidJavadocs.destinationDir
+}
+
+task androidSourcesJar(type: Jar) {
+    archiveClassifier.set('sources')
+    from android.sourceSets.main.java.srcDirs
+}
+
+afterEvaluate {
+    publishing {
+        publications {
+            maven(MavenPublication) {
+                artifact androidJavadocsJar
+                artifact androidSourcesJar
+                artifact("$buildDir/outputs/aar/zip-release.aar")
+                artifact("$buildDir/libs/zip-${this.version}.jar")
+                pom {
+                    name = "com.zip.zip"
+                    groupId = this.group
+                    artifactId = 'zip'
+                    version = this.version
+                    description = 'Zip\'s open-source Android SDK'
+                    url = 'https://github.com/quadpay/quadpay-merchant-sdk-android'
+                    scm {
+                        connection = 'scm:git:https://github.com/quadpay/quadpay-merchant-sdk-android.git'
+                        developerConnection = 'scm:git:https://github.com/quadpay/quadpay-merchant-sdk-android.git'
+                        url = 'https://github.com/quadpay/quadpay-merchant-sdk-android'
+                    }
+                    licenses {
+                        license {
+                            name = 'MIT License'
+                            url = 'http://www.opensource.org/licenses/mit-license.php'
+                        }
+                    }
+
+                    developers {
+                        developer {
+                            id = 'zipengineeringteam'
+                            name = 'Zip Engineering Team'
+                            email = 'global-checkout@zip.co'
+                        }
+                    }
+                }
+
+                pom.withXml {
+                    def dependenciesNode = asNode().appendNode('dependencies')
+
+                    // Iterate over the implementation dependencies (we don't want the test ones),
+                    // adding a <dependency> node for each
+                    configurations.implementation.allDependencies.each {
+                        // Ensure dependencies such as fileTree are not included in the pom.
+                        if (it.name != 'unspecified') {
+                            def dependencyNode = dependenciesNode.appendNode('dependency')
+                            dependencyNode.appendNode('groupId', it.group)
+                            dependencyNode.appendNode('artifactId', it.name)
+                            dependencyNode.appendNode('version', it.version)
+                        }
+                    }
+                }
+            }
+        }
+        repositories {
+            maven {
+                def releaseRepo = "https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/"
+                def snapshotRepo = "https://s01.oss.sonatype.org/content/repositories/snapshots/"
+                url = isReleaseVersion ? releaseRepo : snapshotRepo
+                credentials {
+                    username = project.hasProperty('ossrhUsername') ? ossrhUsername : "Unknown User"
+                    password = project.hasProperty('ossrhPassword') ? ossrhPassword : "Unknown Password"
+                }
+            }
+        }
+    }
+    signing {
+        def signingKey = "Signing Key with newline at the end"
+        def signingPassword = "Signing Key Passphrase"
+        useInMemoryPgpKeys(signingKey, signingPassword)
+        sign publishing.publications.maven
+    }
+}

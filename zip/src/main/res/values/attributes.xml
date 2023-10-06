@@ -1,0 +1,29 @@
+<resources>
+    <declare-styleable name="ZipWidget">
+        <attr name="merchantId" format="string"/>
+        <attr name="learnMoreUrl" format="string"/>
+        <attr name="amount" format="string"/>
+        <attr name="isMFPPMerchant" format="string"/>
+        <attr name="minModal" format="string"/>
+        <attr name="priceColor" format="string"/>
+        <attr name="logoOption" format="string"/>
+        <attr name="displayMode" format="string"/>
+        <attr name="min" format="string"/>
+        <attr name="max" format="string"/>
+        <attr name="logoSize" format="string"/>
+        <attr name="size" format="string"/>
+        <attr name="subTextLayout" format="string"/>
+        <attr name="alignment" format="string"/>
+    </declare-styleable>
+
+    <declare-styleable name="ZipPaymentWidget" parent="ZipWidget">
+        <attr name="merchantId"/>
+        <attr name="learnMoreUrl"/>
+        <attr name="amount"/>
+        <attr name="isMFPPMerchant"/>
+        <attr name="minModal"/>
+        <attr name="hideSubtitle" format="string"/>
+        <attr name="hideTimeline" format="string"/>
+        <attr name="timelineColor" format="string"/>
+    </declare-styleable>
+</resources>
