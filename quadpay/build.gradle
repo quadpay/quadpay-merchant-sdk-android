@@ -1,12 +1,12 @@
 apply plugin: 'com.android.library'
 
-version = "0.8.2"
+version = "0.8.3"
 
 android {
     compileSdkVersion 31
     namespace 'com.quadpay.quadpay'
     defaultConfig {
-        minSdkVersion 31
+        minSdkVersion 24
         targetSdkVersion 31
         buildConfigField 'String', 'VERSION_NAME', "\"${this.version}\""
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
