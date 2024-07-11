@@ -6,13 +6,16 @@ group = "com.quadpay"
 
 task androidJavadocs(type: Javadoc) {
     source = android.sourceSets.main.java.srcDirs
-    classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
     android.libraryVariants.all { variant ->
         if (variant.name == 'release') {
             owner.classpath += variant.javaCompileProvider.get().classpath
         }
     }
     exclude '**/R.html', '**/R.*.html', '**/index.html'
+}
+
+afterEvaluate {
+    tasks.androidJavadocs.classpath += files(project.android.getBootClasspath())
 }
 
 task androidJavadocsJar(type: Jar, dependsOn: androidJavadocs) {
@@ -84,16 +87,18 @@ afterEvaluate {
                 def snapshotRepo = "https://s01.oss.sonatype.org/content/repositories/snapshots/"
                 url = isReleaseVersion ? releaseRepo : snapshotRepo
                 credentials {
-                    username = project.hasProperty('ossrhUsername') ? ossrhUsername : "Unknown User"
-                    password = project.hasProperty('ossrhPassword') ? ossrhPassword : "Unknown Password"
+                    username = project.hasProperty('mavenUsername') ? mavenUsername : "Unknown User"
+                    password = project.hasProperty('mavenPassword') ? mavenPassword : "Unknown Password"
                 }
             }
         }
     }
+
     signing {
         def signingKey = "Signing Key with newline at the end"
         def signingPassword = "Signing Key Passphrase"
         useInMemoryPgpKeys(signingKey, signingPassword)
         sign publishing.publications.maven
     }
+
 }
