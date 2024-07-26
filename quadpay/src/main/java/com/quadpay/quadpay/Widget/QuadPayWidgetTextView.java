@@ -291,14 +291,14 @@ public class QuadPayWidgetTextView extends TextView {
 
         if (amount == null || amount.equals("")) {
 
-            amountString = new SpannableString(" $" + decimalFormat.format(Float.parseFloat(min.toString())));
+            amountString = new SpannableString(" $" + decimalFormat.format(min));
 
         } else {
-            if (Float.parseFloat(amount) < Float.parseFloat(min.toString()))
+            if (Float.parseFloat(amount) < min)
             {
-                amountString = new SpannableString(" $" + decimalFormat.format(Float.parseFloat(min.toString())));
-            } else if (Float.parseFloat(amount) > Float.parseFloat(max.toString())) {
-                amountString = new SpannableString(" $" + decimalFormat.format(Float.parseFloat(max.toString())));
+                amountString = new SpannableString(" $" + decimalFormat.format(min));
+            } else if (Float.parseFloat(amount) > max) {
+                amountString = new SpannableString(" $" + decimalFormat.format(max));
             } else {
                 decimalFormat.setMinimumFractionDigits(2);
                 float instalment = (Float.parseFloat(amount)+ maxFee) / 4;
@@ -312,10 +312,10 @@ public class QuadPayWidgetTextView extends TextView {
             widgetText = widgetTextMin;
 
         } else {
-            if (Float.parseFloat(amount) < Float.parseFloat(min.toString()))
+            if (Float.parseFloat(amount) < min)
             {
                 widgetText = widgetTextMin;
-            } else if (Float.parseFloat(amount) > Float.parseFloat(max.toString())) {
+            } else if (Float.parseFloat(amount) > max) {
                 widgetText = widgetTextMax;
             } else {
                 widgetText = widgetVerbiage;
