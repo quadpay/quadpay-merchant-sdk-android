@@ -21,6 +21,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 
+import com.quadpay.quadpay.Constants;
 import com.quadpay.quadpay.Network.UriUtility;
 import com.quadpay.quadpay.Network.WidgetData;
 import com.quadpay.quadpay.GatewayClient;
@@ -75,8 +76,8 @@ public class QuadPayWidgetTextView extends TextView {
     public QuadPayWidgetTextView(Context context, TypedArray attributes) {
         super(context);
         amount = attributes.getString(R.styleable.QuadPayWidget_amount);
-        min = attributes.getInteger(R.styleable.QuadPayWidget_min,0);
-        max = attributes.getInteger(R.styleable.QuadPayWidget_max, Integer.MAX_VALUE);
+        min = attributes.getInteger(R.styleable.QuadPayWidget_min, Constants.min);
+        max = attributes.getInteger(R.styleable.QuadPayWidget_max, Constants.max);
         widgetVerbiage = context.getString(R.string.widget_text);
         widgetTextMin = context.getString(R.string.widget_text_min);
         widgetTextMax = context.getString(R.string.widget_text_max);
@@ -287,27 +288,17 @@ public class QuadPayWidgetTextView extends TextView {
     public void SetAmount() {
         DecimalFormat decimalFormat = new DecimalFormat("#.##");
         decimalFormat.setMinimumFractionDigits(2);
-        String minOrder = "35";
-        String maxOrder = "1500";
-
-        if (min != null) {
-            minOrder = min.toString();
-        }
-
-        if (max != null) {
-            maxOrder = max.toString();
-        }
 
         if (amount == null || amount.equals("")) {
 
-            amountString = new SpannableString(" $" + decimalFormat.format(Float.parseFloat(minOrder)));
+            amountString = new SpannableString(" $" + decimalFormat.format(Float.parseFloat(min.toString())));
 
         } else {
-            if (Float.parseFloat(amount) < Float.parseFloat(minOrder))
+            if (Float.parseFloat(amount) < Float.parseFloat(min.toString()))
             {
-                amountString = new SpannableString(" $" + decimalFormat.format(Float.parseFloat(minOrder)));
-            } else if (Float.parseFloat(amount) > Float.parseFloat(maxOrder)) {
-                amountString = new SpannableString(" $" + decimalFormat.format(Float.parseFloat(maxOrder)));
+                amountString = new SpannableString(" $" + decimalFormat.format(Float.parseFloat(min.toString())));
+            } else if (Float.parseFloat(amount) > Float.parseFloat(max.toString())) {
+                amountString = new SpannableString(" $" + decimalFormat.format(Float.parseFloat(max.toString())));
             } else {
                 decimalFormat.setMinimumFractionDigits(2);
                 float instalment = (Float.parseFloat(amount)+ maxFee) / 4;
@@ -317,26 +308,14 @@ public class QuadPayWidgetTextView extends TextView {
     }
 
     public void SetWidgetText() {
-        String minOrder = "35";
-        String maxOrder = "1500";
-
-
-        if (min != null) {
-            minOrder = min.toString();
-        }
-
-        if (max != null) {
-            maxOrder = max.toString();
-        }
-
         if (amount == null || amount.equals("")) {
             widgetText = widgetTextMin;
 
         } else {
-            if (Float.parseFloat(amount) < Float.parseFloat(minOrder))
+            if (Float.parseFloat(amount) < Float.parseFloat(min.toString()))
             {
                 widgetText = widgetTextMin;
-            } else if (Float.parseFloat(amount) > Float.parseFloat(maxOrder)) {
+            } else if (Float.parseFloat(amount) > Float.parseFloat(max.toString())) {
                 widgetText = widgetTextMax;
             } else {
                 widgetText = widgetVerbiage;
