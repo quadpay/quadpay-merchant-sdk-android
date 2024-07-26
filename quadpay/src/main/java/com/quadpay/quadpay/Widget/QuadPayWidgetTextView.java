@@ -45,8 +45,8 @@ public class QuadPayWidgetTextView extends TextView {
     private final SpannableStringBuilder sb = new SpannableStringBuilder();
     private SpannableString amountString = null;
     private final String amount;
-    private final String min;
-    private final String max;
+    private final Integer min;
+    private final Integer max;
     private final String widgetVerbiage;
     private final String widgetTextMin;
     private final String widgetTextMax;
@@ -75,8 +75,8 @@ public class QuadPayWidgetTextView extends TextView {
     public QuadPayWidgetTextView(Context context, TypedArray attributes) {
         super(context);
         amount = attributes.getString(R.styleable.QuadPayWidget_amount);
-        min = attributes.getString(R.styleable.QuadPayWidget_min);
-        max = attributes.getString(R.styleable.QuadPayWidget_max);
+        min = attributes.getInteger(R.styleable.QuadPayWidget_min,0);
+        max = attributes.getInteger(R.styleable.QuadPayWidget_max, Integer.MAX_VALUE);
         widgetVerbiage = context.getString(R.string.widget_text);
         widgetTextMin = context.getString(R.string.widget_text_min);
         widgetTextMax = context.getString(R.string.widget_text_max);
@@ -291,11 +291,11 @@ public class QuadPayWidgetTextView extends TextView {
         String maxOrder = "1500";
 
         if (min != null) {
-            minOrder = min;
+            minOrder = min.toString();
         }
 
         if (max != null) {
-            maxOrder = max;
+            maxOrder = max.toString();
         }
 
         if (amount == null || amount.equals("")) {
@@ -322,11 +322,11 @@ public class QuadPayWidgetTextView extends TextView {
 
 
         if (min != null) {
-            minOrder = min;
+            minOrder = min.toString();
         }
 
         if (max != null) {
-            maxOrder = max;
+            maxOrder = max.toString();
         }
 
         if (amount == null || amount.equals("")) {
