@@ -5,6 +5,9 @@ version = "0.8.6"
 android {
     compileSdk 31
     namespace 'com.quadpay.quadpay'
+    buildFeatures {
+        buildConfig true
+    }
     defaultConfig {
         minSdkVersion 24
         targetSdkVersion 31
@@ -47,8 +50,11 @@ dependencies {
 }
 
 task createJar(type: Copy) {
-    from "$buildDir/intermediates/aar_main_jar/release"
-    include "classes.jar"
+    dependsOn "syncReleaseLibJars"
+    from fileTree("$buildDir/intermediates/aar_main_jar/release")
+    include "**/classes.jar"
+    eachFile { path = name }
+    includeEmptyDirs = false
     destinationDir file("$buildDir/libs")
     rename "classes.jar", "quadpay-${this.version}.jar"
 }
